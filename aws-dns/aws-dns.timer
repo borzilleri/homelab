@@ -1,0 +1,10 @@
+[Unit]
+Description=Runs container to refresh dns records in AWS
+Requires=aws-dns.service
+
+[Timer]
+Unit=aws-dns.service
+OnCalendar=daily
+
+[Install]
+WantedBy=timers.target

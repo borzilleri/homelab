@@ -1,0 +1,10 @@
+[Unit]
+Description=Runs certbot container to renew certificates
+Requires=certbot.service
+
+[Timer]
+Unit=certbot.service
+OnCalendar=daily
+
+[Install]
+WantedBy=timers.target

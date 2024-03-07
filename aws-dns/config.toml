@@ -1,0 +1,13 @@
+[general]
+  commit-changes=false
+  force-commit=true
+[general.log]
+  debug=true
+
+[aws]
+  profile="default"
+
+[dns]
+  hostname="sdf1.site"
+  zone-id="Z0127373UIMBUGF0MG3K"
+  ttl=3600
