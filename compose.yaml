@@ -1,4 +1,16 @@
 services:
+  awsdns:
+    build:
+      context: https://github.com/borzilleri/aws-dynamic-dns.git#:app
+    volumes:
+      - ./aws-dns/config.toml:/config.toml:ro
+    secrets:
+      - aws-credentials
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - /var/www/certbot/:/var/www/certbot/:rw
+      - /etc/letsencrypt/:/etc/letsencrypt/:rw
   nginx:
     image: nginx:latest
     container_name: nginx
@@ -16,18 +28,6 @@ services:
       retries: 5
       start_period: 20s
       timeout: 10s
-  certbot:
-    image: certbot/certbot:latest
-    volumes:
-      - /var/www/certbot/:/var/www/certbot/:rw
-      - /etc/letsencrypt/:/etc/letsencrypt/:rw
-  awsdns:
-    build:
-      context: https://github.com/borzilleri/aws-dynamic-dns.git#:app
-    volumes:
-      - ./aws-dns/config.toml:/config.toml:ro
-    secrets:
-      - aws-credentials
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
@@ -53,6 +53,19 @@ services:
       - 9696:9696
     volumes:
       - /etc/servarr/prowlarr:/config
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    ports:
+      - 8080:8080
+    volumes:
+      - /etc/servarr/sabnzbd:/config
+      - central-dogma:/data
 
 volumes:
   central-dogma:
