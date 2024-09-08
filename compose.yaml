@@ -79,7 +79,22 @@ services:
     volumes:
       - /etc/servarr/sabnzbd:/config
       - central-dogma:/data
-
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    env_file: "transmission.env"
+    volumes:
+      - /etc/servarr/transmission:/config
+      - central-dogma:/data
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
 volumes:
   central-dogma:
     driver: local
