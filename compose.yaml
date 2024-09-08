@@ -41,6 +41,19 @@ services:
     volumes:
       - /etc/servarr/radarr/config:/config
       - central-dogma:/data
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    ports:
+      - 8989:8989
+    volumes:
+      - /etc/servarr/sonarr/config:/config
+      - central-dogma:/data
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
