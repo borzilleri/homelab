@@ -28,6 +28,18 @@ services:
       retries: 5
       start_period: 20s
       timeout: 10s
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: always
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    ports:
+      - 7878:7878
+    volumes:
+      - /etc/servarr/radarr/config:/config
+      - central-dogma:/data
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
