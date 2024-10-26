@@ -13,7 +13,7 @@
       container: radarr
       widget:
         type: radarr
-        url: http://radarr
+        url: http://radarr:7878
         key: {{HOMEPAGE_FILE_RADARR_KEY}}
   - Sonarr:
       icon: sh-sonarr
@@ -22,7 +22,7 @@
       container: sonarr
       widget:
         type: sonarr
-        url: http://sonarr
+        url: http://sonarr:8989
         key: {{HOMEPAGE_FILE_SONARR_KEY}}
   - Bazarr:
       icon: sh-bazarr
@@ -31,7 +31,7 @@
       container: bazarr
       widget:
         type: bazarr
-        url: http://bazarr
+        url: http://bazarr:6767
         key: {{HOMEPAGE_FILE_BAZARR_KEY}}
 
 - Data & Network:
@@ -42,7 +42,7 @@
       href: http://central-dogma:5000
       widget:
         type: diskstation
-        url: http://central-dogma:5000
+        url: http://central-dogma.tail120b6.ts.netdogma:5000
         username: {{HOMEPAGE_FILE_SYNOLOGY_USER}}
         password: {{HOMEPAGE_FILE_SYNOLOGY_PASS}}
         #volume: volume_N
@@ -65,18 +65,8 @@
       container: prowlarr
       widget:
         type: prowlarr
-        url: http://prowlarr
+        url: http://prowlarr:9696
         key: {{HOMEPAGE_FILE_PROWLARR_KEY}}
-  - Transmission:
-      icon: sh-transmission
-      href: http://transmission
-      server: melchior
-      container: transmission
-      widget:
-        type: transmission
-        url: http://transmission
-        username: {{HOMEPAGE_FILE_TRANSMISSION_USER}}
-        password: {{HOMEPAGE_FILE_TRANSMISSION_PASS}}
   - SABnzbd:
       icon: sh-sabnzbd
       url: http://sabnzbd
@@ -84,8 +74,18 @@
       container: sabnzbd
       widget:
         type: sabnzbd
-        url: http://sabnzbd
+        url: http://sabnzbd:8080
         key: {{HOMEPAGE_FILE_SABNZBD_KEY}}
+  - Transmission:
+      icon: sh-transmission
+      href: http://transmission
+      server: melchior
+      container: transmission
+      widget:
+        type: transmission
+        url: http://transmission:9091
+        username: {{HOMEPAGE_FILE_TRANSMISSION_USER}}
+        password: {{HOMEPAGE_FILE_TRANSMISSION_PASS}}
   - HDHomeRun:
       icon: sh-hdhomerun
       url: http://192.168.1.246
