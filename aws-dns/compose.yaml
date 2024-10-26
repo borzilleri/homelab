@@ -1,0 +1,12 @@
+services:
+  awsdns:
+    build:
+      context: https://github.com/borzilleri/aws-dynamic-dns.git#:app
+    volumes:
+      - ./config.toml:/config.toml:ro
+    secrets:
+      - aws-credentials
+
+secrets:
+  aws-credentials:
+    file: /etc/aws/aws-dns.json
