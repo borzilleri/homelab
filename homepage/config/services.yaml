@@ -42,20 +42,20 @@
       href: http://central-dogma:5000
       widget:
         type: diskstation
-        url: http://central-dogma.tail120b6.ts.netdogma:5000
+        url: http://central-dogma.tail120b6.ts.net:5000
         username: {{HOMEPAGE_FILE_SYNOLOGY_USER}}
         password: {{HOMEPAGE_FILE_SYNOLOGY_PASS}}
         #volume: volume_N
 #  - TrueNas:
 
-- Devices:
-  - Octoprint:
-      icon: sh-octoprint
-      href: http://octopi
-      widget:
-        type: octoprint
-        url: http://octopi
-        key: {{HOMEPAGE_FILE_OCTOPRINT_KEY}}
+#- Devices:
+#  - Octoprint:
+#      icon: sh-octoprint
+#      href: http://octopi
+#      widget:
+#        type: octoprint
+#        url: http://octopi
+#        key: {{HOMEPAGE_FILE_OCTOPRINT_KEY}}
 
 - Backend:
   - Prowlarr:
@@ -88,5 +88,8 @@
         password: {{HOMEPAGE_FILE_TRANSMISSION_PASS}}
   - HDHomeRun:
       icon: sh-hdhomerun
-      url: http://192.168.1.246
+      widget:
+        type: hdhomerun
+        url: http://192.168.1.246
+        fields: ["channels", "hd", "signalStrength", "signalQuality"]
 
