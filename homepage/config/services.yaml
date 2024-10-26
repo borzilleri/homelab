@@ -1,0 +1,92 @@
+- Media:
+  - Plex:
+    icon: sh-Plex
+    href: http://caspar.tail120b6.ts.net:32400/
+    widget:
+      type: tautulli
+      url: http://caspar.tail120b6.ts.net:8181/
+      key: {{HOMEPAGE_FILE_TAUTULLI_KEY}}
+  - Radarr:
+    icon: sh-Radarr
+    href: http://radarr
+    server: melchior
+    container: radarr
+    widget:
+      type: radarr
+      url: http://radarr
+      key: {{HOMEPAGE_FILE_RADARR_KEY}}
+  - Sonarr:
+    icon: sh-Sonarr
+    href: http://sonarr
+    server: melchior
+    container: sonarr
+    widget:
+      type: sonarr
+      url: http://sonarr
+      key: {{HOMEPAGE_FILE_SONARR_KEY}}
+  - Bazarr:
+    icon: sh-Bazarr
+    href: http://bazarr
+    server: melchior
+    container: bazarr
+    widget:
+      type: bazarr
+      url: http://bazarr
+      key: {{HOMEPAGE_FILE_BAZARR_KEY}}
+
+- Data & Network:
+  # - Tailscale:
+  # - Paperless-ngx:
+  - Synology:
+    icon: sh-Synology
+    href: http://central-dogma:5000
+    widget:
+      type: diskstation
+      url: http://central-dogma:5000
+      username: {{HOMEPAGE_FILE_SYNOLOGY_USER}}
+      password: {{HOMEPAGE_FILE_SYNOLOGY_PASS}}
+      #volume: volume_N
+#  - TrueNas:
+
+- Devices:
+  - Octoprint:
+    icon: sh-Octoprint
+    href: http://octopi
+    widget:
+      type: octoprint
+      url: http://octopi
+      key: {{HOMEPAGE_FILE_OCTOPRINT_KEY}}
+
+- Backend:
+  - Prowlarr:
+    icon: sh-Prowlarr
+    href: http://prowlarr
+    server: melchior
+    container: prowlarr
+    widget:
+      type: prowlarr
+      url: http://prowlarr
+      key: {{HOMEPAGE_FILE_PROWLARR_KEY}}
+  - Transmission:
+    icon: sh-Transmission
+    href: http://transmission
+    server: melchior
+    container: transmission
+    widget:
+      type: transmission
+      url: http://transmission
+      username: {{HOMEPAGE_FILE_TRANSMISSION_USER}}
+      password: {{HOMEPAGE_FILE_TRANSMISSION_PASS}}
+  - SABnzbd:
+    icon: sh-SABnzbd
+    url: http://sabnzbd
+    server: melchior
+    container: sabnzbd
+    widget:
+      type: sabnzbd
+      url: http://sabnzbd
+      key: {{HOMEPAGE_FILE_SABNZBD_KEY}}
+  - HDHomeRun:
+    icon: sh-HDHomeRun
+    url: http://192.168.1.246
+
