@@ -4,6 +4,7 @@ services:
     container_name: homepage
     restart: unless-stopped
     environment:
+      LOG_TARGETS: stdout
       HOMEPAGE_FILE_TAUTULLI_KEY: /run/secrets/tautulli_key
       HOMEPAGE_FILE_RADARR_KEY: /run/secrets/radarr_key
       HOMEPAGE_FILE_SONARR_KEY: /run/secrets/sonarr_key
@@ -31,8 +32,6 @@ services:
       - transmission_user
       - transmission_pass
       - sabnzbd_key
-
-      
   dockerproxy:
     image: ghcr.io/tecnativa/docker-socket-proxy:latest
     container_name: dockerproxy
@@ -49,24 +48,24 @@ services:
 
 secrets:
   tautulli_key:
-    file: ./secrets/tautulli_key.txt
+    file: /etc/homelab/homepage/secrets/tautulli_key
   radarr_key:
-    file: ./secrets/radarr_key.txt
+    file: /etc/homelab/homepage/secrets/radarr_key
   sonarr_key:
-    file: ./secrets/sonarr_key.txt
+    file: /etc/homelab/homepage/secrets/sonarr_key
   bazarr_key:
-      file: ./secrets/bazarr_key.txt
+    file: /etc/homelab/homepage/secrets/bazarr_key
   synology_user:
-      file: ./secrets/synology_user.txt
+    file: /etc/homelab/homepage/secrets/synology_user
   synology_pass:
-      file: ./secrets/synology_pass.txt
+    file: /etc/homelab/homepage/secrets/synology_pass
   octoprint_key:
-      file: ./secrets/octoprint_key.txt
+    file: /etc/homelab/homepage/secrets/octoprint_key
   prowlarr_key:
-      file: ./secrets/prowlarr_key.txt
+    file: /etc/homelab/homepage/secrets/prowlarr_key
   transmission_user:
-      file: ./secrets/transmission_user.txt
+    file: /etc/homelab/homepage/secrets/transmission_user
   transmission_pass:
-      file: ./secrets/transmission_pass.txt
+    file: /etc/homelab/homepage/secrets/transmission_pass
   sabnzbd_key:
-      file: ./secrets/sabnzbd_key.txt
+    file: /etc/homelab/homepage/secrets/sabnzbd_key

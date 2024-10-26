@@ -1,13 +1,13 @@
 - Media:
   - Plex:
-      icon: sh-Plex
-      href: http://caspar.tail120b6.ts.net:32400/
+      icon: sh-plex
+      href: https://app.plex.tv
       widget:
         type: tautulli
-        url: http://caspar.tail120b6.ts.net:8181/
+        url: http://caspar.tail120b6.ts.net:8181
         key: {{HOMEPAGE_FILE_TAUTULLI_KEY}}
   - Radarr:
-      icon: sh-Radarr
+      icon: sh-radarr
       href: http://radarr
       server: melchior
       container: radarr
@@ -16,7 +16,7 @@
         url: http://radarr
         key: {{HOMEPAGE_FILE_RADARR_KEY}}
   - Sonarr:
-      icon: sh-Sonarr
+      icon: sh-sonarr
       href: http://sonarr
       server: melchior
       container: sonarr
@@ -25,7 +25,7 @@
         url: http://sonarr
         key: {{HOMEPAGE_FILE_SONARR_KEY}}
   - Bazarr:
-      icon: sh-Bazarr
+      icon: sh-bazarr
       href: http://bazarr
       server: melchior
       container: bazarr
@@ -38,7 +38,7 @@
   # - Tailscale:
   # - Paperless-ngx:
   - Synology:
-      icon: sh-Synology
+      icon: sh-synology
       href: http://central-dogma:5000
       widget:
         type: diskstation
@@ -50,7 +50,7 @@
 
 - Devices:
   - Octoprint:
-      icon: sh-Octoprint
+      icon: sh-octoprint
       href: http://octopi
       widget:
         type: octoprint
@@ -59,7 +59,7 @@
 
 - Backend:
   - Prowlarr:
-      icon: sh-Prowlarr
+      icon: sh-prowlarr
       href: http://prowlarr
       server: melchior
       container: prowlarr
@@ -68,7 +68,7 @@
         url: http://prowlarr
         key: {{HOMEPAGE_FILE_PROWLARR_KEY}}
   - Transmission:
-      icon: sh-Transmission
+      icon: sh-transmission
       href: http://transmission
       server: melchior
       container: transmission
@@ -78,7 +78,7 @@
         username: {{HOMEPAGE_FILE_TRANSMISSION_USER}}
         password: {{HOMEPAGE_FILE_TRANSMISSION_PASS}}
   - SABnzbd:
-      icon: sh-SABnzbd
+      icon: sh-sabnzbd
       url: http://sabnzbd
       server: melchior
       container: sabnzbd
@@ -87,6 +87,6 @@
         url: http://sabnzbd
         key: {{HOMEPAGE_FILE_SABNZBD_KEY}}
   - HDHomeRun:
-      icon: sh-HDHomeRun
+      icon: sh-hdhomerun
       url: http://192.168.1.246
 
