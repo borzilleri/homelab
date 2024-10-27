@@ -1,18 +1,19 @@
 ---
-# For configuration options and examples, please see:
-# https://gethomepage.dev/configs/bookmarks
+- Personal:
+    - Rampant I/O:
+        - abbr: IO
+          href: https://rampant.io
+    - Borzilleri.net:
+        - abbr: JB
+          href: https://borzilleri.net
 
 - Developer:
+    - AWS:
+        - icon: sh-amazon-web-services
+          href: https://rampantio.signin.aws.amazon.com/console/
     - Github:
-        - abbr: GH
-          href: https://github.com/
-
-- Social:
-    - Reddit:
-        - abbr: RE
-          href: https://reddit.com/
-
-- Entertainment:
-    - YouTube:
-        - abbr: YT
-          href: https://youtube.com/
+        - icon: sh-github
+          href: https://github.com/borzilleri/
+    - Tailscale:
+        - icon: sh-tailscale
+          href: https://login.tailscale.com/admin/machines
