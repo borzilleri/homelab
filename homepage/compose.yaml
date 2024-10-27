@@ -13,6 +13,7 @@ services:
       HOMEPAGE_FILE_SONARR_KEY: /run/secrets/sonarr_key
       HOMEPAGE_FILE_SYNOLOGY_PASS: /run/secrets/synology_pass
       HOMEPAGE_FILE_SYNOLOGY_USER: /run/secrets/synology_user
+      HOMEPAGE_FILE_TAILSCALE_KEY: /run/secrets/tailscale_key
       HOMEPAGE_FILE_TAUTULLI_KEY: /run/secrets/tautulli_key
       HOMEPAGE_FILE_TRANSMISSION_USER: /run/secrets/transmission_user
       HOMEPAGE_FILE_TRANSMISSION_PASS: /run/secrets/transmission_pass
@@ -30,6 +31,7 @@ services:
       - sonarr_key
       - synology_pass
       - synology_user
+      - tailscale_key
       - tautulli_key
       - transmission_pass
       - transmission_user
@@ -65,6 +67,8 @@ secrets:
     file: /etc/homelab/homepage/secrets/synology_pass
   synology_user:
     file: /etc/homelab/homepage/secrets/synology_user
+  tailscale_key:
+    file: /etc/homelab/homepage/secrets/tailscale_key
   tautulli_key:
     file: /etc/homelab/homepage/secrets/tautulli_key
   transmission_pass:
