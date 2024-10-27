@@ -5,17 +5,18 @@ services:
     restart: unless-stopped
     environment:
       LOG_TARGETS: stdout
-      HOMEPAGE_FILE_TAUTULLI_KEY: /run/secrets/tautulli_key
-      HOMEPAGE_FILE_RADARR_KEY: /run/secrets/radarr_key
-      HOMEPAGE_FILE_SONARR_KEY: /run/secrets/sonarr_key
       HOMEPAGE_FILE_BAZARR_KEY: /run/secrets/bazarr_key
-      HOMEPAGE_FILE_SYNOLOGY_USER: /run/secrets/synology_user
-      HOMEPAGE_FILE_SYNOLOGY_PASS: /run/secrets/synology_pass
       HOMEPAGE_FILE_OCTOPRINT_KEY: /run/secrets/octoprint_key
       HOMEPAGE_FILE_PROWLARR_KEY: /run/secrets/prowlarr_key
+      HOMEPAGE_FILE_RADARR_KEY: /run/secrets/radarr_key
+      HOMEPAGE_FILE_SABNZBD_KEY: /run/secrets/sabnzbd_key
+      HOMEPAGE_FILE_SONARR_KEY: /run/secrets/sonarr_key
+      HOMEPAGE_FILE_SYNOLOGY_PASS: /run/secrets/synology_pass
+      HOMEPAGE_FILE_SYNOLOGY_USER: /run/secrets/synology_user
+      HOMEPAGE_FILE_TAUTULLI_KEY: /run/secrets/tautulli_key
       HOMEPAGE_FILE_TRANSMISSION_USER: /run/secrets/transmission_user
       HOMEPAGE_FILE_TRANSMISSION_PASS: /run/secrets/transmission_pass
-      HOMEPAGE_FILE_SABNZBD_KEY: /run/secrets/sabnzbd_key
+      HOMEPAGE_FILE_TRUENAS_KEY: /run/secrets/truenas_key
     volumes:
       - ./config:/app/config
     ports:
@@ -47,25 +48,27 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
 secrets:
-  tautulli_key:
-    file: /etc/homelab/homepage/secrets/tautulli_key
-  radarr_key:
-    file: /etc/homelab/homepage/secrets/radarr_key
-  sonarr_key:
-    file: /etc/homelab/homepage/secrets/sonarr_key
   bazarr_key:
     file: /etc/homelab/homepage/secrets/bazarr_key
-  synology_user:
-    file: /etc/homelab/homepage/secrets/synology_user
-  synology_pass:
-    file: /etc/homelab/homepage/secrets/synology_pass
   octoprint_key:
     file: /etc/homelab/homepage/secrets/octoprint_key
   prowlarr_key:
     file: /etc/homelab/homepage/secrets/prowlarr_key
-  transmission_user:
-    file: /etc/homelab/homepage/secrets/transmission_user
-  transmission_pass:
-    file: /etc/homelab/homepage/secrets/transmission_pass
+  radarr_key:
+    file: /etc/homelab/homepage/secrets/radarr_key
   sabnzbd_key:
     file: /etc/homelab/homepage/secrets/sabnzbd_key
+  sonarr_key:
+    file: /etc/homelab/homepage/secrets/sonarr_key
+  synology_pass:
+    file: /etc/homelab/homepage/secrets/synology_pass
+  synology_user:
+    file: /etc/homelab/homepage/secrets/synology_user
+  tautulli_key:
+    file: /etc/homelab/homepage/secrets/tautulli_key
+  transmission_pass:
+    file: /etc/homelab/homepage/secrets/transmission_pass
+  transmission_user:
+    file: /etc/homelab/homepage/secrets/transmission_user
+  truenas_key:
+    file: /etc/homelab/homepage/secrets/truenas_key
