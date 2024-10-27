@@ -100,3 +100,35 @@
         url: http://transmission:9091
         username: {{HOMEPAGE_FILE_TRANSMISSION_USER}}
         password: {{HOMEPAGE_FILE_TRANSMISSION_PASS}}
+
+- Network:
+  - Caspar:
+      icon: sh-apple-light
+      widget:
+        type: tailscale
+        deviceid: nrUQEf2CNTRL
+        key: {{HOMEPAGE_FILE_TAILSCALE_KEY}}
+  - Melchior:
+      icon: sh-debian
+      widget:
+        type: tailscale
+        deviceid: nk3yA1S1Gk11CNTRL
+        key: {{HOMEPAGE_FILE_TAILSCALE_KEY}}
+  - Central-Dogma:
+      icon: sh-synology-light
+      widget:
+        type: tailscale
+        deviceid: ndWSpYRefZ11CNTRL
+        key: {{HOMEPAGE_FILE_TAILSCALE_KEY}}
+  - Cloudbank:
+      icon: sh-windows-light
+      widget:
+        type: tailscale
+        deviceid: nyGBArTHSp11CNTRL
+        key: {{HOMEPAGE_FILE_TAILSCALE_KEY}}
+  - SDF-1:
+      icon: sh-apple
+      widget:
+        type: tailscale
+        deviceid: n3p2cA6CNTRL
+        key: {{HOMEPAGE_FILE_TAILSCALE_KEY}}
