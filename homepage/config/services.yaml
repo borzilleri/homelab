@@ -6,6 +6,13 @@
         type: tautulli
         url: http://caspar.tail120b6.ts.net:8181
         key: {{HOMEPAGE_FILE_TAUTULLI_KEY}}
+  - HDHomeRun:
+      icon: sh-hdhomerun
+      href: http://hdhomerun
+      widget:
+        type: hdhomerun
+        url: http://192.168.1.246
+        fields: ["channels", "hd"]
   - Radarr:
       icon: sh-radarr
       href: http://radarr
@@ -86,10 +93,3 @@
         url: http://transmission:9091
         username: {{HOMEPAGE_FILE_TRANSMISSION_USER}}
         password: {{HOMEPAGE_FILE_TRANSMISSION_PASS}}
-  - HDHomeRun:
-      icon: sh-hdhomerun
-      widget:
-        type: hdhomerun
-        url: http://192.168.1.246
-        fields: ["channels", "hd", "signalStrength", "signalQuality"]
-
