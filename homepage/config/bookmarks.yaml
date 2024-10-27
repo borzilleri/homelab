@@ -9,11 +9,11 @@
 
 - Developer:
     - AWS:
-        - icon: sh-amazon-web-services
+        - icon: sh-amazon-web-services-light
           href: https://rampantio.signin.aws.amazon.com/console/
     - Github:
-        - icon: sh-github
+        - icon: sh-github-light
           href: https://github.com/borzilleri/
     - Tailscale:
-        - icon: sh-tailscale
+        - icon: sh-tailscale-light
           href: https://login.tailscale.com/admin/machines
