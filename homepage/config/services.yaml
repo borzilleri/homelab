@@ -8,13 +8,13 @@
         key: {{HOMEPAGE_FILE_TAUTULLI_KEY}}
   - HDHomeRun:
       icon: sh-hdhomerun
-      href: http://hdhomerun
+      href: http://hdhomerun-light
       widget:
         type: hdhomerun
         url: http://192.168.1.246
         fields: ["channels", "hd"]
   - Radarr:
-      icon: sh-radarr
+      icon: sh-radarr-light
       href: http://radarr
       server: melchior
       container: radarr
@@ -41,11 +41,10 @@
         url: http://bazarr:6767
         key: {{HOMEPAGE_FILE_BAZARR_KEY}}
 
-- Data & Network:
-  # - Tailscale:
+- Data:
   # - Paperless-ngx:
   - Synology:
-      icon: sh-synology
+      icon: sh-synology-light
       href: http://central-dogma:5000
       widget:
         type: diskstation
@@ -53,7 +52,7 @@
         username: {{HOMEPAGE_FILE_SYNOLOGY_USER}}
         password: {{HOMEPAGE_FILE_SYNOLOGY_PASS}}
   - TrueNAS:
-      icon: sh-truenas-scale
+      icon: sh-truenas-scale-light
       href: http://terminal-dogma.local
       widget:
         type: truenas
@@ -121,13 +120,13 @@
         deviceid: ndWSpYRefZ11CNTRL
         key: {{HOMEPAGE_FILE_TAILSCALE_KEY}}
   - Cloudbank:
-      icon: sh-windows-light
+      icon: sh-microsoft-windows-light
       widget:
         type: tailscale
         deviceid: nyGBArTHSp11CNTRL
         key: {{HOMEPAGE_FILE_TAILSCALE_KEY}}
   - SDF-1:
-      icon: sh-apple
+      icon: sh-apple-light
       widget:
         type: tailscale
         deviceid: n3p2cA6CNTRL
