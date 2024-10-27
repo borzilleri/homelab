@@ -52,17 +52,24 @@
         url: http://central-dogma.tail120b6.ts.net:5000
         username: {{HOMEPAGE_FILE_SYNOLOGY_USER}}
         password: {{HOMEPAGE_FILE_SYNOLOGY_PASS}}
-        #volume: volume_N
-#  - TrueNas:
+  - TrueNAS:
+      icon: sh-truenas-scale
+      href: http://terminal-dogma.local
+      widget:
+        type: truenas
+        url: http://terminal-dogma.local
+        key: {{HOMEPAGE_FILE_TRUENAS_KEY}}
+        enablePools: true
+        nasType: scale
 
-#- Devices:
-#  - Octoprint:
-#      icon: sh-octoprint
-#      href: http://octopi
-#      widget:
-#        type: octoprint
-#        url: http://octopi
-#        key: {{HOMEPAGE_FILE_OCTOPRINT_KEY}}
+- Devices:
+  - Octoprint:
+      icon: sh-octoprint
+      href: http://octopi
+      widget:
+        type: octoprint
+        url: http://octopi.local
+        key: {{HOMEPAGE_FILE_OCTOPRINT_KEY}}
 
 - Backend:
   - Prowlarr:
