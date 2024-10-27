@@ -22,17 +22,18 @@ services:
     ports:
       - 3000:3000
     secrets:
-      - tautulli_key
-      - radarr_key
-      - sonarr_key
       - bazarr_key
-      - synology_user
-      - synology_pass
       - octoprint_key
       - prowlarr_key
-      - transmission_user
-      - transmission_pass
+      - radarr_key
       - sabnzbd_key
+      - sonarr_key
+      - synology_pass
+      - synology_user
+      - tautulli_key
+      - transmission_pass
+      - transmission_user
+      - truenas_key
   dockerproxy:
     image: ghcr.io/tecnativa/docker-socket-proxy:latest
     container_name: dockerproxy
