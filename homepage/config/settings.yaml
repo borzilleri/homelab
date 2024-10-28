@@ -5,22 +5,21 @@ color: slate
 target: _blank
 showStats: true
 statusStyle: "dot"
+useEqualHeights: true
 
 layout:
   Media:
     style: row
     columns: 3
-    useEqualHeights: true
   Devices:
     style: row
     columns: 3
-  Data \& Network:
+  "Data & Network":
     style: row
-    useEqualHeights: true
+    columns: 3
   Services:
     style: row
     columns: 3
-    useEqualHeights: true
   Tailscale:
     style: row
     columns: 3
