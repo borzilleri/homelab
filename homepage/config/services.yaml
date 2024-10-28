@@ -106,6 +106,7 @@
         url: https://192.168.1.1
         username: {{HOMEPAGE_FILE_UNIFI_USER}}
         password: {{HOMEPAGE_FILE_UNIFI_PASS}}
+        fields: ["wan", "lan", "wlan"]
   - Synology:
       icon: sh-synology-light
       href: http://central-dogma:5000
