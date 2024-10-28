@@ -82,6 +82,6 @@ secrets:
   truenas_key:
     file: /etc/homelab/homepage/secrets/truenas_key
   unifi_pass:
-    file: /etc/homelab/homepage/secrets/unifi_psas
+    file: /etc/homelab/homepage/secrets/unifi_pass
   unifi_user:
     file: /etc/homelab/homepage/secrets/unifi_user
