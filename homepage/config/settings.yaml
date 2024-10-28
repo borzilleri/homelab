@@ -9,11 +9,18 @@ statusStyle: "dot"
 layout:
   Media:
     style: row
-  Servarr:
+    columns: 3
+  Devices:
     style: row
     columns: 3
-  Tailscale:
+  Data & Network:
+    style: row
+    useEqualHeights: true
+  Services:
+    style: row
     columns: 3
-  Data & Networks:
-  Devices:
+    useEqualHeights: true
+  Tailscale:
+    style: row
+    columns: 3
 
