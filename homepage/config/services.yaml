@@ -6,13 +6,8 @@
         type: tautulli
         url: http://caspar.tail120b6.ts.net:8181
         key: {{HOMEPAGE_FILE_TAUTULLI_KEY}}
-  - HDHomeRun:
-      icon: sh-hdhomerun
-      href: http://hdhomerun-light
-      widget:
-        type: hdhomerun
-        url: http://192.168.1.246
-        fields: ["channels", "hd"]
+
+- Servarr:
   - Radarr:
       icon: sh-radarr-light
       href: http://radarr
@@ -40,37 +35,6 @@
         type: bazarr
         url: http://bazarr:6767
         key: {{HOMEPAGE_FILE_BAZARR_KEY}}
-
-- Data:
-  # - Paperless-ngx:
-  - Synology:
-      icon: sh-synology-light
-      href: http://central-dogma:5000
-      widget:
-        type: diskstation
-        url: http://central-dogma.tail120b6.ts.net:5000
-        username: {{HOMEPAGE_FILE_SYNOLOGY_USER}}
-        password: {{HOMEPAGE_FILE_SYNOLOGY_PASS}}
-  - TrueNAS:
-      icon: sh-truenas-scale-light
-      href: http://terminal-dogma.local
-      widget:
-        type: truenas
-        url: http://terminal-dogma.local
-        key: {{HOMEPAGE_FILE_TRUENAS_KEY}}
-        enablePools: true
-        nasType: scale
-
-- Devices:
-  - Octoprint:
-      icon: sh-octoprint
-      href: http://octopi
-      widget:
-        type: octoprint
-        url: http://octopi.local
-        key: {{HOMEPAGE_FILE_OCTOPRINT_KEY}}
-
-- Backend:
   - Prowlarr:
       icon: sh-prowlarr
       href: http://prowlarr
@@ -100,7 +64,44 @@
         username: {{HOMEPAGE_FILE_TRANSMISSION_USER}}
         password: {{HOMEPAGE_FILE_TRANSMISSION_PASS}}
 
-- Network:
+- Data & Network:
+  # - Paperless-ngx:
+  - Synology:
+      icon: sh-synology-light
+      href: http://central-dogma:5000
+      widget:
+        type: diskstation
+        url: http://central-dogma.tail120b6.ts.net:5000
+        username: {{HOMEPAGE_FILE_SYNOLOGY_USER}}
+        password: {{HOMEPAGE_FILE_SYNOLOGY_PASS}}
+  - TrueNAS:
+      icon: sh-truenas-scale-light
+      href: http://terminal-dogma.local
+      widget:
+        type: truenas
+        url: http://terminal-dogma.local
+        key: {{HOMEPAGE_FILE_TRUENAS_KEY}}
+        enablePools: true
+        nasType: scale
+
+- Devices:
+  - HDHomeRun:
+      icon: sh-hdhomerun
+      href: http://hdhomerun-light
+      widget:
+        type: hdhomerun
+        url: http://192.168.1.246
+        fields: ["channels", "hd"]
+  - Octoprint:
+      icon: sh-octoprint
+      href: http://octopi
+      widget:
+        type: octoprint
+        url: http://octopi.local
+        key: {{HOMEPAGE_FILE_OCTOPRINT_KEY}}
+
+
+- Tailscale:
   - Caspar:
       icon: sh-apple-light
       widget:

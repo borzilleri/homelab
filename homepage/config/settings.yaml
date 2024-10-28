@@ -1,6 +1,17 @@
 ---
 title: SDF-1.site
 theme: dark
+color: slate
 target: _blank
 showStats: true
 statusStyle: "dot"
+
+layout:
+  Media:
+    style: row
+  Data & Networks:
+    style: row
+  Servarr:
+    style: row
+  Tailscale:
+    style: row
