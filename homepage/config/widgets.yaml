@@ -1,4 +1,9 @@
 ---
+- unifi_console:
+    url: https://192.1681.1.
+    username: {{HOMEPAGE_FILE_UNIFI_USER}}
+    password: {{HOMEPAGE_FILE_UNIFI_PASS}}
+
 - resources:
     cpu: true
     memory: true

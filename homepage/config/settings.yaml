@@ -13,7 +13,7 @@ layout:
   Devices:
     style: row
     columns: 3
-  Data & Network:
+  Data \& Network:
     style: row
     useEqualHeights: true
   Services:

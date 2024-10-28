@@ -96,7 +96,7 @@
         deviceid: n3p2cA6CNTRL
         key: {{HOMEPAGE_FILE_TAILSCALE_KEY}}
 
-- Data & Network:
+- Data \& Network:
   # - Paperless-ngx:
   - Unifi Express:
       icon: sh-ubiquiti-unifi-light
