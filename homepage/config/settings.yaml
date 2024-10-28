@@ -11,9 +11,9 @@ layout:
     style: row
   Servarr:
     style: row
-    colums: 3
+    columns: 3
   Tailscale:
     columns: 3
   Data & Networks:
   Devices:
-    
+
