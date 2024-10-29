@@ -1,0 +1,88 @@
+services:
+  broker:
+    image: docker.io/library/redis:7
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: db_data
+        target: /data
+        volume:
+          subpath: redis
+
+  db:
+    image: docker.io/library/postgres:16
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: db_data
+        target: /var/lib/postgresql/data
+        volume:
+          subpath: postgresql
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
+    secrets:
+      - db_pass
+      - db_user
+
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+    ports:
+      - 8000:8000
+    volumes:
+      - type: volume
+        source: data
+        target: /usr/src/paperless/data
+        volume:
+          subpath: data
+      - type: volume
+        source: data
+        target: /usr/src/paperless/media
+        volume:
+          subpath: media
+      - type: volume
+        source: transfer
+        target: /usr/src/paperless/export
+        volume:
+          subpath: export
+      - type: volume
+        source: transfer
+        target: /usr/src/paperless/consume
+        volume:
+          subpath: import
+    env_file: docker-compose.env
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBHOST: db
+
+volumes:
+  db_data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/AppDataPool/paperless-db
+  data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/Storage Pool 1/paperless-data
+  transfer:
+    driver_opts:
+      type: cifs
+      o: "uid=1000,gid=1000,username=smb_user,password=RviTtuoLdBUeHq2AYYsa"
+      device: "//terminal-dogma.local/Paperless"
+
+secrets:
+  db_pass:
+    file: /etc/homelab/paperless/secrets/db_pass
+  db_user:
+    file: /etc/homelab/paperless/secrets/db_user
+      
+    
