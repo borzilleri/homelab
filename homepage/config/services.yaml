@@ -117,7 +117,7 @@
         password: {{HOMEPAGE_FILE_SYNOLOGY_PASS}}
   - TrueNAS:
       icon: sh-truenas-scale-light
-      href: http://terminal-dogma.local
+      href: http://truenas.sdf1.site
       widget:
         type: truenas
         url: http://terminal-dogma.local
