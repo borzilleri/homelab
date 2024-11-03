@@ -104,7 +104,7 @@
       container: paperless-webserver
       widget:
         type: paperlessngx
-        url: http://paperless-webserver
+        url: http://paperless-webserver:8000
         key: {{HOMEPAGE_FILE_PAPERLESS_KEY}}
   - Unifi Express:
       icon: sh-ubiquiti-unifi-light
