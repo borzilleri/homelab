@@ -23,8 +23,6 @@ services:
       HOMEPAGE_FILE_TRUENAS_KEY: /run/secrets/truenas_key
       HOMEPAGE_FILE_UNIFI_PASS: /run/secrets/unifi_pass
       HOMEPAGE_FILE_UNIFI_USER: /run/secrets/unifi_user
-    ports:
-      - 3000:3000
     volumes:
       - ./config:/app/config
     networks:
@@ -54,8 +52,6 @@ services:
       - SERVICES=1
       - TASKS=1
       - POST=0
-    ports:
-      - 127.0.0.1:2375:2375
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
