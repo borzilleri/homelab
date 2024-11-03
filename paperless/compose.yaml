@@ -13,6 +13,8 @@ services:
         volume:
           nocopy: true
           subpath: redis
+    networks:
+      - default
 
   db:
     image: docker.io/library/postgres:16
@@ -30,6 +32,8 @@ services:
         volume:
           nocopy: true
           subpath: postgresql
+    networks:
+      - default
     secrets:
       - db_pass
       - db_user
@@ -64,6 +68,7 @@ services:
       - /terminal_dogma/paperless/export:/usr/src/paperless/export
       - /terminal_dogma/paperless/import:/usr/src/paperless/consume
     networks:
+      - default
       - homelab
     secrets:
       - db_pass
@@ -82,6 +87,9 @@ volumes:
       type: nfs
       o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
       device: :/mnt/Storage Pool 1/paperless-data
+
+networks:
+  default:
 
 secrets:
   db_pass:
