@@ -10,6 +10,7 @@ services:
       LOG_TARGETS: stdout
       HOMEPAGE_FILE_BAZARR_KEY: /run/secrets/bazarr_key
       HOMEPAGE_FILE_OCTOPRINT_KEY: /run/secrets/octoprint_key
+      HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
       HOMEPAGE_FILE_PROWLARR_KEY: /run/secrets/prowlarr_key
       HOMEPAGE_FILE_RADARR_KEY: /run/secrets/radarr_key
       HOMEPAGE_FILE_SABNZBD_KEY: /run/secrets/sabnzbd_key
@@ -31,6 +32,7 @@ services:
     secrets:
       - bazarr_key
       - octoprint_key
+      - paperless_key
       - prowlarr_key
       - radarr_key
       - sabnzbd_key
@@ -63,6 +65,8 @@ secrets:
     file: /etc/homelab/homepage/secrets/bazarr_key
   octoprint_key:
     file: /etc/homelab/homepage/secrets/octoprint_key
+  paperless_key:
+    file: /etc/homelab/homepage/secrets/paperless_key
   prowlarr_key:
     file: /etc/homelab/homepage/secrets/prowlarr_key
   radarr_key:
