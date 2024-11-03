@@ -3,7 +3,7 @@ services:
     build:
       context: https://github.com/borzilleri/aws-dynamic-dns.git#:app
     volumes:
-      - ./config.toml:/config.toml:ro
+      - /etc/aws-dns/config.toml:/config.toml:ro
     secrets:
       - aws-credentials
 

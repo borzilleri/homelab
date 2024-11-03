@@ -8,6 +8,6 @@
   profile="default"
 
 [dns]
-  hostname="sdf1.site"
-  zone-id="Z0127373UIMBUGF0MG3K"
+  hostname=""
+  zone-id=""
   ttl=3600
