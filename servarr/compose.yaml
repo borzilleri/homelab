@@ -10,12 +10,11 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Los_Angeles
-    ports:
-      - 7878:7878
     volumes:
       - /etc/servarr/radarr/config:/config
       - central-dogma:/data
     networks:
+      - default
       - homelab
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -25,12 +24,11 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Los_Angeles
-    ports:
-      - 8989:8989
     volumes:
       - /etc/servarr/sonarr/config:/config
       - central-dogma:/data
     networks:
+      - default
       - homelab
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
@@ -40,12 +38,11 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Los_Angeles
-    ports:
-      - 6767:6767
     volumes:
       - /etc/servarr/bazarr/config:/config
       - central-dogma:/data
     networks:
+      - default
       - homelab
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
@@ -55,11 +52,10 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Los_Angeles
-    ports:
-      - 9696:9696
     volumes:
       - /etc/servarr/prowlarr:/config
     networks:
+      - default
       - homelab
   sabnzbd:
     image: lscr.io/linuxserver/sabnzbd:latest
@@ -69,12 +65,11 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Los_Angeles
-    ports:
-      - 8080:8080
     volumes:
       - /etc/servarr/sabnzbd:/config
       - central-dogma:/data
     networks:
+      - default
       - homelab
   transmission:
     image: lscr.io/linuxserver/transmission:latest
@@ -86,13 +81,13 @@ services:
       - TZ=America/Los_Angeles
     env_file: /etc/homelab/transmission.env
     ports:
-      - 9091:9091
       - 51413:51413
       - 51413:51413/udp
     volumes:
       - /etc/servarr/transmission:/config
       - central-dogma:/data
     networks:
+      - default
       - homelab
 
 volumes:
@@ -102,3 +97,6 @@ volumes:
       type: nfs
       o: addr=central-dogma.local,nolock,soft,nfsvers=4
       device: :/volume1/Media
+
+networks:
+  default:
