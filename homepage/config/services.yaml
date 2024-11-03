@@ -97,7 +97,15 @@
         key: {{HOMEPAGE_FILE_TAILSCALE_KEY}}
 
 - Data & Network:
-  # - Paperless-ngx:
+  - Paperless:
+      icon: sh-paperless-ngx-light
+      href: http://paperless
+      server: melchior
+      container: paperless-webserver
+      widget:
+        type: paperlessngx
+        url: http://paperless-webserver
+        key: {{HOMEPAGE_FILE_PAPERLESS_KEY}}
   - Unifi Express:
       icon: sh-ubiquiti-unifi-light
       href: https://unifi.ui.com/consoles/942A6F1A68D80000000008133FD3000000000880E6FB00000000664E63BD:1105048/network/default/dashboard
@@ -117,7 +125,7 @@
         password: {{HOMEPAGE_FILE_SYNOLOGY_PASS}}
   - TrueNAS:
       icon: sh-truenas-scale-light
-      href: http://truenas.sdf1.site
+      href: http://truenas
       widget:
         type: truenas
         url: http://terminal-dogma.local
