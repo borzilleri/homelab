@@ -26,6 +26,7 @@ services:
     volumes:
       - ./config:/app/config
     networks:
+      - default
       - homelab
     secrets:
       - bazarr_key
@@ -54,6 +55,8 @@ services:
       - POST=0
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - default
 
 secrets:
   bazarr_key:
@@ -86,3 +89,6 @@ secrets:
     file: /etc/homelab/homepage/secrets/unifi_pass
   unifi_user:
     file: /etc/homelab/homepage/secrets/unifi_user
+
+networks:
+  default:
