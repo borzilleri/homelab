@@ -1,11 +1,4 @@
 - Media:
-  - Plex:
-      icon: sh-plex
-      href: https://app.plex.tv
-      widget:
-        type: tautulli
-        url: http://caspar.tail120b6.ts.net:8181
-        key: {{HOMEPAGE_FILE_TAUTULLI_KEY}}
   - Paperless:
       icon: sh-paperless-ngx-light
       href: http://paperless
@@ -25,6 +18,13 @@
         url: http://kavita:5000
         username: {{HOMEPAGE_FILE_KAVITA_USER}}
         password: {{HOMEPAGE_FILE_KAVITA_PASS}}
+  - Plex:
+      icon: sh-plex
+      href: https://app.plex.tv
+      widget:
+        type: tautulli
+        url: http://caspar.tail120b6.ts.net:8181
+        key: {{HOMEPAGE_FILE_TAUTULLI_KEY}}
   - Radarr:
       icon: sh-radarr-light
       href: http://radarr
