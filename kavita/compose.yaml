@@ -1,3 +1,5 @@
+include:
+  - ../common/networks.yaml
 services:
   kavita:
     image: lscr.io/linuxserver/kavita:latest
