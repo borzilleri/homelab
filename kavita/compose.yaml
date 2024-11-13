@@ -1,0 +1,33 @@
+services:
+  kavita:
+    image: lscr.io/linuxserver/kavita:latest
+    container_name: kavita
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    volumes:
+      - data:/data #optional
+      - type: volume
+        source: config
+        target: /config
+        volume:
+          nocopy: true
+          subpath: kavita/config
+    networks:
+      - homelab
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/Storage Pool 1/kavita-data
+  config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/AppDataPool/Configs
