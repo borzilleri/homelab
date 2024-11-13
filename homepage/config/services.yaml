@@ -6,6 +6,25 @@
         type: tautulli
         url: http://caspar.tail120b6.ts.net:8181
         key: {{HOMEPAGE_FILE_TAUTULLI_KEY}}
+  - Paperless:
+      icon: sh-paperless-ngx-light
+      href: http://paperless
+      server: melchior
+      container: paperless-webserver
+      widget:
+        type: paperlessngx
+        url: http://paperless-webserver:8000
+        key: {{HOMEPAGE_FILE_PAPERLESS_KEY}}
+  - Kavita:
+      icon: sh-kavita
+      href: http://kavita.sdf1.site
+      server: melchior
+      container: kavita
+      widget:
+        type: kavita
+        url: http://kavita:5000
+        username: {{HOMEPAGE_FILE_KAVITA_USER}}
+        password: {{HOMEPAGE_FILE_KAVITA_PASS}}
   - Radarr:
       icon: sh-radarr-light
       href: http://radarr
@@ -97,15 +116,6 @@
         key: {{HOMEPAGE_FILE_TAILSCALE_KEY}}
 
 - Data & Network:
-  - Paperless:
-      icon: sh-paperless-ngx-light
-      href: http://paperless
-      server: melchior
-      container: paperless-webserver
-      widget:
-        type: paperlessngx
-        url: http://paperless-webserver:8000
-        key: {{HOMEPAGE_FILE_PAPERLESS_KEY}}
   - Unifi Express:
       icon: sh-ubiquiti-unifi-light
       href: https://unifi.ui.com/consoles/942A6F1A68D80000000008133FD3000000000880E6FB00000000664E63BD:1105048/network/default/dashboard
