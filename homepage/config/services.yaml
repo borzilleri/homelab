@@ -1,7 +1,7 @@
 - Media:
   - Paperless:
       icon: sh-paperless-ngx-light
-      href: http://paperless
+      href: http://paperless.sdf1.site
       server: melchior
       container: paperless-webserver
       widget:
@@ -27,7 +27,7 @@
         key: {{HOMEPAGE_FILE_TAUTULLI_KEY}}
   - Radarr:
       icon: sh-radarr-light
-      href: http://radarr
+      href: http://radarr.sdf1.site
       server: melchior
       container: radarr
       widget:
@@ -36,7 +36,7 @@
         key: {{HOMEPAGE_FILE_RADARR_KEY}}
   - Sonarr:
       icon: sh-sonarr
-      href: http://sonarr
+      href: http://sonarr.sdf1.site
       server: melchior
       container: sonarr
       widget:
@@ -47,7 +47,7 @@
 - Services:
   - Bazarr:
       icon: sh-bazarr
-      href: http://bazarr
+      href: http://bazarr.sdf1.site
       server: melchior
       container: bazarr
       widget:
@@ -56,7 +56,7 @@
         key: {{HOMEPAGE_FILE_BAZARR_KEY}}
   - Prowlarr:
       icon: sh-prowlarr
-      href: http://prowlarr
+      href: http://prowlarr.sdf1.site
       server: melchior
       container: prowlarr
       widget:
@@ -65,7 +65,7 @@
         key: {{HOMEPAGE_FILE_PROWLARR_KEY}}
   - SABnzbd:
       icon: sh-sabnzbd
-      url: http://sabnzbd
+      url: http://sabnzbd.sdf1.site
       server: melchior
       container: sabnzbd
       widget:
@@ -74,7 +74,7 @@
         key: {{HOMEPAGE_FILE_SABNZBD_KEY}}
   - Transmission:
       icon: sh-transmission
-      href: http://transmission
+      href: http://transmission.sdf1.site
       server: melchior
       container: transmission
       widget:
@@ -146,14 +146,14 @@
 - Devices:
   - HDHomeRun:
       icon: sh-hdhomerun
-      href: http://hdhomerun-light
+      href: http://hdhomerun.sdf1.site
       widget:
         type: hdhomerun
         url: http://192.168.1.246
         fields: ["channels", "hd"]
   - Octoprint:
       icon: sh-octoprint
-      href: http://octopi
+      href: http://octopi.sdf1.site
       widget:
         type: octoprint
         url: http://octopi.local
