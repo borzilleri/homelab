@@ -65,7 +65,7 @@
         key: {{HOMEPAGE_FILE_PROWLARR_KEY}}
   - SABnzbd:
       icon: sh-sabnzbd
-      url: http://sabnzbd.sdf1.site
+      href: http://sabnzbd.sdf1.site
       server: melchior
       container: sabnzbd
       widget:
