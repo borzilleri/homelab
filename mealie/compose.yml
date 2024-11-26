@@ -36,7 +36,7 @@ services:
       - POSTGRES_PASSWORD
 
   db:
-    image: postgres:16
+    image: postgres:15
     container_name: mealie-db
     restart: unless-stopped
     user: "1000:1000"
@@ -50,7 +50,7 @@ services:
         target: /var/lib/postgresql/data
         volume:
           nocopy: true
-          subpath: db
+          subpath: postgresql15
     networks:
       - default
     secrets:
