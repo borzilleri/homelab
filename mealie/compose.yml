@@ -29,7 +29,7 @@ services:
       POSTGRES_USER: mealie
       POSTGRES_SERVER: db
     depends_on:
-      postgres:
+      db:
         condition: service_healthy
     secrets:
       - POSTGRES_PASSWORD
