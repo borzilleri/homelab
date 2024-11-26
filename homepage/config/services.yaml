@@ -1,6 +1,6 @@
 - Media:
   - Mealie:
-      icon:
+      icon: sh-mealie-light
       href: http://mealie.sdf1.site
       server: melchior
       container: mealie
