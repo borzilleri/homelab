@@ -19,6 +19,12 @@ services:
         volume:
           nocopy: true
           subpath: data
+    # This should be a path to an env file with just the
+    # POSTGRES_PASSWORD env var, containing the postgres password.
+    # because the mealie dev is an absolute FUCKING MORON
+    # who's too idiotic too implement the *_FILE pattern correctly
+    # for docker secrets. What a fucking dipshit.
+    env_file: /etc/homelab/mealie/postgres.env
     environment:
       ALLOW_SIGNUP: "false"
       PUID: 1000
@@ -32,8 +38,6 @@ services:
     networks:
       - default
       - homelab
-    secrets:
-      - POSTGRES_PASSWORD
 
   db:
     image: postgres:15
