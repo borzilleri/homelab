@@ -6,12 +6,13 @@ services:
     image: ghcr.io/mealie-recipes/mealie:v2.2.0
     container_name: mealie
     restart: unless-stopped
+    depends_on:
+      - db
     deploy:
       resources:
         limits:
-          memory: 1000M # 
+          memory: 1000M
     volumes:
-      - mealie-data:/app/data/
       - type: volume
         source: data
         target: /app/data
@@ -22,26 +23,27 @@ services:
       ALLOW_SIGNUP: "false"
       PUID: 1000
       PGID: 1000
-      TZL: America/Los_Angeles
+      TZ: America/Los_Angeles
       # BASE_URL: https://mealie.yourdomain.com
       DB_ENGINE: postgres
       POSTGRES_DB: mealie
       POSTGRES_USER: mealie
       POSTGRES_SERVER: db
-    depends_on:
-      db:
-        condition: service_healthy
-    secrets:
-      - POSTGRES_PASSWORD
     networks:
       - default
       - homelab
+    secrets:
+      - POSTGRES_PASSWORD
 
   db:
+    image: postgres:16
     container_name: mealie-db
-    image: postgres:15
     restart: unless-stopped
     user: "1000:1000"
+    environment:
+      POSTGRES_DB: mealie
+      POSTGRES_USER: mealie
+      POSTGRES_PASSWORD_FILE: /run/secrets/POSTGRES_PASSWORD
     volumes:
       - type: volume
         source: data
@@ -49,19 +51,10 @@ services:
         volume:
           nocopy: true
           subpath: db
-    environment:
-      POSTGRES_DB: mealie
-      POSTGRES_USER: mealie
-      POSTGRES_PASSWORD_FILE: /run/secrets/POSTGRES_PASSWORD
-    healthcheck:
-      test: ["CMD", "pg_isready"]
-      interval: 30s
-      timeout: 20s
-      retries: 3
-    secrets:
-      - POSTGRES_PASSWORD
     networks:
       - default
+    secrets:
+      - POSTGRES_PASSWORD
 
 networks:
   default:
