@@ -1,4 +1,14 @@
 - Media:
+  - Mealie:
+      icon:
+      href: http://mealie.sdf1.site
+      server: melchior
+      container: mealie
+      widget:
+        type: mealie
+        url: http://mealie:9000
+        key: {{HOMEPAGE_FILE_MEALIE_KEY}}
+        version: 2 
   - Paperless:
       icon: sh-paperless-ngx-light
       href: http://paperless.sdf1.site

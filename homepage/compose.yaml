@@ -12,6 +12,7 @@ services:
       HOMEPAGE_FILE_KAVITA_PASS: /run/secrets/kavita_pass
       HOMEPAGE_FILE_KAVITA_USER: /run/secrets/kavita_user
       HOMEPAGE_FILE_OCTOPRINT_KEY: /run/secrets/octoprint_key
+      HOMEPAGE_FILE_MEALIE_KEY: /run/secrets/mealie_key
       HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
       HOMEPAGE_FILE_PROWLARR_KEY: /run/secrets/prowlarr_key
       HOMEPAGE_FILE_RADARR_KEY: /run/secrets/radarr_key
@@ -36,6 +37,7 @@ services:
       - kavita_pass
       - kavita_user
       - octoprint_key
+      - mealie_key
       - paperless_key
       - prowlarr_key
       - radarr_key
@@ -73,6 +75,8 @@ secrets:
     file: /etc/homelab/homepage/secrets/kavita_user
   octoprint_key:
     file: /etc/homelab/homepage/secrets/octoprint_key
+  mealie_key:
+    file: /etc/homelab/homepage/secrets/mealie_key
   paperless_key:
     file: /etc/homelab/homepage/secrets/paperless_key
   prowlarr_key:
