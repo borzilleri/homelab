@@ -1,0 +1,11 @@
+include:
+  - ../common/networks.yaml
+services:
+  whatsupdocker:
+    # ports: 3000
+    image: getwud/wud
+    container_name: wud
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - homelab
