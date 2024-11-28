@@ -98,7 +98,7 @@
       siteMonitor: http://caspar.tail120b6.ts.net:30000
       widget:
         type: customapi
-        url: http://caspar.tail120b6.ts.net:30000/io/api/status
+        url: http://caspar.tail120b6.ts.net:30000/api/status
         refreshInterval: 60000
         method: GET
         mappings:
