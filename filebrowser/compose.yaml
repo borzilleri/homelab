@@ -1,0 +1,35 @@
+include:
+  - ../common/networks.yaml
+
+services:
+  filebrowser:
+    # Port 80
+    image: gtstef/filebrowser
+    restart: unless-stopped
+    container_name: filebrowser
+    user: "1000:1000"
+    volumes:
+      - ./filebrowser.yaml:/filebrowser.yaml
+      - storage:/srv # This path should not be changed.
+      - type: volume
+        source: config
+        target: /database
+        volume:
+          nocopy: true
+          subpath: filebrowser
+    networks:
+      - homelab
+
+volumes:
+  config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/AppDataPool/Configs
+  storage:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/Storage Pool 1/DogmaArchive
