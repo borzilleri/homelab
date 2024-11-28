@@ -9,7 +9,11 @@ services:
     user: "1000:1000"
     volumes:
       - ./filebrowser.yaml:/filebrowser.yaml
-      - storage:/srv
+      - type: volume
+        source: storage
+        target: /srv
+        volume:
+          nocopy: true
       - type: volume
         source: config
         target: /database
