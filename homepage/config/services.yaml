@@ -95,10 +95,10 @@
   - FoundryVTT:
       icon: sh-foundry-virtual-tabletop
       href: https://foundry.rampant.io
-      siteMonitor: https://foundry.rampant.io
+      siteMonitor: http://caspar.tail120b6.ts.net:30000
       widget:
         type: customapi
-        url: https://foundry.rampant.io/api/status
+        url: http://caspar.tail120b6.ts.net:30000/io/api/status
         refreshInterval: 60000
         method: GET
         mappings:
