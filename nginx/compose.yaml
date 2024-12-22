@@ -33,7 +33,14 @@ services:
       - '8080:80' # Public HTTP Port
       - '8443:443' # Public HTTPS Port
       - '81:81' # Admin Web Port
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "2"
     environment:
+      PUID: 1000
+      PGID: 1000
       DB_MYSQL_HOST: "db"
       DB_MYSQL_PORT: 3306
       DB_MYSQL_NAME: "npm"

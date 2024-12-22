@@ -6,7 +6,7 @@ Requires=docker.service
 
 [Service]
 Type=oneshot
-ExecStart=/bin/bash -c "docker compose -f /opt/homelab/compose.yaml run --rm certbot renew"
+ExecStart=/bin/bash -c "docker compose -f /opt/homelab/certbot/compose.yaml run --rm certbot renew --dns-route53 --non-interactive --deploy-hook /hooks/restart-nginx.sh"
 
 [Install]
 WantedBy=multi-user.target
