@@ -49,6 +49,8 @@ services:
         volume:
           nocopy: true
           subpath: npm/data
+    networks:
+      - homelab
     depends_on:
       - db
     secrets:
