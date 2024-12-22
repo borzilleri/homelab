@@ -65,9 +65,8 @@ services:
   db:
     image: 'jc21/mariadb-aria:latest'
     restart: unless-stopped
+    user: "1000:1000"
     environment:
-      PUID: 1000
-      PGID: 1000
       MARIADB_AUTO_UPGRADE: '1'
       MYSQL_DATABASE: 'npm'
       MYSQL_USER: 'npm'
