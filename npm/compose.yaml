@@ -25,7 +25,7 @@ services:
       DB_MYSQL_USER: "npm"
       DB_MYSQL_PASSWORD__FILE: /run/secrets/db_pass
     volumes:
-      - /etc/letsencrypt/:/etc/letsencrypt
+      - /etc/homelab/npm/letsencrypt:/etc/letsencrypt
       - /etc/homelab/npm/data:/data
     networks:
       - homelab
