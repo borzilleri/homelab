@@ -26,12 +26,7 @@ services:
       DB_MYSQL_PASSWORD__FILE: /run/secrets/db_pass
     volumes:
       - /etc/letsencrypt/:/etc/letsencrypt
-      - type: volume
-        source: config
-        target: /data
-        volume:
-          nocopy: true
-          subpath: npm/data
+      - /etc/homelab/npm/data:/data
     networks:
       - homelab
       - default
@@ -47,12 +42,7 @@ services:
       MYSQL_PASSWORD_FILE: /run/secrets/db_pass
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_pass
     volumes:
-      - type: volume
-        source: config
-        target: /var/lib/mysql
-        volume:
-          nocopy: true
-          subpath: npm/db
+      - /etc/homelab/npm/mysql9:/var/lib/mysql
     networks:
       - default
     secrets:
