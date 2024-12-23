@@ -47,9 +47,7 @@ services:
       DB_MYSQL_PORT: 3306
       DB_MYSQL_NAME: "npm"
       DB_MYSQL_USER: "npm"
-      DB_MYSQL_PASSWORD__FILE: /run/secrets/MYSQL_PWD
-      # Uncomment this if IPv6 is not enabled on your host
-      # DISABLE_IPV6: 'true'
+      DB_MYSQL_PASSWORD__FILE: /run/secrets/db_pass
     volumes:
       - /etc/letsencrypt/:/etc/letsencrypt
       - type: volume
@@ -62,7 +60,7 @@ services:
       - homelab
       - default
     secrets:
-      - MYSQL_PWD
+      - db_pass
   db:
     image: 'mysql:9'
     restart: unless-stopped
@@ -70,8 +68,8 @@ services:
     environment:
       MYSQL_DATABASE: 'npm'
       MYSQL_USER: 'npm'
-      MYSQL_PASSWORD__FILE: /run/secrets/MYSQL_PWD
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/DB_ROOT_PWD
+      MYSQL_PASSWORD_FILE: /run/secrets/db_pass
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_pass
     volumes:
       - type: volume
         source: config
@@ -82,13 +80,13 @@ services:
     networks:
       - default
     secrets:
-      - DB_ROOT_PWD
-      - MYSQL_PWD
+      - db_root_pass
+      - db_pass
 
 secrets:
-  DB_ROOT_PWD:
+  db_root_pass:
     file: /etc/homelab/npm/secrets/db_root_pass
-  MYSQL_PWD:
+  db_pass:
     file: /etc/homelab/npm/secrets/db_pass
 
 volumes:
