@@ -1,0 +1,77 @@
+include:
+  - ../common/networks.yaml
+services:
+  npm:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - '8080:80' # Public HTTP Port
+      - '8443:443' # Public HTTPS Port
+      - '81:81' # Admin Web Port
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "2"
+    environment:
+      PUID: 1000
+      PGID: 1000
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_NAME: "npm"
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD__FILE: /run/secrets/db_pass
+    volumes:
+      - /etc/letsencrypt/:/etc/letsencrypt
+      - type: volume
+        source: config
+        target: /data
+        volume:
+          nocopy: true
+          subpath: npm/data
+    networks:
+      - homelab
+      - default
+    secrets:
+      - db_pass
+  db:
+    image: 'mysql:9'
+    restart: unless-stopped
+    user: "1000:1000"
+    environment:
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD_FILE: /run/secrets/db_pass
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_pass
+    volumes:
+      - type: volume
+        source: config
+        target: /var/lib/mysql
+        volume:
+          nocopy: true
+          subpath: npm/db
+    networks:
+      - default
+    secrets:
+      - db_root_pass
+      - db_pass
+
+secrets:
+  db_root_pass:
+    file: /etc/homelab/npm/secrets/db_root_pass
+  db_pass:
+    file: /etc/homelab/npm/secrets/db_pass
+
+volumes:
+  config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/AppDataPool/Configs
+
+networks:
+  default:
