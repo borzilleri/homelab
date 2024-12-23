@@ -29,6 +29,8 @@ services:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: nginx-proxy-manager
     restart: unless-stopped
+    depends_on:
+      - db
     ports:
       - '8080:80' # Public HTTP Port
       - '8443:443' # Public HTTPS Port
@@ -58,8 +60,7 @@ services:
           subpath: npm/data
     networks:
       - homelab
-    depends_on:
-      - db
+      - default
     secrets:
       - MYSQL_PWD
   db:
@@ -78,6 +79,8 @@ services:
         volume:
           nocopy: true
           subpath: npm/db
+    networks:
+      - default
     secrets:
       - DB_ROOT_PWD
       - MYSQL_PWD
@@ -95,3 +98,6 @@ volumes:
       type: nfs
       o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
       device: :/mnt/AppDataPool/Configs
+
+networks:
+  default:
