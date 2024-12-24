@@ -1,8 +1,0 @@
-services:
-  certbot:
-    image: certbot/dns-route53:latest
-    volumes:
-      - /var/www/certbot/:/var/www/certbot/:rw
-      - /etc/letsencrypt/:/etc/letsencrypt/:rw
-      - ./hooks:/hooks
-    
