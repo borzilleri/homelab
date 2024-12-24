@@ -8,9 +8,9 @@ services:
     depends_on:
       - db
     ports:
-      - '8080:80' # Public HTTP Port
-      - '8443:443' # Public HTTPS Port
-      - '8081:81' # Admin Web Port
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '81:81' # Admin Web Port
     logging:
       driver: "json-file"
       options:
