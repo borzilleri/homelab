@@ -1,7 +1,7 @@
 - Media:
   - Mealie:
       icon: sh-mealie-light
-      href: http://mealie.sdf1.site
+      href: https://mealie.sdf1.site
       server: melchior
       container: mealie
       widget:
@@ -11,7 +11,7 @@
         version: 2 
   - Paperless:
       icon: sh-paperless-ngx-light
-      href: http://paperless.sdf1.site
+      href: https://paperless.sdf1.site
       server: melchior
       container: paperless-webserver
       widget:
@@ -20,7 +20,7 @@
         key: {{HOMEPAGE_FILE_PAPERLESS_KEY}}
   - Kavita:
       icon: sh-kavita
-      href: http://kavita.sdf1.site
+      href: https://kavita.sdf1.site
       server: melchior
       container: kavita
       widget:
@@ -37,7 +37,7 @@
         key: {{HOMEPAGE_FILE_TAUTULLI_KEY}}
   - Radarr:
       icon: sh-radarr-light
-      href: http://radarr.sdf1.site
+      href: https://radarr.sdf1.site
       server: melchior
       container: radarr
       widget:
@@ -46,7 +46,7 @@
         key: {{HOMEPAGE_FILE_RADARR_KEY}}
   - Sonarr:
       icon: sh-sonarr
-      href: http://sonarr.sdf1.site
+      href: https://sonarr.sdf1.site
       server: melchior
       container: sonarr
       widget:
@@ -57,7 +57,7 @@
 - Services:
   - Bazarr:
       icon: sh-bazarr
-      href: http://bazarr.sdf1.site
+      href: https://bazarr.sdf1.site
       server: melchior
       container: bazarr
       widget:
@@ -66,7 +66,7 @@
         key: {{HOMEPAGE_FILE_BAZARR_KEY}}
   - Prowlarr:
       icon: sh-prowlarr
-      href: http://prowlarr.sdf1.site
+      href: https://prowlarr.sdf1.site
       server: melchior
       container: prowlarr
       widget:
@@ -75,7 +75,7 @@
         key: {{HOMEPAGE_FILE_PROWLARR_KEY}}
   - SABnzbd:
       icon: sh-sabnzbd
-      href: http://sabnzbd.sdf1.site
+      href: https://sabnzbd.sdf1.site
       server: melchior
       container: sabnzbd
       widget:
@@ -84,7 +84,7 @@
         key: {{HOMEPAGE_FILE_SABNZBD_KEY}}
   - Transmission:
       icon: sh-transmission
-      href: http://transmission.sdf1.site
+      href: https://transmission.sdf1.site
       server: melchior
       container: transmission
       widget:
@@ -157,9 +157,19 @@
         username: {{HOMEPAGE_FILE_UNIFI_USER}}
         password: {{HOMEPAGE_FILE_UNIFI_PASS}}
         fields: ["uptime", "wan", "lan_devices", "wlan_devices"]
+  - Nginx Proxy Manager:
+      icon: sh-nginx-proxy-manager
+      href: https://npm.sdf1.site
+      server: melchior
+      container: nginx-proxy-manager
+      widget:
+        type: npm
+        url: http://melchior:81
+        username: homepage@example.com
+        password: {{HOMEPAGE_FILE_NPM_PASS}}
   - Synology:
       icon: sh-synology-light
-      href: http://central-dogma:5000
+      href: https://synology.sdf1.site
       widget:
         type: diskstation
         url: http://central-dogma.tail120b6.ts.net:5000
@@ -167,7 +177,7 @@
         password: {{HOMEPAGE_FILE_SYNOLOGY_PASS}}
   - TrueNAS:
       icon: sh-truenas-scale-light
-      href: http://truenas
+      href: https://truenas.sdf1.site
       widget:
         type: truenas
         url: http://terminal-dogma.local
@@ -178,14 +188,14 @@
 - Devices:
   - HDHomeRun:
       icon: sh-hdhomerun
-      href: http://hdhomerun.sdf1.site
+      href: https://hdhomerun.sdf1.site
       widget:
         type: hdhomerun
         url: http://192.168.1.246
         fields: ["channels", "hd"]
   - Octoprint:
       icon: sh-octoprint
-      href: http://octopi.sdf1.site
+      href: https://octopi.sdf1.site
       widget:
         type: octoprint
         url: http://octopi.local
