@@ -164,7 +164,7 @@
       container: nginx-proxy-manager
       widget:
         type: npm
-        url: http://melchior:81
+        url: http://nginx-proxy-manager:81
         username: homepage@example.com
         password: {{HOMEPAGE_FILE_NPM_PASS}}
   - Synology:

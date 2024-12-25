@@ -1,0 +1,9 @@
+.service-card:has(.docker-status[title="Exited"]) {
+  /* Other styling changes for Exited Services */
+  /* ... */
+
+  /* Hide API errors for unavailable Services */
+  & details {
+    display: None;
+  }
+}
