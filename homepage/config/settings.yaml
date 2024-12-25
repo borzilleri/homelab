@@ -8,6 +8,7 @@ statusStyle: "dot"
 useEqualHeights: true
 
 layout:
+  Links:
   Media:
     style: row
     columns: 3
