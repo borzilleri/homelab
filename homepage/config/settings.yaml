@@ -9,6 +9,8 @@ useEqualHeights: true
 
 layout:
   Links:
+    iconsOnly: true
+    style: row    
   Media:
     style: row
     columns: 3
