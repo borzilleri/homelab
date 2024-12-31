@@ -3,7 +3,7 @@ include:
 services:
   mealie:
     # Port 9000
-    image: ghcr.io/mealie-recipes/mealie:v2.2.0
+    image: ghcr.io/mealie-recipes/mealie:v2.4.1
     container_name: mealie
     restart: unless-stopped
     depends_on:
