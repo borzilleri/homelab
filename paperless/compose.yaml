@@ -8,11 +8,11 @@ services:
     user: "1000:1000"
     volumes:
       - type: volume
-        source: db_data
+        source: data
         target: /data
         volume:
           nocopy: true
-          subpath: redis
+          subpath: paperless/db/redis
     networks:
       - default
 
