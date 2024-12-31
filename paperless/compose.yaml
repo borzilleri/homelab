@@ -27,11 +27,11 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
     volumes:
       - type: volume
-        source: db_data
+        source: data
         target: /var/lib/postgresql/data
         volume:
           nocopy: true
-          subpath: postgresql
+          subpath: paperless/db/postgres16
     networks:
       - default
     secrets:
@@ -58,13 +58,13 @@ services:
         target: /usr/src/paperless/data
         volume:
           nocopy: true
-          subpath: data
+          subpath: paperless/data
       - type: volume
         source: data
         target: /usr/src/paperless/media
         volume:
           nocopy: true
-          subpath: media
+          subpath: paperless/media
       - /terminal_dogma/paperless/export:/usr/src/paperless/export
       - /terminal_dogma/paperless/import:/usr/src/paperless/consume
     networks:
@@ -75,18 +75,13 @@ services:
       - db_user
 
 volumes:
-  db_data:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
-      device: :/mnt/AppDataPool/paperless-db
   data:
+    name: paperless-data
     driver: local
     driver_opts:
       type: nfs
       o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
-      device: :/mnt/Storage Pool 1/paperless-data
+      device: :/mnt/DataPool/AppData
 
 networks:
   default:
