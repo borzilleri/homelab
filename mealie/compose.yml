@@ -18,7 +18,7 @@ services:
         target: /app/data
         volume:
           nocopy: true
-          subpath: data
+          subpath: mealie/data
     # This should be a path to an env file with just the
     # POSTGRES_PASSWORD env var, containing the postgres password.
     # because the mealie dev is an absolute FUCKING MORON
@@ -54,7 +54,7 @@ services:
         target: /var/lib/postgresql/data
         volume:
           nocopy: true
-          subpath: postgresql15
+          subpath: mealie/db/postgres15
     networks:
       - default
     secrets:
@@ -69,7 +69,7 @@ volumes:
     driver_opts:
       type: nfs
       o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
-      device: :/mnt/Storage Pool 1/mealie-data
+      device: :/mnt/DataPool/AppData
 
 secrets:
   POSTGRES_PASSWORD:
