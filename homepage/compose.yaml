@@ -29,7 +29,12 @@ services:
       HOMEPAGE_FILE_UNIFI_PASS: /run/secrets/unifi_pass
       HOMEPAGE_FILE_UNIFI_USER: /run/secrets/unifi_user
     volumes:
-      - ./config:/app/config
+      - type: volume
+        source: data
+        target: /app/config
+        volume:
+          nocopy: true
+          subpath: homepage/config
     networks:
       - default
       - homelab
@@ -112,3 +117,11 @@ secrets:
 
 networks:
   default:
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/AppData
