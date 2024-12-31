@@ -65,8 +65,8 @@ services:
         volume:
           nocopy: true
           subpath: paperless/media
-      - /terminal_dogma/paperless/export:/usr/src/paperless/export
-      - /terminal_dogma/paperless/import:/usr/src/paperless/consume
+      - /opt/terminal_dogma/Paperless/export:/usr/src/paperless/export
+      - /opt/terminal_dogma/Paperless/import:/usr/src/paperless/consume
     networks:
       - default
       - homelab
