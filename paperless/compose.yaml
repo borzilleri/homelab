@@ -40,7 +40,7 @@ services:
 
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
-    container_name: paperless-webserver
+    container_name: paperless
     restart: unless-stopped
     depends_on:
       - db
@@ -76,7 +76,6 @@ services:
 
 volumes:
   data:
-    name: paperless-data
     driver: local
     driver_opts:
       type: nfs
