@@ -15,6 +15,7 @@ services:
       HOMEPAGE_FILE_NPM_PASS: /run/secrets/npm_pass
       HOMEPAGE_FILE_MEALIE_KEY: /run/secrets/mealie_key
       HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
+      HOMEPAGE_FILE_PLEX_KEY: /run/secrets/plex_key
       HOMEPAGE_FILE_PROWLARR_KEY: /run/secrets/prowlarr_key
       HOMEPAGE_FILE_RADARR_KEY: /run/secrets/radarr_key
       HOMEPAGE_FILE_SABNZBD_KEY: /run/secrets/sabnzbd_key
@@ -46,6 +47,7 @@ services:
       - mealie_key
       - npm_pass
       - paperless_key
+      - plex_key
       - prowlarr_key
       - radarr_key
       - sabnzbd_key
@@ -88,6 +90,8 @@ secrets:
     file: /etc/homelab/homepage/secrets/npm_pass
   paperless_key:
     file: /etc/homelab/homepage/secrets/paperless_key
+  plex_key:
+    file: /etc/homelab/homepage/secrets/plex_key
   prowlarr_key:
     file: /etc/homelab/homepage/secrets/prowlarr_key
   radarr_key:
