@@ -66,8 +66,18 @@ services:
         volume:
           nocopy: true
           subpath: paperless/media
-      - /opt/terminal_dogma/Paperless/export:/usr/src/paperless/export
-      - /opt/terminal_dogma/Paperless/import:/usr/src/paperless/consume
+      - type: volume
+        source: transfer
+        target: /usr/src/paperless/export
+        volume:
+          nocopy: true
+          subpath: export
+      - type: volume
+        source: transfer
+        target: /usr/src/paperless/consume
+        volume:
+          nocopy: true
+          subpath: import        
     networks:
       - default
       - homelab
@@ -76,6 +86,12 @@ services:
       - db_user
 
 volumes:
+  transfer:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/PaperlessTransfer
   data:
     driver: local
     driver_opts:
