@@ -13,7 +13,7 @@ services:
     volumes:
       - central-dogma:/data
       - type: volume
-        source: data
+        source: config
         target: /config
         volume:
           nocopy: true
@@ -32,7 +32,7 @@ services:
     volumes:
       - central-dogma:/data
       - type: volume
-        source: data
+        source: config
         target: /config
         volume:
           nocopy: true
@@ -51,7 +51,7 @@ services:
     volumes:
       - central-dogma:/data
       - type: volume
-        source: data
+        source: config
         target: /config
         volume:
           nocopy: true
@@ -69,7 +69,7 @@ services:
       - TZ=America/Los_Angeles
     volumes:
       - type: volume
-        source: data
+        source: config
         target: /config
         volume:
           nocopy: true
@@ -87,7 +87,7 @@ services:
       - TZ=America/Los_Angeles
     volumes:
       - type: volume
-        source: data
+        source: config
         target: /config
         volume:
           nocopy: true
@@ -111,7 +111,7 @@ services:
     volumes:
       - central-dogma:/data
       - type: volume
-        source: data
+        source: config
         target: /config
         volume:
           nocopy: true
@@ -121,7 +121,7 @@ services:
       - homelab
 
 volumes:
-  app-data:
+  config:
     driver: local
     driver_opts:
       type: nfs
