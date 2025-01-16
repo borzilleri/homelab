@@ -11,8 +11,13 @@ services:
       - PGID=1000
       - TZ=America/Los_Angeles
     volumes:
-      - /etc/servarr/radarr/config:/config
       - central-dogma:/data
+      - type: volume
+        source: data
+        target: /config
+        volume:
+          nocopy: true
+          subpath: radarr/config
     networks:
       - default
       - homelab
@@ -25,8 +30,13 @@ services:
       - PGID=1000
       - TZ=America/Los_Angeles
     volumes:
-      - /etc/servarr/sonarr/config:/config
       - central-dogma:/data
+      - type: volume
+        source: data
+        target: /config
+        volume:
+          nocopy: true
+          subpath: sonarr/config
     networks:
       - default
       - homelab
@@ -39,8 +49,13 @@ services:
       - PGID=1000
       - TZ=America/Los_Angeles
     volumes:
-      - /etc/servarr/bazarr/config:/config
       - central-dogma:/data
+      - type: volume
+        source: data
+        target: /config
+        volume:
+          nocopy: true
+          subpath: bazarr/config
     networks:
       - default
       - homelab
@@ -53,7 +68,12 @@ services:
       - PGID=1000
       - TZ=America/Los_Angeles
     volumes:
-      - /etc/servarr/prowlarr:/config
+      - type: volume
+        source: data
+        target: /config
+        volume:
+          nocopy: true
+          subpath: prowlarr/config
     networks:
       - default
       - homelab
@@ -66,7 +86,12 @@ services:
       - PGID=1000
       - TZ=America/Los_Angeles
     volumes:
-      - /etc/servarr/sabnzbd:/config
+      - type: volume
+        source: data
+        target: /config
+        volume:
+          nocopy: true
+          subpath: sabnzbd/config
       - central-dogma:/data
     networks:
       - default
@@ -84,13 +109,25 @@ services:
       - 51413:51413
       - 51413:51413/udp
     volumes:
-      - /etc/servarr/transmission:/config
       - central-dogma:/data
+      - type: volume
+        source: data
+        target: /config
+        volume:
+          nocopy: true
+          subpath: transmission/config
     networks:
       - default
       - homelab
 
 volumes:
+  app-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/AppData
+
   central-dogma:
     driver: local
     driver_opts:
