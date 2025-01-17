@@ -25,10 +25,16 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     restart: always
+    depends_on:
+      - db
+    env_file: /etc/homelab/servarr/radarr.env
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Los_Angeles
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+      RADARR__POSTGRES__HOST: db
+      RADARR__POSTGRES__PORT: 5432
+      RADARR__POSTGRES__USER: servarr
     volumes:
       - central-dogma:/data
       - type: volume
