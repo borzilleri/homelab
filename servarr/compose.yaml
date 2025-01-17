@@ -50,10 +50,16 @@ services:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     restart: always
+    depends_on:
+      - db
+    env_file: /etc/homelab/servarr/sonarr.env
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Los_Angeles
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+      SONARR__POSTGRES__HOST: db
+      SONARR__POSTGRES__PORT: 5432
+      SONARR__POSTGRES__USER: servarr
     volumes:
       - central-dogma:/data
       - type: volume
