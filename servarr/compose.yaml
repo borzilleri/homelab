@@ -2,6 +2,25 @@ include:
   - ../common/networks.yaml
 
 services:
+  db:
+    image: postgres:14
+    container_name: servarr-db
+    restart: unless-stopped
+    user: "1000:1000"
+    environment:
+      POSTGRES_USER: servarr
+      POSTGRES_PASSWORD_FILE: /run/secrets/POSTGRES_PASSWORD
+    volumes:
+      - type: volume
+        source: config
+        target: /var/lib/postgresql/data
+        volume:
+          nocopy: true
+          subpath: servarr/postgres14
+    networks:
+      - default
+    secrets:
+      - POSTGRES_PASSWORD
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
@@ -134,6 +153,10 @@ volumes:
       type: nfs
       o: addr=central-dogma.local,nolock,soft,nfsvers=4
       device: :/volume1/Media
+
+secrets:
+  POSTGRES_PASSWORD:
+    file: /etc/homelab/servarr/secrets/db_pass
 
 networks:
   default:
