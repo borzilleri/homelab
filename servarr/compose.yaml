@@ -89,9 +89,9 @@ services:
       PUID: 1000
       PGID: 1000
       TZ: America/Los_Angeles
-      PROWLARR_POSTGRES_HOST: db
-      PROWLARR_POSTGRES_PORT: 5432
-      PROWLARR_POSTGRES_USER: servarr
+      PROWLARR__POSTGRES__HOST: db
+      PROWLARR__POSTGRES__PORT: 5432
+      PROWLARR__POSTGRES__USER: servarr
     volumes:
       - type: volume
         source: config
