@@ -82,10 +82,16 @@ services:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
     restart: always
+    depends_on:
+      - db
+    env_file: /etc/homelab/servarr/prowlarr.env
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Los_Angeles
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+      PROWLARR_POSTGRES_HOST: db
+      PROWLARR_POSTGRES_PORT: 5432
+      PROWLARR_POSTGRES_USER: servarr
     volumes:
       - type: volume
         source: config
