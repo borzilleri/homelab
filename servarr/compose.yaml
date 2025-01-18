@@ -75,10 +75,17 @@ services:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
     restart: always
+    depends_on:
+      - db
+    env_file: /etc/homelab/servarr/bazarr.env
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Los_Angeles
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+      POSTGRES_ENABLED: True
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_USERNAME: servarr
     volumes:
       - central-dogma:/data
       - type: volume
