@@ -1,3 +1,6 @@
+include:
+  - ../common/networks.yaml
+
 services:
   calibre-web-automated: # Port 8083
     image: crocodilestick/calibre-web-automated:latest
@@ -26,6 +29,8 @@ services:
         volume:
           nocopy: true
           subpath: Calibre
+    networks:
+      - homelab
 
 volumes:
   config:
