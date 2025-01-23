@@ -9,6 +9,7 @@ services:
     environment:
       LOG_TARGETS: stdout
       HOMEPAGE_FILE_BAZARR_KEY: /run/secrets/bazarr_key
+      HOMEPAGE_FILE_CALIBRE_PASS: /run/secrets/calibre_pass
       HOMEPAGE_FILE_KAVITA_PASS: /run/secrets/kavita_pass
       HOMEPAGE_FILE_KAVITA_USER: /run/secrets/kavita_user
       HOMEPAGE_FILE_OCTOPRINT_KEY: /run/secrets/octoprint_key
@@ -41,6 +42,7 @@ services:
       - homelab
     secrets:
       - bazarr_key
+      - calibre_pass
       - kavita_pass
       - kavita_user
       - octoprint_key
@@ -78,6 +80,8 @@ services:
 secrets:
   bazarr_key:
     file: /etc/homelab/homepage/secrets/bazarr_key
+  calibre_pass:
+    file: /etc/homelab/homepage/secrets/calibre_pass
   kavita_pass:
     file: /etc/homelab/homepage/secrets/kavita_pass
   kavita_user:
