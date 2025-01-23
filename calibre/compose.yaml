@@ -1,0 +1,42 @@
+services:
+  calibre-web-automated: # Port 8083
+    image: crocodilestick/calibre-web-automated:latest
+    container_name: calibre-cwa
+    restart: unless-stopped
+    environment:
+      PUID: 1000
+      PGID: 1000
+      DOCKER_MODS: lscr.io/linuxserver/mods:universal-calibre-v7.16.0
+    volumes:
+      - type: volume
+        source: config
+        target: /config
+        volume:
+          nocopy: true
+          subpath: cwa
+      - type: volume
+        source: central-dogma
+        target: /cwa-book-ingest
+        volume:
+          nocopy: true
+          subpath: downloads/complete/calibre
+      - type: volume
+        source: central-dogma
+        target: /calibre-library
+        volume:
+          nocopy: true
+          subpath: Calibre
+
+volumes:
+  config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/AppData
+  central-dogma:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=central-dogma.local,nolock,soft,nfsvers=4
+      device: :/volume1/Media
