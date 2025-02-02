@@ -1,0 +1,15 @@
+include:
+  - ../common/networks.yaml
+
+services:
+  dockge: # Port 5001
+    image: louislam/dockge:1
+    restart: unless-stopped
+    environment:
+      - DOCKGE_STACKS_DIR=/opt/stacks
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/homelab/dockge:/app/data
+      - /opt/homelab:/opt/stacks
+    networks:
+      - homelab
