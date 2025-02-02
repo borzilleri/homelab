@@ -13,7 +13,6 @@ services:
       - /etc/homelab/beszel:/beszel_data
     networks:
       - homelab
-      - default
   beszel-agent:
     image: henrygd/beszel-agent
     container_name: beszel-agent
@@ -26,8 +25,3 @@ services:
     env_file: /etc/homelab/beszel.env
     environment:
       PORT: 45876
-    networks:
-      - default
-
-networks:
-  default:
