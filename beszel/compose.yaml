@@ -1,0 +1,13 @@
+include:
+  - ../common/networks.yaml
+services:
+  beszel:
+    image: henrygd/beszel:latest
+    container_name: beszel
+    restart: unless-stopped
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    ports:
+      - 8090:8090
+    volumes:
+      - /etc/homelab/beszel:/beszel_data
