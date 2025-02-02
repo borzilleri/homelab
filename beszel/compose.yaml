@@ -13,3 +13,15 @@ services:
       - /etc/homelab/beszel:/beszel_data
     networks:
       - homelab
+  beszel-agent:
+    image: henrygd/beszel-agent
+    container_name: beszel-agent
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # monitor other disks / partitions by mounting a folder in /extra-filesystems
+      # - /mnt/disk/.beszel:/extra-filesystems/sda1:ro
+    env_file: /etc/homelab/beszel.env
+    environment:
+      PORT: 45876
