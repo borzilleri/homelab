@@ -11,3 +11,5 @@ services:
       - 8090:8090
     volumes:
       - /etc/homelab/beszel:/beszel_data
+    networks:
+      - homelab
