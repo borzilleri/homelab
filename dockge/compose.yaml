@@ -3,7 +3,7 @@ include:
 
 services:
   dockge: # Port 5001
-    image: louislam/dockge:1
+    image: louislam/dockge:1.4.2
     restart: unless-stopped
     environment:
       - DOCKGE_STACKS_DIR=/opt/stacks
