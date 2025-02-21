@@ -3,13 +3,13 @@ include:
 
 services:
   calibre-web-automated: # Port 8083
-    image: crocodilestick/calibre-web-automated:latest
+    image: crocodilestick/calibre-web-automated:3.0.4
     container_name: calibre-cwa
     restart: unless-stopped
     environment:
       PUID: 1000
       PGID: 1000
-      DOCKER_MODS: lscr.io/linuxserver/mods:universal-calibre-v7.16.0
+      TZ: America/Los_Angeles
     volumes:
       - type: volume
         source: config
