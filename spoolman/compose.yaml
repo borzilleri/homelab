@@ -1,0 +1,25 @@
+include:
+  - ../common/networks.yaml
+services:
+  spoolman: # Port 8000
+    image: ghcr.io/donkie/spoolman:latest
+    restart: unless-stopped
+    environment:
+      TZ: America/Los_Angeles
+    networks:
+      - homelab
+    volumes:
+      - type: volume
+        source: data
+        target: /home/app/.local/share/spoolman
+        volume:
+          nocopy: true
+          subpath: spoolman/data
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/AppData
