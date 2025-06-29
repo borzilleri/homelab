@@ -34,8 +34,6 @@ services:
         volume:
           nocopy: true
           subpath: homebox/data
-    ports:
-      - 3100:7745
   db:
     image: docker.io/library/postgres:16
     container_name: homebox-db
