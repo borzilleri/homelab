@@ -1,6 +1,6 @@
 # https://homebox.software/en/
 # https://github.com/sysadminsmedia/homebox
-# Port 3100
+# Port 7745
 
 include:
   - ../common/networks.yaml
