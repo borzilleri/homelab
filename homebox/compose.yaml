@@ -1,0 +1,75 @@
+# https://homebox.software/en/
+# https://github.com/sysadminsmedia/homebox
+# Port 3100
+
+include:
+  - ../common/networks.yaml
+
+services:
+  homebox:
+    image: ghcr.io/sysadminsmedia/homebox:latest
+    container_name: homebox
+    restart: unless-stopped
+    depends_on:
+      - db
+    env_file: /etc/homelab/homebox/docker.env
+    environment:
+      HBOX_LOG_LEVEL: info
+      HBOX_LOG_FORMAT: text
+      HBOX_WEB_MAX_FILE_UPLOAD: 100
+      HBOX_OPTIONS_ALLOW_REGISTRATION: false
+      HBOX_OPTIONS_ALLOW_ANALYTICS: true
+      HBOX_DATABASE_DRIVER: postgres
+      HBOX_DATABASE_HOST: db
+      HBOX_DATABASE_PORT: 5432
+      HBOX_DATABASE_DATABASE: homebox
+    networks:
+      - default
+      - homelab
+    volumes:
+      - type: volume
+        source: data
+        target: /data
+        volume:
+          nocopy: true
+          subpath: homebox/data
+    ports:
+      - 3100:7745
+  db:
+    image: docker.io/library/postgres:16
+    container_name: homebox-db
+    restart: unless-stopped
+    user: "1000:1000"
+    environment:
+      POSTGRES_DB: homebox
+      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
+    volumes:
+      - type: volume
+        source: data
+        target: /var/lib/postgresql/data
+        volume:
+          nocopy: true
+          subpath: homebox/db/postgres16
+    networks:
+      - default
+    secrets:
+      - db_pass
+      - db_user
+
+networks:
+  default:
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/AppData
+
+secrets:
+  db_pass:
+    file: /etc/homelab/homebox/secrets/db_pass
+  db_user:
+    file: /etc/homelab/homebox/secrets/db_user
