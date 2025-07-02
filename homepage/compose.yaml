@@ -10,11 +10,7 @@ services:
       LOG_TARGETS: stdout
       HOMEPAGE_FILE_BAZARR_KEY: /run/secrets/bazarr_key
       HOMEPAGE_FILE_CALIBRE_PASS: /run/secrets/calibre_pass
-      HOMEPAGE_FILE_KAVITA_PASS: /run/secrets/kavita_pass
-      HOMEPAGE_FILE_KAVITA_USER: /run/secrets/kavita_user
-      HOMEPAGE_FILE_OCTOPRINT_KEY: /run/secrets/octoprint_key
       HOMEPAGE_FILE_NPM_PASS: /run/secrets/npm_pass
-      HOMEPAGE_FILE_MEALIE_KEY: /run/secrets/mealie_key
       HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
       HOMEPAGE_FILE_PLEX_KEY: /run/secrets/plex_key
       HOMEPAGE_FILE_PROWLARR_KEY: /run/secrets/prowlarr_key
@@ -28,8 +24,9 @@ services:
       HOMEPAGE_FILE_TRANSMISSION_USER: /run/secrets/transmission_user
       HOMEPAGE_FILE_TRANSMISSION_PASS: /run/secrets/transmission_pass
       HOMEPAGE_FILE_TRUENAS_KEY: /run/secrets/truenas_key
-      HOMEPAGE_FILE_UNIFI_PASS: /run/secrets/unifi_pass
-      HOMEPAGE_FILE_UNIFI_USER: /run/secrets/unifi_user
+      HOMEPAGE_FILE_UNIFI_UCG_MAX_KEY: /run/secrets/unifi_ucg_max_key
+      HOMEPAGE_FILE_HOMEBOX_USER: /run/secrets/homebox_user
+      HOMEPAGE_FILE_HOMEBOX_PASS: /run/secrets/homebox_pass
     volumes:
       - type: volume
         source: data
@@ -43,10 +40,6 @@ services:
     secrets:
       - bazarr_key
       - calibre_pass
-      - kavita_pass
-      - kavita_user
-      - octoprint_key
-      - mealie_key
       - npm_pass
       - paperless_key
       - plex_key
@@ -61,8 +54,9 @@ services:
       - transmission_pass
       - transmission_user
       - truenas_key
-      - unifi_pass
-      - unifi_user
+      - unifi_ucg_max_key
+      - homebox_user
+      - homebox_pass
   dockerproxy:
     image: ghcr.io/tecnativa/docker-socket-proxy:latest
     container_name: homepage-dockerproxy
@@ -82,14 +76,6 @@ secrets:
     file: /etc/homelab/homepage/secrets/bazarr_key
   calibre_pass:
     file: /etc/homelab/homepage/secrets/calibre_pass
-  kavita_pass:
-    file: /etc/homelab/homepage/secrets/kavita_pass
-  kavita_user:
-    file: /etc/homelab/homepage/secrets/kavita_user
-  octoprint_key:
-    file: /etc/homelab/homepage/secrets/octoprint_key
-  mealie_key:
-    file: /etc/homelab/homepage/secrets/mealie_key
   npm_pass:
     file: /etc/homelab/homepage/secrets/npm_pass
   paperless_key:
@@ -118,10 +104,12 @@ secrets:
     file: /etc/homelab/homepage/secrets/transmission_user
   truenas_key:
     file: /etc/homelab/homepage/secrets/truenas_key
-  unifi_pass:
-    file: /etc/homelab/homepage/secrets/unifi_pass
-  unifi_user:
-    file: /etc/homelab/homepage/secrets/unifi_user
+  unifi_ucg_max_key:
+    file: /etc/homelab/homepage/secrets/unifi_ucg_max_key
+  homebox_user:
+    file: /etc/homelab/homepage/secrets/homebox_user
+  homebox_pass:
+    file: /etc/homelab/homepage/secrets/homebox_pass
 
 networks:
   default:
