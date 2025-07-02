@@ -3,6 +3,7 @@ include:
 services:
   spoolman: # Port 8000
     image: ghcr.io/donkie/spoolman:latest
+    container_name: spoolman
     restart: unless-stopped
     environment:
       TZ: America/Los_Angeles
