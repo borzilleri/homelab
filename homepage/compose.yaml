@@ -28,6 +28,8 @@ services:
       HOMEPAGE_FILE_UNIFI_UCG_MAX_KEY: /run/secrets/unifi_ucg_max_key
       HOMEPAGE_FILE_HOMEBOX_USER: /run/secrets/homebox_user
       HOMEPAGE_FILE_HOMEBOX_PASS: /run/secrets/homebox_pass
+      HOMEPAGE_FILE_PROXMOX_USER: /run/secrets/proxmox_token_id
+      HOMEPAGE_FILE_PROXMOX_PASS: /run/secrets/proxmox_token
     volumes:
       - type: volume
         source: data
@@ -58,6 +60,8 @@ services:
       - unifi_ucg_max_key
       - homebox_user
       - homebox_pass
+      - proxmox_token_id
+      - proxmox_token
   dockerproxy:
     image: ghcr.io/tecnativa/docker-socket-proxy:latest
     container_name: homepage-dockerproxy
@@ -111,6 +115,10 @@ secrets:
     file: /etc/homelab/homepage/secrets/homebox_user
   homebox_pass:
     file: /etc/homelab/homepage/secrets/homebox_pass
+  proxmox_token_id:
+    file: /etc/homelab/homepage/secrets/proxmox_token_id
+  proxmox_token:
+    file: /etc/homelab/homepage/secrets/proxmox_token
 
 networks:
   default:
