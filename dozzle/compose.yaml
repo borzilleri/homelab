@@ -1,0 +1,18 @@
+include:
+  - ../common/networks.yaml
+
+# Port 8080
+services:
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      # Enable container actions (stop, start, restart). See https://dozzle.dev/guide/actions
+      DOZZLE_ENABLE_ACTIONS: true
+      # Allow access to container shells. See https://dozzle.dev/guide/shell
+      DOZZLE_ENABLE_SHELL: false
+      # Enable authentication. See https://dozzle.dev/guide/authentication
+      # DOZZLE_AUTH_PROVIDER: simple
