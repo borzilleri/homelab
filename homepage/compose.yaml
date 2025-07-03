@@ -30,6 +30,7 @@ services:
       HOMEPAGE_FILE_HOMEBOX_PASS: /run/secrets/homebox_pass
       HOMEPAGE_FILE_PROXMOX_USER: /run/secrets/proxmox_token_id
       HOMEPAGE_FILE_PROXMOX_PASS: /run/secrets/proxmox_token
+      HOMEPAGE_FILE_HA_TOKEN: /run/secrets/homeassistant_token
     volumes:
       - type: volume
         source: data
@@ -62,6 +63,7 @@ services:
       - homebox_pass
       - proxmox_token_id
       - proxmox_token
+      - homeassistant_token
   dockerproxy:
     image: ghcr.io/tecnativa/docker-socket-proxy:latest
     container_name: homepage-dockerproxy
@@ -119,6 +121,8 @@ secrets:
     file: /etc/homelab/homepage/secrets/proxmox_token_id
   proxmox_token:
     file: /etc/homelab/homepage/secrets/proxmox_token
+  homeassistant_token:
+    file: /etc/homelab/homepage/secrets/homeassistant_token
 
 networks:
   default:
