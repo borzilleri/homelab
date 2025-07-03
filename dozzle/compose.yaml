@@ -16,3 +16,5 @@ services:
       DOZZLE_ENABLE_SHELL: false
       # Enable authentication. See https://dozzle.dev/guide/authentication
       # DOZZLE_AUTH_PROVIDER: simple
+    networks:
+      - homelab
