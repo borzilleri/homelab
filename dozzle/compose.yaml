@@ -16,5 +16,6 @@ services:
       DOZZLE_ENABLE_SHELL: false
       # Enable authentication. See https://dozzle.dev/guide/authentication
       # DOZZLE_AUTH_PROVIDER: simple
+      DOZZLE_REMOTE_AGENT: medina.sdf1.internal:7007
     networks:
       - homelab
