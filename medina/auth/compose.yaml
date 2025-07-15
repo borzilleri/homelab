@@ -1,7 +1,7 @@
 
 services:
   lldap:
-    image: lldap/lldap-rootless:stable
+    image: lldap/lldap:latest-debian-rootless
     container_name: lldap
     restart: unless-stopped
     ports:
