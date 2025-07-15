@@ -1,0 +1,70 @@
+
+services:
+  lldap:
+    image: lldap/lldap-rootless:stable
+    container_name: lldap
+    restart: unless-stopped
+    ports:
+      # For the web front-end
+      - "17170:17170"
+      # For LDAP, not recommended to expose. 
+      #- "3890:3890"
+    volumes:
+      - "/opt/docker_data/lldap/data:/data"
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+      LLDAP_JWT_SECRET_FILE: /run/secrets/lldap_jwt_secret
+      LLDAP_KEY_SEED_FILE: /run/secrets/lldap_key_seed
+      LLDAP_LDAP_USER_PASS_FILE: /run/secrets/lldap_ldap_user_pass
+    secrets:
+      - lldap_jwt_secret
+      - lldap_key_seed
+      - lldap_ldap_user_pass
+  pocketid:
+    image: ghcr.io/pocket-id/pocket-id:v1
+    container_name: pocket-id
+    restart: unless-stopped
+    ports:
+      - 1411:1411
+    env_file:
+      - /opt/docker_data/pocketid/pocketid.env
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+      APP_URL: https://pocketid.sdf1.rampant.io
+      TRUST_PROXY: true
+      ENCRYPTION_KEY_FILE: /run/secrets/pocketid_encryption_key
+    volumes:
+      - /opt/docker_data/pocketid/data:/app/data
+    healthcheck:
+      test: [ "CMD", "/app/pocket-id", "healthcheck" ]
+      interval: 1m30s
+      timeout: 5s
+      retries: 2
+      start_period: 10s
+#  tinyauth:
+#    image: ghcr.io/steveiliop56/tinyauth:v3
+#    container_name: tinyauth
+#    restart: unless-stopped
+#    ports:
+#      - "3000:3000"
+#    environment:
+#      APP_URL: "https://tinyauth.sdf1.rampant.io"
+#      SECRET_FILE: /run/secrets/tinyauth_secret
+#      LDAP_ADDRESS: ldap://lldap:3890
+#      LDAPP_BIND_DN: uid=observer-user,ou=people,dc=sdf1,dc=rampant,dc=io
+#      LDAP_BASE_DN: dc=sdf1,dc=rampant,dc=io
+#      LDAP_INSECURE: true
+
+secrets:
+  lldap_jwt_secret:
+    file: /opt/docker_data/lldap/secrets/jwt_secret
+  lldap_key_seed:
+    file: /opt/docker_data/lldap/secrets/key_seed
+  lldap_ldap_user_pass:
+    file: /opt/docker_data/lldap/secrets/ldap_user_pass
+  pocketid_encryption_key:
+    file: /opt/docker_data/pocketid/secrets/encryption_key
