@@ -27,6 +27,7 @@ services:
     volumes:
       - /etc/homelab/npm/letsencrypt:/etc/letsencrypt
       - /etc/homelab/npm/data:/data
+      - ./snippets:/snippets
     networks:
       - homelab
       - default
