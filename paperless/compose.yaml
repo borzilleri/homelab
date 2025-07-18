@@ -46,8 +46,11 @@ services:
       - db
       - broker
     user: "1000:1000"
-    env_file: docker-compose.env
+    env_file:
+      - ./docker-compose.env
+      - /etc/homelab/paperless/socialaccount_providers.env
     environment:
+      PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
       PAPERLESS_URL: https://paperless.sdf1.site
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBHOST: db
