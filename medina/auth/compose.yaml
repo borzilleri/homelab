@@ -49,9 +49,9 @@ services:
       - lldap_key_seed
       - lldap_ldap_user_pass
   authelia:
-    image: 'docker.io/authelia/authelia:latest'
-    container_name: "authelia"
-    restart: "unless_stopped"
+    image: docker.io/authelia/authelia:latest
+    container_name: authelia
+    restart: unless-stopped
     ports:
       - 9091:9091
     environment:
