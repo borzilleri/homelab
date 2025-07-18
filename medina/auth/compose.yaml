@@ -71,6 +71,7 @@ services:
       - authelia_identity_validation_reset_password_jwt_secret
       - authelia_session_secret
       - authelia_storage_encryption_key
+      - authelia_notifier_smtp_password
       - authelia_oidc_jwks_rsa_2048_private_pem
       - authelia_paperless_client_secret
     volumes:
