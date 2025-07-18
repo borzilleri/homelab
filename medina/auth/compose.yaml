@@ -71,6 +71,7 @@ services:
       - authelia_session_secret
       - authelia_storage_encryption_key
       - authelia_oidc_jwks_rsa_2048_private_pem
+      - authelia_paperless_client_secret
     volumes:
       - /opt/docker_data/authelia/config:/config
 
@@ -95,3 +96,5 @@ secrets:
     file: /opt/docker_data/authelia/secrets/storage_encryption_key
   authelia_oidc_jwks_rsa_2048_private_pem:
     file: /opt/docker_data/authelia/secrets/oidc_jwks_rsa_2048_private_pem
+  authelia_paperless_client_secret:
+    file: /opt/docker_data/authelia/secrets/authelia_paperless_client_secret
