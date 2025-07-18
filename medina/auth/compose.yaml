@@ -55,6 +55,9 @@ services:
     ports:
       - 9091:9091
     environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
       X_AUTHELIA_CONFIG_FILTERS: template
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE: /run/secrets/authelia_authentication_backend_ldap_password
       AUTHELIA_IDENTITY_PROVIDERS_OIDC_HMAC_SECRET_FILE: /run/secrets/authelia_identity_providers_oidc_hmac_secret
@@ -69,7 +72,7 @@ services:
       - authelia_storage_encryption_key
       - authelia_oidc_jwks_rsa_2048_private_pem
     volumes:
-      - /opt/docker_data/config/authelia:/config
+      - /opt/docker_data/authelia/config:/config
 
 secrets:
   # pocketid_encryption_key:
