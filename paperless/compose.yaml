@@ -47,18 +47,8 @@ services:
       - broker
     user: "1000:1000"
     env_file:
-      - ./docker-compose.env
+      - ./paperless.env
       - /etc/homelab/paperless/socialaccount_providers.env
-    environment:
-      PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
-      PAPERLESS_URL: https://paperless.sdf1.rampant.io
-      PAPERLESS_CSRF_TRUSTED_ORIGINS: https://paperless.sdf1.site
-      PAPERLESS_ALLOWED_HOSTS: https://paperless.sdf1.site
-      PAPERLESS_CORS_ALLOWED_HOSTS: https://paperless.sdf1.site
-      PAPERLESS_REDIS: redis://broker:6379
-      PAPERLESS_DBHOST: db
-      PAPERLESS_DBUSER_FILE: /run/secrets/db_user
-      PAPERLESS_DBPASS_FILE: /run/secrets/db_pass
     volumes:
       - type: volume
         source: data
