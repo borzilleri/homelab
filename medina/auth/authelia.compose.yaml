@@ -1,0 +1,104 @@
+
+services:
+  # pocketid:
+  #   image: ghcr.io/pocket-id/pocket-id:v1
+  #   container_name: pocket-id
+  #   restart: unless-stopped
+  #   ports:
+  #     - 1411:1411
+  #   env_file:
+  #     - /opt/docker_data/pocketid/pocketid.env
+  #   environment:
+  #     PUID: 1000
+  #     PGID: 1000
+  #     TZ: America/Los_Angeles
+  #     APP_URL: https://pocketid.sdf1.rampant.io
+  #     TRUST_PROXY: true
+  #     ENCRYPTION_KEY_FILE: /run/secrets/pocketid_encryption_key
+  #   volumes:
+  #     - /opt/docker_data/pocketid/data:/app/data
+  #   secrets:
+  #     - pocketid_encryption_key
+  #   healthcheck:
+  #     test: [ "CMD", "/app/pocket-id", "healthcheck" ]
+  #     interval: 1m30s
+  #     timeout: 5s
+  #     retries: 2
+  #     start_period: 10s
+
+  lldap:
+    image: lldap/lldap:latest-debian-rootless
+    container_name: lldap
+    restart: unless-stopped
+    ports:
+      # For the web front-end
+      - "17170:17170"
+      # For LDAP, not recommended to expose. 
+      #- "3890:3890"
+    volumes:
+      - "/opt/docker_data/lldap/data:/data"
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+      LLDAP_JWT_SECRET_FILE: /run/secrets/lldap_jwt_secret
+      LLDAP_KEY_SEED_FILE: /run/secrets/lldap_key_seed
+      LLDAP_LDAP_USER_PASS_FILE: /run/secrets/lldap_ldap_user_pass
+    secrets:
+      - lldap_jwt_secret
+      - lldap_key_seed
+      - lldap_ldap_user_pass
+  authelia:
+    image: docker.io/authelia/authelia:latest
+    container_name: authelia
+    restart: unless-stopped
+    ports:
+      - 9091:9091
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+      X_AUTHELIA_CONFIG_FILTERS: template
+      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE: /run/secrets/authelia_authentication_backend_ldap_password
+      AUTHELIA_IDENTITY_PROVIDERS_OIDC_HMAC_SECRET_FILE: /run/secrets/authelia_identity_providers_oidc_hmac_secret
+      AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET_FILE: /run/secrets/authelia_identity_validation_reset_password_jwt_secret
+      AUTHELIA_SESSION_SECRET_FILE: /run/secrets/authelia_session_secret
+      AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: /run/secrets/authelia_storage_encryption_key
+      AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE: /run/secrets/authelia_notifier_smtp_password
+    secrets:
+      - authelia_authentication_backend_ldap_password
+      - authelia_identity_providers_oidc_hmac_secret
+      - authelia_identity_validation_reset_password_jwt_secret
+      - authelia_session_secret
+      - authelia_storage_encryption_key
+      - authelia_notifier_smtp_password
+      - authelia_oidc_jwks_rsa_2048_private_pem
+      - authelia_paperless_client_secret
+    volumes:
+      - /opt/docker_data/authelia/config:/config
+
+secrets:
+  # pocketid_encryption_key:
+  #   file: /opt/docker_data/pocketid/secrets/encryption_key
+  lldap_jwt_secret:
+   file: /opt/docker_data/lldap/secrets/jwt_secret
+  lldap_key_seed:
+   file: /opt/docker_data/lldap/secrets/key_seed
+  lldap_ldap_user_pass:
+   file: /opt/docker_data/lldap/secrets/ldap_user_pass
+  authelia_authentication_backend_ldap_password:
+    file: /opt/docker_data/authelia/secrets/authentication_backend_ldap_password
+  authelia_identity_providers_oidc_hmac_secret:
+    file: /opt/docker_data/authelia/secrets/identity_providers_oidc_hmac_secret
+  authelia_identity_validation_reset_password_jwt_secret:
+    file: /opt/docker_data/authelia/secrets/identity_validation_reset_password_jwt_secret
+  authelia_session_secret:
+    file: /opt/docker_data/authelia/secrets/session_secret
+  authelia_storage_encryption_key:
+    file: /opt/docker_data/authelia/secrets/storage_encryption_key
+  authelia_notifier_smtp_password:
+    file: /opt/docker_data/authelia/secrets/notifier_smtp_password
+  authelia_oidc_jwks_rsa_2048_private_pem:
+    file: /opt/docker_data/authelia/secrets/oidc_jwks_rsa_2048_private_pem
+  authelia_paperless_client_secret:
+    file: /opt/docker_data/authelia/secrets/paperless_client_secret

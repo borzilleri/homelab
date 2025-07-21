@@ -78,6 +78,17 @@ services:
       - /opt/docker_data/authentik/data/media:/media
       - /opt/docker_data/authentik/data/certs:/certs
       - /opt/docker_data/authentik/data/custom-templates:/templates
+  dockerproxy:
+    image: ghcr.io/tecnativa/docker-socket-proxy:latest
+    container_name: authentik-docker-proxy
+    restart: unless-stopped
+    environment:
+      CONTAINERS: 1
+      POST: 1
+      IMAGES: 1
+      INFO: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   redis:
