@@ -10,6 +10,7 @@ services:
       LOG_TARGETS: stdout
       HOMEPAGE_ALLOWED_HOSTS: homepage.sdf1.site
       HOMEPAGE_FILE_AUTHENTIK_PASS: /run/secrets/authentik_pass
+      HOMEPAGE_FILE_AUTHENTIK_API_TOKEN: /run/secrets/authentik_api_token
       HOMEPAGE_FILE_BAZARR_KEY: /run/secrets/bazarr_key
       HOMEPAGE_FILE_CALIBRE_PASS: /run/secrets/calibre_pass
       HOMEPAGE_FILE_NPM_PASS: /run/secrets/npm_pass
@@ -46,6 +47,7 @@ services:
       - homelab
     secrets:
       - authentik_pass
+      - authentik_api_token
       - bazarr_key
       - calibre_pass
       - npm_pass
@@ -87,6 +89,8 @@ services:
 secrets:
   authentik_pass:
     file: /etc/homelab/homepage/secrets/authentik_pass
+  authentik_api_token:
+    file: /etc/homelab/homepage/secrets/authentik_api_token
   bazarr_key:
     file: /etc/homelab/homepage/secrets/bazarr_key
   calibre_pass:
