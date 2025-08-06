@@ -1,0 +1,19 @@
+include:
+  - ../common/networks.yaml
+
+services:
+  unifi-route53-updater:
+    image: "ghcr.io/borzilleri/unifi-route53-dns:latest"
+    environment:
+      UNIFI_R53_DNS_APP_PORT: 8080
+      AWS_REGION: us-west-2
+      AWS_SHARED_CREDENTIALS_FILE: /run/secrets/aws_credentials
+    volumes:
+      - ./config.yaml:/config.yaml
+    secrets:
+      - aws_credentials
+    networks:
+      - homelab
+secrets:
+  aws_credentials:
+    file: /etc/homelab/unifi-route53-dns/secrets/aws_credentials
