@@ -8,6 +8,7 @@ services:
     restart: unless-stopped
     environment:
       UNIFI_R53_DNS_APP_PORT: 8080
+      UNIFI_R53_DNS_LOG_LEVEL: INFO
       AWS_REGION: us-west-2
       AWS_SHARED_CREDENTIALS_FILE: /run/secrets/aws_credentials
     volumes:
