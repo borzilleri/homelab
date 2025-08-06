@@ -2,8 +2,10 @@ include:
   - ../common/networks.yaml
 
 services:
-  unifi-route53-updater:
+  unifi-route53-dns:
     image: "ghcr.io/borzilleri/unifi-route53-dns:latest"
+    container_name: unifi-route53-dns
+    restart: unless-stopped
     environment:
       UNIFI_R53_DNS_APP_PORT: 8080
       AWS_REGION: us-west-2
