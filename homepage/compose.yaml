@@ -72,6 +72,30 @@ services:
       - homeassistant_token
       - beszel_user
       - beszel_pass
+  homepage-public:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage-public
+    restart: unless-stopped
+    environment:
+      LOG_TARGETS: stdout
+      HOMEPAGE_ALLOWED_HOSTS: home.sdf1.rampant.io
+      HOMEPAGE_FILE_AUTHENTIK_PASS: /run/secrets/authentik_pass
+      HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
+      HOMEPAGE_FILE_HA_TOKEN: /run/secrets/homeassistant_token
+    volumes:
+      - type: volume
+        source: data
+        target: /app/config
+        volume:
+          nocopy: true
+          subpath: homepage/public
+    networks:
+      - default
+      - homelab
+    secrets:
+      - authentik_pass
+      - paperless_key
+      - homeassistant_token
   dockerproxy:
     image: ghcr.io/tecnativa/docker-socket-proxy:latest
     container_name: homepage-dockerproxy
