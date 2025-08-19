@@ -78,7 +78,7 @@ services:
     restart: unless-stopped
     environment:
       LOG_TARGETS: stdout
-      HOMEPAGE_ALLOWED_HOSTS: home.sdf1.rampant.io
+      HOMEPAGE_ALLOWED_HOSTS: home.sdf1.rampant.io,homepage-public:3000
       HOMEPAGE_FILE_AUTHENTIK_PASS: /run/secrets/authentik_pass
       HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
       HOMEPAGE_FILE_HA_TOKEN: /run/secrets/homeassistant_token
