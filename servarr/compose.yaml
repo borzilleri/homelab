@@ -86,6 +86,9 @@ services:
         volume:
           nocopy: true
           subpath: maintainerr/config
+    networks:
+      - default
+      - homelab
 
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
