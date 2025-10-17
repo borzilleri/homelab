@@ -71,6 +71,22 @@ services:
     networks:
       - default
       - homelab
+
+  maintainerr: # Port 6246 
+    image: ghcr.io/jorenn92/maintainerr:2.19
+    container_name: maintainerr
+    restart: unless-stopped
+    user: 1000:1000
+    environment:
+      TZ: America/Los_Angeles
+    volumes:
+      - type: volume
+        source: config
+        target: /opt/data
+        volume:
+          nocopy: true
+          subpath: maintainerr/config
+
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
