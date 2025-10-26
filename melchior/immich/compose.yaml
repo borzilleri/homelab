@@ -1,0 +1,107 @@
+# Make sure to use the docker-compose.yml of the current release:
+#
+# https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
+#
+# The compose file on main may not be compatible with the latest release.
+
+name: immich
+
+include:
+  - ../common/networks.yaml
+
+services:
+  immich-server: # Port 2283
+    container_name: immich_server
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - type: volume
+        source: library-data
+        target: /data
+        volume:
+          nocopy: true
+          subpath: immich
+      - type: volume
+        source: library-data
+        target: /mnt/external
+        volume:
+          nocopy: true
+          subpath: external
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - database
+    healthcheck:
+      disable: false
+    networks:
+      - default
+      - homelab
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    restart: unless-stopped
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    volumes:
+      - model-cache:/cache
+    env_file:
+      - .env
+    healthcheck:
+      disable: false
+    networks:
+      - default
+
+  redis:
+    container_name: immich_redis
+    image: docker.io/valkey/valkey:8-bookworm@sha256:fea8b3e67b15729d4bb70589eb03367bab9ad1ee89c876f54327fc7c6e618571
+    restart: unless-stopped
+    healthcheck:
+      test: redis-cli ping || exit 1
+    networks:
+      - default
+
+  database:
+    container_name: immich_postgres
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
+    restart: unless-stopped
+    shm_size: 128mb
+    environment:
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE_NAME}
+      POSTGRES_PASSWORD_FILE: ${DB_PASSWORD_FILE}
+      # Uncomment the DB_STORAGE_TYPE: 'HDD' var if your database isn't stored on SSDs
+      # DB_STORAGE_TYPE: 'HDD'
+    volumes:
+      - type: volume
+        source: db-data
+        target: /var/lib/postgresql/data
+        volume:
+          nocopy: true
+          subpath: immich/db
+    networks:
+      - default
+
+
+networks:
+  default:
+
+volumes:
+  model-cache:
+  library-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/Photos
+  db-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/AppData
+
+secrets:
+  db_pass:
+    file: /etc/homelab/immich/secrets/db_pass
