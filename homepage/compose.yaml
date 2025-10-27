@@ -35,6 +35,7 @@ services:
       HOMEPAGE_FILE_HA_TOKEN: /run/secrets/homeassistant_token
       HOMEPAGE_FILE_BESZEL_USER: /run/secrets/beszel_user
       HOMEPAGE_FILE_BESZEL_PASS: /run/secrets/beszel_pass
+      HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
     volumes:
       - type: volume
         source: data
@@ -72,6 +73,7 @@ services:
       - homeassistant_token
       - beszel_user
       - beszel_pass
+      - immich_key
   homepage-public:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage-public
@@ -82,6 +84,7 @@ services:
       HOMEPAGE_FILE_AUTHENTIK_PASS: /run/secrets/authentik_pass
       HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
       HOMEPAGE_FILE_HA_TOKEN: /run/secrets/homeassistant_token
+      HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
     volumes:
       - type: volume
         source: data
@@ -96,6 +99,7 @@ services:
       - authentik_pass
       - paperless_key
       - homeassistant_token
+      - immich_key
   dockerproxy:
     image: ghcr.io/tecnativa/docker-socket-proxy:latest
     container_name: homepage-dockerproxy
@@ -163,6 +167,8 @@ secrets:
     file: /etc/homelab/homepage/secrets/beszel_user
   beszel_pass:
     file: /etc/homelab/homepage/secrets/beszel_pass
+  immich_key:
+    file: /etc/homelab/homepage/secrets/immich_key
 
 networks:
   default:
