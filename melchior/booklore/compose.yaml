@@ -21,7 +21,7 @@ services:
         condition: service_healthy
     volumes:
       - type: volume
-        source: data
+        source: app-data
         target: /app/data
         volume:
           nocopy: true
