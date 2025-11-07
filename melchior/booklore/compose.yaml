@@ -21,7 +21,7 @@ services:
         condition: service_healthy
     volumes:
       - type: volume
-        source: app-data
+        source: data
         target: /app/data
         volume:
           nocopy: true
@@ -64,7 +64,7 @@ services:
       retries: 10
 
 volumes:
-  app-data:
+  data:
     driver: local
     driver_opts:
       type: nfs
