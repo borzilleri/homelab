@@ -16,6 +16,8 @@ services:
       DATABASE_USERNAME: booklore
       DATABASE_PASSWORD: ${MYSQL_PASSWORD}
       BOOKLORE_PORT: 6060
+    expose:
+      - "6060"
     depends_on:
       mariadb:
         condition: service_healthy
@@ -38,6 +40,9 @@ services:
         volume:
           nocopy: true
           subpath: downloads/complete/book-import
+    networks:
+      - default
+      - homelab
 
   mariadb:
     image: lscr.io/linuxserver/mariadb:11.4.5
@@ -62,7 +67,12 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      - default
 
+networks:
+  default:
+  
 volumes:
   data:
     driver: local
