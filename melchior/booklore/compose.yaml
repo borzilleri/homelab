@@ -1,0 +1,78 @@
+include:
+  - ../common/networks.yaml
+
+services:
+  booklore:
+    image: booklore/booklore:latest
+    # Alternative: Use GitHub Container Registry
+    # image: ghcr.io/booklore-app/booklore:latest
+    container_name: booklore
+    restart: unless-stopped
+    environment:
+      USER_ID: 1000
+      GROUP_ID: 1000
+      TZ: America/Los_Angeles
+      DATABASE_URL: jdbc:mariadb://mariadb:3306/booklore
+      DATABASE_USERNAME: booklore
+      DATABASE_PASSWORD: ${MYSQL_PASSWORD}
+      BOOKLORE_PORT: 6060
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    volumes:
+      - type: volume
+        source: data
+        target: /app/data
+        volume:
+          nocopy: true
+          subpath: booklore/data
+      - type: volume
+        source: central-dogma
+        target: /books
+        volume:
+          nocopy: true
+          subpath: Books
+      - type: volume
+        source: central-dogma
+        target: /bookdrop
+        volume:
+          nocopy: true
+          subpath: downloads/complete/book-import
+
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:11.4.5
+    restart: unless-stopped
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+      MYSQL_DATABASE: booklore
+      MYSQL_USER: booklore
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - type: volume
+        source: data
+        target: /config
+        volume:
+          nocopy: true
+          subpath: booklore/db
+    healthcheck:
+      test: [ "CMD", "mariadb-admin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  app-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/AppData
+  central-dogma:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=central-dogma.local,nolock,soft,nfsvers=4
+      device: :/volume1/Media
