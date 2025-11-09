@@ -145,17 +145,17 @@ services:
     container_name: sabnzbd
     restart: always
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Los_Angeles
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
     volumes:
+      - central-dogma:/data
       - type: volume
         source: config
         target: /config
         volume:
           nocopy: true
           subpath: sabnzbd/config
-      - central-dogma:/data
     networks:
       - default
       - homelab
@@ -164,9 +164,9 @@ services:
     container_name: transmission
     restart: always
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Los_Angeles
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
     env_file: /etc/homelab/transmission.env
     ports:
       - 51413:51413
