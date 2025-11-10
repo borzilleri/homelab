@@ -12,7 +12,6 @@ services:
       HOMEPAGE_FILE_AUTHENTIK_PASS: /run/secrets/authentik_pass
       HOMEPAGE_FILE_AUTHENTIK_API_TOKEN: /run/secrets/authentik_api_token
       HOMEPAGE_FILE_BAZARR_KEY: /run/secrets/bazarr_key
-      HOMEPAGE_FILE_CALIBRE_PASS: /run/secrets/calibre_pass
       HOMEPAGE_FILE_NPM_PASS: /run/secrets/npm_pass
       HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
       HOMEPAGE_FILE_PLEX_KEY: /run/secrets/plex_key
@@ -21,28 +20,18 @@ services:
       HOMEPAGE_FILE_SABNZBD_KEY: /run/secrets/sabnzbd_key
       HOMEPAGE_FILE_SONARR_KEY: /run/secrets/sonarr_key
       HOMEPAGE_FILE_SYNOLOGY_PASS: /run/secrets/synology_pass
-      HOMEPAGE_FILE_SYNOLOGY_USER: /run/secrets/synology_user
       HOMEPAGE_FILE_TAILSCALE_KEY: /run/secrets/tailscale_key
       HOMEPAGE_FILE_TAUTULLI_KEY: /run/secrets/tautulli_key
-      HOMEPAGE_FILE_TRANSMISSION_USER: /run/secrets/transmission_user
       HOMEPAGE_FILE_TRANSMISSION_PASS: /run/secrets/transmission_pass
       HOMEPAGE_FILE_TRUENAS_KEY: /run/secrets/truenas_key
       HOMEPAGE_FILE_UNIFI_UCG_MAX_KEY: /run/secrets/unifi_ucg_max_key
-      HOMEPAGE_FILE_HOMEBOX_USER: /run/secrets/homebox_user
       HOMEPAGE_FILE_HOMEBOX_PASS: /run/secrets/homebox_pass
-      HOMEPAGE_FILE_PROXMOX_USER: /run/secrets/proxmox_token_id
       HOMEPAGE_FILE_PROXMOX_PASS: /run/secrets/proxmox_token
       HOMEPAGE_FILE_HA_TOKEN: /run/secrets/homeassistant_token
-      HOMEPAGE_FILE_BESZEL_USER: /run/secrets/beszel_user
       HOMEPAGE_FILE_BESZEL_PASS: /run/secrets/beszel_pass
       HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
     volumes:
-      - type: volume
-        source: data
-        target: /app/config
-        volume:
-          nocopy: true
-          subpath: homepage/config
+      - /opt/appdata/homepage/main:/app/config
     networks:
       - default
       - homelab
@@ -50,7 +39,6 @@ services:
       - authentik_pass
       - authentik_api_token
       - bazarr_key
-      - calibre_pass
       - npm_pass
       - paperless_key
       - plex_key
@@ -59,16 +47,12 @@ services:
       - sabnzbd_key
       - sonarr_key
       - synology_pass
-      - synology_user
       - tailscale_key
       - tautulli_key
       - transmission_pass
-      - transmission_user
       - truenas_key
       - unifi_ucg_max_key
-      - homebox_user
       - homebox_pass
-      - proxmox_token_id
       - proxmox_token
       - homeassistant_token
       - beszel_user
@@ -86,12 +70,7 @@ services:
       HOMEPAGE_FILE_HA_TOKEN: /run/secrets/homeassistant_token
       HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
     volumes:
-      - type: volume
-        source: data
-        target: /app/config
-        volume:
-          nocopy: true
-          subpath: homepage/public
+      - /opt/appdata/homepage/public:/app/config
     networks:
       - default
       - homelab
@@ -116,67 +95,51 @@ services:
 
 secrets:
   authentik_pass:
-    file: /etc/homelab/homepage/secrets/authentik_pass
+    file: /opt/appdata/homepage/secrets/authentik_pass
   authentik_api_token:
-    file: /etc/homelab/homepage/secrets/authentik_api_token
+    file: /opt/appdata/homepage/secrets/authentik_api_token
   bazarr_key:
-    file: /etc/homelab/homepage/secrets/bazarr_key
+    file: /opt/appdata/homepage/secrets/bazarr_key
   calibre_pass:
-    file: /etc/homelab/homepage/secrets/calibre_pass
+    file: /opt/appdata/homepage/secrets/calibre_pass
   npm_pass:
-    file: /etc/homelab/homepage/secrets/npm_pass
+    file: /opt/appdata/homepage/secrets/npm_pass
   paperless_key:
-    file: /etc/homelab/homepage/secrets/paperless_key
+    file: /opt/appdata/homepage/secrets/paperless_key
   plex_key:
-    file: /etc/homelab/homepage/secrets/plex_key
+    file: /opt/appdata/homepage/secrets/plex_key
   prowlarr_key:
-    file: /etc/homelab/homepage/secrets/prowlarr_key
+    file: /opt/appdata/homepage/secrets/prowlarr_key
   radarr_key:
-    file: /etc/homelab/homepage/secrets/radarr_key
+    file: /opt/appdata/homepage/secrets/radarr_key
   sabnzbd_key:
-    file: /etc/homelab/homepage/secrets/sabnzbd_key
+    file: /opt/appdata/homepage/secrets/sabnzbd_key
   sonarr_key:
-    file: /etc/homelab/homepage/secrets/sonarr_key
+    file: /opt/appdata/homepage/secrets/sonarr_key
   synology_pass:
-    file: /etc/homelab/homepage/secrets/synology_pass
-  synology_user:
-    file: /etc/homelab/homepage/secrets/synology_user
+    file: /opt/appdata/homepage/secrets/synology_pass
   tailscale_key:
-    file: /etc/homelab/homepage/secrets/tailscale_key
+    file: /opt/appdata/homepage/secrets/tailscale_key
   tautulli_key:
-    file: /etc/homelab/homepage/secrets/tautulli_key
+    file: /opt/appdata/homepage/secrets/tautulli_key
   transmission_pass:
-    file: /etc/homelab/homepage/secrets/transmission_pass
+    file: /opt/appdata/homepage/secrets/transmission_pass
   transmission_user:
-    file: /etc/homelab/homepage/secrets/transmission_user
+    file: /opt/appdata/homepage/secrets/transmission_user
   truenas_key:
-    file: /etc/homelab/homepage/secrets/truenas_key
+    file: /opt/appdata/homepage/secrets/truenas_key
   unifi_ucg_max_key:
-    file: /etc/homelab/homepage/secrets/unifi_ucg_max_key
-  homebox_user:
-    file: /etc/homelab/homepage/secrets/homebox_user
+    file: /opt/appdata/homepage/secrets/unifi_ucg_max_key
   homebox_pass:
-    file: /etc/homelab/homepage/secrets/homebox_pass
-  proxmox_token_id:
-    file: /etc/homelab/homepage/secrets/proxmox_token_id
+    file: /opt/appdata/homepage/secrets/homebox_pass
   proxmox_token:
-    file: /etc/homelab/homepage/secrets/proxmox_token
+    file: /opt/appdata/homepage/secrets/proxmox_token
   homeassistant_token:
-    file: /etc/homelab/homepage/secrets/homeassistant_token
-  beszel_user:
-    file: /etc/homelab/homepage/secrets/beszel_user
+    file: /opt/appdata/homepage/secrets/homeassistant_token
   beszel_pass:
-    file: /etc/homelab/homepage/secrets/beszel_pass
+    file: /opt/appdata/homepage/secrets/beszel_pass
   immich_key:
-    file: /etc/homelab/homepage/secrets/immich_key
+    file: /opt/appdata/homepage/secrets/immich_key
 
 networks:
   default:
-
-volumes:
-  data:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
-      device: :/mnt/DataPool/AppData

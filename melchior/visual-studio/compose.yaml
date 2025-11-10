@@ -1,0 +1,15 @@
+include:
+  - ../common/networks.yaml
+services:
+  code-server:
+    build:
+      context: .
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    restart: unless-stopped
+    expose:
+      - "3000"
+    volumes:
+      - /opt/appdata/homepage:/home/workspace/homepage
+    networks:
+      - homelab
