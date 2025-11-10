@@ -7,6 +7,8 @@ services:
     container_name: homepage
     restart: unless-stopped
     environment:
+      PUID: 1000
+      PGID: 1000
       LOG_TARGETS: stdout
       HOMEPAGE_ALLOWED_HOSTS: homepage.sdf1.site
       HOMEPAGE_FILE_AUTHENTIK_PASS: /run/secrets/authentik_pass
@@ -63,6 +65,8 @@ services:
     restart: unless-stopped
     environment:
       LOG_TARGETS: stdout
+      PUID: 1000
+      PGID: 1000
       HOMEPAGE_ALLOWED_HOSTS: home.sdf1.rampant.io,homepage-public:3000
       HOMEPAGE_FILE_AUTHENTIK_PASS: /run/secrets/authentik_pass
       HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
