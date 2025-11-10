@@ -55,7 +55,6 @@ services:
       - homebox_pass
       - proxmox_token
       - homeassistant_token
-      - beszel_user
       - beszel_pass
       - immich_key
   homepage-public:
