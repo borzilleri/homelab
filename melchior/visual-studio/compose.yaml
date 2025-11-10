@@ -4,8 +4,7 @@ services:
   code-server:
     build:
       context: .
-    image: ghcr.io/gethomepage/homepage:latest
-    container_name: homepage
+    container_name: vs-code-server
     restart: unless-stopped
     expose:
       - "3000"
