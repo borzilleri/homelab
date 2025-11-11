@@ -9,25 +9,19 @@ services:
     user: "1000:1000"
     environment:
       POSTGRES_USER: servarr
-      POSTGRES_PASSWORD_FILE: /run/secrets/POSTGRES_PASSWORD
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
     volumes:
-      - type: volume
-        source: config
-        target: /var/lib/postgresql/data
-        volume:
-          nocopy: true
-          subpath: servarr/postgres14
+      - /opt/appdata/servarr/db/pg14:/var/lib/postgresql/data
     networks:
       - default
     secrets:
-      - POSTGRES_PASSWORD
+      - db_pass
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
-    restart: always
+    restart: unless-stopped
     depends_on:
       - db
-    env_file: /etc/homelab/servarr/radarr.env
     environment:
       PUID: 1000
       PGID: 1000
@@ -35,14 +29,10 @@ services:
       RADARR__POSTGRES__HOST: db
       RADARR__POSTGRES__PORT: 5432
       RADARR__POSTGRES__USER: servarr
+      RADARR__POSTGRES__PASSWORD: ${DB_PASS}
     volumes:
       - central-dogma:/data
-      - type: volume
-        source: config
-        target: /config
-        volume:
-          nocopy: true
-          subpath: radarr/config
+      - /opt/appdata/servarr/radarr:/config
     networks:
       - default
       - homelab
@@ -52,7 +42,6 @@ services:
     restart: always
     depends_on:
       - db
-    env_file: /etc/homelab/servarr/sonarr.env
     environment:
       PUID: 1000
       PGID: 1000
@@ -60,14 +49,51 @@ services:
       SONARR__POSTGRES__HOST: db
       SONARR__POSTGRES__PORT: 5432
       SONARR__POSTGRES__USER: servarr
+      SONARR__POSTGRES__PASSWORD: ${DB_PASS}
     volumes:
       - central-dogma:/data
-      - type: volume
-        source: config
-        target: /config
-        volume:
-          nocopy: true
-          subpath: sonarr/config
+      - /opt/appdata/servarr/sonarr:/config
+    networks:
+      - default
+      - homelab
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+      POSTGRES_ENABLED: True
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_USERNAME: servarr
+      POSTGRES_PASSWORD: ${DB_PASS}
+    volumes:
+      - central-dogma:/data
+      - /opt/appdata/servarr/bazarr:/config
+    networks:
+      - default
+      - homelab
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+      PROWLARR__POSTGRES__HOST: db
+      PROWLARR__POSTGRES__PORT: 5432
+      PROWLARR__POSTGRES__USER: servarr
+      PROWLARR__POSTGRES__PASSWORD: ${DB_PASS}
+    volumes:
+      - /opt/appdata/servarr/prowlarr:/config
     networks:
       - default
       - homelab
@@ -80,66 +106,11 @@ services:
     environment:
       TZ: America/Los_Angeles
     volumes:
-      - type: volume
-        source: config
-        target: /opt/data
-        volume:
-          nocopy: true
-          subpath: maintainerr/config
+      - /opt/appdata/servarr/maintainerr:/config
     networks:
       - default
       - homelab
 
-  bazarr:
-    image: lscr.io/linuxserver/bazarr:latest
-    container_name: bazarr
-    restart: always
-    depends_on:
-      - db
-    env_file: /etc/homelab/servarr/bazarr.env
-    environment:
-      PUID: 1000
-      PGID: 1000
-      TZ: America/Los_Angeles
-      POSTGRES_ENABLED: True
-      POSTGRES_HOST: db
-      POSTGRES_PORT: 5432
-      POSTGRES_USERNAME: servarr
-    volumes:
-      - central-dogma:/data
-      - type: volume
-        source: config
-        target: /config
-        volume:
-          nocopy: true
-          subpath: bazarr/config
-    networks:
-      - default
-      - homelab
-  prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
-    container_name: prowlarr
-    restart: always
-    depends_on:
-      - db
-    env_file: /etc/homelab/servarr/prowlarr.env
-    environment:
-      PUID: 1000
-      PGID: 1000
-      TZ: America/Los_Angeles
-      PROWLARR__POSTGRES__HOST: db
-      PROWLARR__POSTGRES__PORT: 5432
-      PROWLARR__POSTGRES__USER: servarr
-    volumes:
-      - type: volume
-        source: config
-        target: /config
-        volume:
-          nocopy: true
-          subpath: prowlarr/config
-    networks:
-      - default
-      - homelab
   sabnzbd:
     image: lscr.io/linuxserver/sabnzbd:latest
     container_name: sabnzbd
@@ -150,12 +121,7 @@ services:
       TZ: America/Los_Angeles
     volumes:
       - central-dogma:/data
-      - type: volume
-        source: config
-        target: /config
-        volume:
-          nocopy: true
-          subpath: sabnzbd/config
+      - /opt/appdata/servarr/sabnzbd:/config
     networks:
       - default
       - homelab
@@ -163,34 +129,23 @@ services:
     image: lscr.io/linuxserver/transmission:latest
     container_name: transmission
     restart: always
+    env_file: /etc/homelab/transmission.env
     environment:
       PUID: 1000
       PGID: 1000
       TZ: America/Los_Angeles
-    env_file: /etc/homelab/transmission.env
+      USER: admin
     ports:
       - 51413:51413
       - 51413:51413/udp
     volumes:
       - central-dogma:/data
-      - type: volume
-        source: config
-        target: /config
-        volume:
-          nocopy: true
-          subpath: transmission/config
+      - /opt/appdata/servarr/transmission:/config
     networks:
       - default
       - homelab
 
 volumes:
-  config:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
-      device: :/mnt/DataPool/AppData
-
   central-dogma:
     driver: local
     driver_opts:
@@ -199,7 +154,7 @@ volumes:
       device: :/volume1/Media
 
 secrets:
-  POSTGRES_PASSWORD:
+  db_pass:
     file: /etc/homelab/servarr/secrets/db_pass
 
 networks:
