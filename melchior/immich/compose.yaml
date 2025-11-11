@@ -79,12 +79,7 @@ services:
     secrets:
       - db_pass
     volumes:
-      - type: volume
-        source: db-data
-        target: /var/lib/postgresql/data
-        volume:
-          nocopy: true
-          subpath: immich/db
+      - /opt/appdata/immich/db/pg14:/var/lib/postgresql/data
     networks:
       - default
 
@@ -100,12 +95,6 @@ volumes:
       type: nfs
       o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
       device: :/mnt/DataPool/Photos
-  db-data:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
-      device: :/mnt/DataPool/AppData
 
 secrets:
   db_pass:
