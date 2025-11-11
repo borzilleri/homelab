@@ -22,12 +22,7 @@ services:
       mariadb:
         condition: service_healthy
     volumes:
-      - type: volume
-        source: data
-        target: /app/data
-        volume:
-          nocopy: true
-          subpath: booklore/data
+      - /opt/appdata/booklore/data:/app/data
       - type: volume
         source: central-dogma
         target: /books
@@ -56,12 +51,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
-      - type: volume
-        source: data
-        target: /config
-        volume:
-          nocopy: true
-          subpath: booklore/db
+      - /opt/appdata/booklore/db:/config
     healthcheck:
       test: [ "CMD", "mariadb-admin", "ping", "-h", "localhost" ]
       interval: 5s
@@ -74,12 +64,6 @@ networks:
   default:
   
 volumes:
-  data:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
-      device: :/mnt/DataPool/AppData
   central-dogma:
     driver: local
     driver_opts:
