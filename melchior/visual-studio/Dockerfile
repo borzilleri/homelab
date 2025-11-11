@@ -4,7 +4,8 @@ ENV OPENVSCODE_SERVER_ROOT="/home/.openvscode-server"
 ENV OPENVSCODE="${OPENVSCODE_SERVER_ROOT}/bin/openvscode-server"
 
 SHELL ["/bin/bash", "-c"]
-RUN mkdir -p /home/workspace/homepage
+RUN mkdir -p /home/workspace/homepage \
+    mkdir -p /home/workspace/homelab
 RUN \
     # Direct download links to external .vsix not available on https://open-vsx.org/
     # The two links here are just used as example, they are actually available on https://open-vsx.org/
