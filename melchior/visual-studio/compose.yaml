@@ -10,6 +10,7 @@ services:
     expose:
       - "3000"
     volumes:
-      - /opt/code_workspace:/home/workspace
+      - /opt/appdata/homepage:/home/workspace/homepage
+      - /opt/homelab:/home/workspace/homelab
     networks:
       - homelab

@@ -25,3 +25,7 @@ RUN \
     )\
     # Install the $exts
     && for ext in "${exts[@]}"; do ${OPENVSCODE} --install-extension "${ext}"; done
+
+
+RUN mkdir -p /home/workspace/homepage \
+    mkdir -p /home/workspace/homelab
