@@ -21,7 +21,7 @@ services:
       POSTGRES_USER: paperless
       POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
     volumes:
-      - /opt/appdata/paperless/db:/var/lib/postgresql/data
+      - /opt/appdata/paperless/db/pg16:/var/lib/postgresql/data
     networks:
       - default
     secrets:
