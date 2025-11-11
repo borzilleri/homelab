@@ -7,12 +7,7 @@ services:
     restart: unless-stopped
     user: "1000:1000"
     volumes:
-      - type: volume
-        source: data
-        target: /data
-        volume:
-          nocopy: true
-          subpath: paperless/db/redis
+      - redis-data:/data
     networks:
       - default
 
@@ -23,20 +18,14 @@ services:
     user: "1000:1000"
     environment:
       POSTGRES_DB: paperless
-      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_USER: paperless
       POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
     volumes:
-      - type: volume
-        source: data
-        target: /var/lib/postgresql/data
-        volume:
-          nocopy: true
-          subpath: paperless/db/postgres16
+      - /opt/appdata/paperless/db:/var/lib/postgresql/data
     networks:
       - default
     secrets:
       - db_pass
-      - db_user
 
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
@@ -48,20 +37,10 @@ services:
     user: "1000:1000"
     env_file:
       - ./paperless.env
-      - /etc/homelab/paperless/socialaccount_providers.env
+      - /opt/appdata/paperless/socialaccount_providers.env
     volumes:
-      - type: volume
-        source: data
-        target: /usr/src/paperless/data
-        volume:
-          nocopy: true
-          subpath: paperless/data
-      - type: volume
-        source: data
-        target: /usr/src/paperless/media
-        volume:
-          nocopy: true
-          subpath: paperless/media
+      - /opt/appdata/paperless/data:/usr/src/paperless/data
+      - /opt/appdata/paperless/media:/usr/src/paperless/media
       - type: volume
         source: transfer
         target: /usr/src/paperless/export
@@ -79,27 +58,19 @@ services:
       - homelab
     secrets:
       - db_pass
-      - db_user
 
 volumes:
+  redis-data:
   transfer:
     driver: local
     driver_opts:
       type: nfs
       o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
       device: :/mnt/DataPool/PaperlessTransfer
-  data:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
-      device: :/mnt/DataPool/AppData
 
 networks:
   default:
 
 secrets:
   db_pass:
-    file: /etc/homelab/paperless/secrets/db_pass
-  db_user:
-    file: /etc/homelab/paperless/secrets/db_user
+    file: /opt/appdata/paperless/secrets/db_pass
