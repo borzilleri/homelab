@@ -99,14 +99,14 @@ services:
       - homelab
 
   maintainerr: # Port 6246 
-    image: ghcr.io/jorenn92/maintainerr:2.19
+    image: ghcr.io/maintainerr/maintainerr:v2.20
     container_name: maintainerr
     restart: unless-stopped
     user: 1000:1000
     environment:
       TZ: America/Los_Angeles
     volumes:
-      - /opt/appdata/servarr/maintainerr:/config
+      - /opt/appdata/servarr/maintainerr:/opt/data
     networks:
       - default
       - homelab
