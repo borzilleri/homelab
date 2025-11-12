@@ -5,7 +5,6 @@ services:
     image: docker.io/library/redis:7
     container_name: paperless-broker
     restart: unless-stopped
-    user: "1000:1000"
     volumes:
       - redis-data:/data
     networks:
