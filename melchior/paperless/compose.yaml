@@ -12,7 +12,7 @@ services:
       - default
 
   db:
-    image: docker.io/library/postgres:16
+    image: docker.io/library/postgres:16-bookworm
     container_name: paperless-db
     restart: unless-stopped
     user: "1000:1000"
