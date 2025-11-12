@@ -17,21 +17,8 @@ services:
       - postgres_pass
     volumes:
       - /opt/docker_data/authentik/pg16:/var/lib/postgresql/data
-  redis:
-    image: docker.io/library/redis:alpine
-    container_name: authentik-redis
-    restart: unless-stopped
-    command: --save 60 1 --loglevel warning
-    healthcheck:
-      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
-      start_period: 20s
-      interval: 30s
-      retries: 5
-      timeout: 3s
-    volumes:
-      - redis:/data
   server:
-    image: ghcr.io/goauthentik/server:2025.6.3
+    image: ghcr.io/goauthentik/server:${AUTHENTIK_VERSION}
     container_name: authentik
     restart: unless-stopped
     command: server
@@ -41,8 +28,6 @@ services:
     user: "1000:1000"
     depends_on:
       postgresql:
-        condition: service_healthy
-      redis:
         condition: service_healthy
     env_file:
       - ./authentik.env
@@ -56,7 +41,7 @@ services:
       - /opt/docker_data/authentik/data/certs:/certs
       - /opt/docker_data/authentik/data/custom-templates:/templates
   worker:
-    image: ghcr.io/goauthentik/server:2025.6.3
+    image: ghcr.io/goauthentik/server:${AUTHENTIK_VERSION}
     container_name: authentik-worker
     restart: unless-stopped
     command: worker
