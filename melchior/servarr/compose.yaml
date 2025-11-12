@@ -99,7 +99,7 @@ services:
       - homelab
 
   maintainerr: # Port 6246 
-    image: ghcr.io/maintainerr/maintainerr:v2.20.0
+    image: ghcr.io/maintainerr/maintainerr:2.20.0
     container_name: maintainerr
     restart: unless-stopped
     user: 1000:1000
