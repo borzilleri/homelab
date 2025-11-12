@@ -49,8 +49,6 @@ services:
     depends_on:
       postgresql:
         condition: service_healthy
-      redis:
-        condition: service_healthy
     env_file:
       - ./authentik.env
     secrets:
@@ -75,9 +73,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
-volumes:
-  redis:
-    driver: local
 
 secrets:
   authentik_secret_key:
