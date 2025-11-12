@@ -34,6 +34,7 @@ services:
       HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
     volumes:
       - /opt/appdata/homepage/main:/app/config
+      - /opt/appdata/homepage/tls:/app/config/tls
     networks:
       - default
       - homelab
