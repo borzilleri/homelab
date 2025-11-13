@@ -129,7 +129,7 @@ services:
     image: lscr.io/linuxserver/transmission:latest
     container_name: transmission
     restart: always
-    env_file: /etc/homelab/transmission.env
+    env_file: /opt/appdata/servarr/transmission.env
     environment:
       PUID: 1000
       PGID: 1000
@@ -155,7 +155,7 @@ volumes:
 
 secrets:
   db_pass:
-    file: /etc/homelab/servarr/secrets/db_pass
+    file: /opt/appdata/servarr/secrets/db_pass
 
 networks:
   default:
