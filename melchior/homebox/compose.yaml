@@ -12,7 +12,7 @@ services:
     restart: unless-stopped
     depends_on:
       - db
-    env_file: /opt/appdata/homebox/docker.env
+    env_file: /opt/appdata/homebox/homebox.env
     environment:
       HBOX_LOG_LEVEL: info
       HBOX_LOG_FORMAT: text
