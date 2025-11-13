@@ -19,4 +19,4 @@ services:
       - homelab
 secrets:
   aws_credentials:
-    file: /etc/homelab/unifi-route53-dns/secrets/aws_credentials
+    file: /opt/appdata/unifi-route53-dns/aws_credentials
