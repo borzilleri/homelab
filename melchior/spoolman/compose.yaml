@@ -10,17 +10,4 @@ services:
     networks:
       - homelab
     volumes:
-      - type: volume
-        source: data
-        target: /home/app/.local/share/spoolman
-        volume:
-          nocopy: true
-          subpath: spoolman/data
-
-volumes:
-  data:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
-      device: :/mnt/DataPool/AppData
+      - /opt/appdata/spoolman/data:/home/app/.local/share/spoolman
