@@ -12,7 +12,7 @@ services:
     restart: unless-stopped
     depends_on:
       - db
-    env_file: /etc/homelab/homebox/docker.env
+    env_file: /opt/appdata/homebox/docker.env
     environment:
       HBOX_LOG_LEVEL: info
       HBOX_LOG_FORMAT: text
@@ -22,18 +22,14 @@ services:
       HBOX_DATABASE_DRIVER: postgres
       HBOX_DATABASE_HOST: db
       HBOX_DATABASE_PORT: 5432
+      HBOX_DATABASE_USERNAME: homebox
       HBOX_DATABASE_DATABASE: homebox
       HBOX_DATABASE_SSL_MODE: disable
     networks:
       - default
       - homelab
     volumes:
-      - type: volume
-        source: data
-        target: /data
-        volume:
-          nocopy: true
-          subpath: homebox/data
+      - /opt/appdata/homebox/data:/data
   db:
     image: docker.io/library/postgres:16
     container_name: homebox-db
@@ -41,34 +37,18 @@ services:
     user: "1000:1000"
     environment:
       POSTGRES_DB: homebox
-      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_USER: homebox
       POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
     volumes:
-      - type: volume
-        source: data
-        target: /var/lib/postgresql/data
-        volume:
-          nocopy: true
-          subpath: homebox/db/postgres16
+      - /opt/appdata/homebox/db/pg16:/var/luib/postgresql/data
     networks:
       - default
     secrets:
       - db_pass
-      - db_user
 
 networks:
   default:
 
-volumes:
-  data:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
-      device: :/mnt/DataPool/AppData
-
 secrets:
   db_pass:
-    file: /etc/homelab/homebox/secrets/db_pass
-  db_user:
-    file: /etc/homelab/homebox/secrets/db_user
+    file: /opt/appdata/homebox/secrets/db_pass
