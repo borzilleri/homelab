@@ -10,7 +10,7 @@ services:
     ports:
       - 8090:8090
     volumes:
-      - /etc/homelab/beszel:/beszel_data
+      - /opt/appdata/beszel:/beszel_data
     networks:
       - homelab
   beszel-agent:
