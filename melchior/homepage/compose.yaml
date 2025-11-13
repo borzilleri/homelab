@@ -98,6 +98,13 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - default
+  backup:
+    image: offen/docker-volume-backup:v2.46.1
+    restart: unless-stopped
+    env_file: ./backup.env
+    volumes:
+      - /opt/appdata/homepage:/backup/homepage:ro
+      - /opt/terminal_dogma/AppData/homepage:/archive
 
 secrets:
   authentik_pass:
