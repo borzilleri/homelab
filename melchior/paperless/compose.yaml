@@ -64,6 +64,8 @@ services:
     image: offen/docker-volume-backup:v2.46.1
     restart: unless-stopped
     env_file: ./backup.env
+    depends_on:
+      - db
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
