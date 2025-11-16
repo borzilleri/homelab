@@ -11,6 +11,7 @@ services:
       - 8090:8090
     volumes:
       - /opt/appdata/beszel:/beszel_data
+      - /opt/terminal_dogma/AppData/beszel:/beszel_data/backups
     networks:
       - homelab
   beszel-agent:
@@ -25,12 +26,3 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       # monitor other disks / partitions by mounting a folder in /extra-filesystems
       # - /mnt/disk/.beszel:/extra-filesystems/sda1:ro
-  backup:
-    image: offen/docker-volume-backup:v2.46.1
-    restart: unless-stopped
-    env_file: ./backup.env
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-      - /opt/appdata/beszel/backups:/backup/beszel:ro
-      - /opt/terminal_dogma/AppData/beszel:/archive
