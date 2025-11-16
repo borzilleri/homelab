@@ -65,6 +65,8 @@ services:
     restart: unless-stopped
     env_file: ./backup.env
     volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
       - ./backup_config:/etc/dockervolumebackup/conf.d
       - /opt/appdata/paperless/data/:/backup/paperless_data
       - /opt/appdata/paperless/db/backup:/backup/paperless_db

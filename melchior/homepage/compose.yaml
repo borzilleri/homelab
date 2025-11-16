@@ -103,6 +103,8 @@ services:
     restart: unless-stopped
     env_file: ./backup.env
     volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
       - /opt/appdata/homepage:/backup/homepage:ro
       - /opt/terminal_dogma/AppData/homepage:/archive
 

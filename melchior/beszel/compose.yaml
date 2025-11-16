@@ -30,5 +30,7 @@ services:
     restart: unless-stopped
     env_file: ./backup.env
     volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
       - /opt/appdata/beszel/backups:/backup/beszel:ro
       - /opt/terminal_dogma/AppData/beszel:/archive
