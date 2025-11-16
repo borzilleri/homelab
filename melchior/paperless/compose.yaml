@@ -69,6 +69,7 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       - /opt/appdata/paperless/data/:/backup/paperless_data
       - /opt/appdata/paperless/db/backup:/backup/paperless_db
       - /opt/terminal_dogma/AppData/paperless:/archive
