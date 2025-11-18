@@ -23,8 +23,9 @@ services:
       # Servarr (DB, Transmission)
       - /opt/appdata/servarr/db/backup:/backup/servarr/servarr_db
       - /opt/appdata/servarr/transmission:/backup/servarr/transmission
-
-      # Homebox
+      # Homebox (DB, Data)
+      - /opt/appdata/homebox/data:/backup/homebox/homebox_data
+      - /opt/appdata/homebox/db/backup:/backup/homebox/homebox_db
       # Booklore (DB, app)
       # Maintainerr
       # NPM
