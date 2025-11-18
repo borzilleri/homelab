@@ -1,6 +1,0 @@
-records:
-  sdf1.rampant.io:
-    zoneId: "Z273W8KZPBRPJR"
-    ttl: 300
-    additionalHosts:
-      - "*.sdf1.rampant.io"

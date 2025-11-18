@@ -12,7 +12,7 @@ services:
       AWS_REGION: us-west-2
       AWS_SHARED_CREDENTIALS_FILE: /run/secrets/aws_credentials
     volumes:
-      - ./config.yaml:/config.yaml
+      - /opt/appdata/unifi-route53-dns/config.yaml:/config.yaml
     secrets:
       - aws_credentials
     networks:
