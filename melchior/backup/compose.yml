@@ -1,0 +1,30 @@
+services:
+  backup:
+    image: offen/docker-volume-backup:v2.46.1
+    restart: unless-stopped
+    environment:
+      BACKUP_CRON_EXPRESSION: "@daily"
+      BACKUP_JITTER: "0s"
+      BACKUP_COMPRESSION: "gz"
+      BACKUP_RETENTION_DAYS: "30"
+      BACKUP_PRUNING_LEEWAY: "1m"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./configuration:/etc/dockervolumebackup/conf.d
+      # Destination Directory
+      - /opt/terminal_dogma/AppData:/archive
+      # Homepage
+      - /opt/appdata/homepage:/backup/homepage:ro
+      # Paperless (DB, Data)
+      - /opt/appdata/paperless/data:/backup/paperless/paperless_data
+      - /opt/appdata/paperless/db/backup:/backup/paperless/paperless_db
+      # Servarr (DB, Transmission)
+      - /opt/appdata/servarr/db/backup:/backup/servarr/servarr_db
+      - /opt/appdata/servarr/transmission:/backup/servarr/transmission
+
+      # Homebox
+      # Booklore (DB, app)
+      # Maintainerr
+      # NPM

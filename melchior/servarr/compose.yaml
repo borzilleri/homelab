@@ -152,19 +152,6 @@ services:
     networks:
       - default
       - homelab
-  backup:
-    image: offen/docker-volume-backup:v2.46.1
-    restart: unless-stopped
-    env_file: ./backup.env
-    depends_on:
-      - db
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /opt/appdata/servarr/transmission:/backup/transmission
-      - /opt/appdata/servarr/db/backup:/backup/db
-      - /opt/terminal_dogma/AppData/servarr:/archive
 
 volumes:
   central-dogma:
