@@ -10,8 +10,11 @@ services:
     environment:
       POSTGRES_USER: servarr
       POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
+    labels:
+      docker-volume-backup.archive-pre: /bin/sh -c 'pg_dumpall -U servarr --clean --file=/backup/servarr_db.sql'
     volumes:
       - /opt/appdata/servarr/db/pg14:/var/lib/postgresql/data
+      - /opt/appdata/servarr/db/backup:/backup
     networks:
       - default
     secrets:
@@ -144,6 +147,19 @@ services:
     networks:
       - default
       - homelab
+  backup:
+    image: offen/docker-volume-backup:v2.46.1
+    restart: unless-stopped
+    env_file: ./backup.env
+    depends_on:
+      - db
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /opt/appdata/servarr/transmission:/backup/transmission
+      - /opt/appdata/servarr/db/backup:/backup/db
+      - /opt/terminal_dogma/AppData/servarr:/archive
 
 volumes:
   central-dogma:
