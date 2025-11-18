@@ -36,6 +36,7 @@ services:
     volumes:
       - central-dogma:/data
       - /opt/appdata/servarr/radarr:/config
+      - /opt/terminal_dogma/AppData/servarr/radarr:/backups
     networks:
       - default
       - homelab
@@ -56,6 +57,7 @@ services:
     volumes:
       - central-dogma:/data
       - /opt/appdata/servarr/sonarr:/config
+      - /opt/terminal_dogma/AppData/servarr/sonarr:/backups
     networks:
       - default
       - homelab
@@ -78,6 +80,7 @@ services:
     volumes:
       - central-dogma:/data
       - /opt/appdata/servarr/bazarr:/config
+      - /opt/terminal_dogma/AppData/servarr/bazarr:/backups
     networks:
       - default
       - homelab
@@ -97,6 +100,7 @@ services:
       PROWLARR__POSTGRES__PASSWORD: ${DB_PASS}
     volumes:
       - /opt/appdata/servarr/prowlarr:/config
+      - /opt/terminal_dogma/AppData/servarr/prowlarr:/backups
     networks:
       - default
       - homelab
@@ -125,6 +129,7 @@ services:
     volumes:
       - central-dogma:/data
       - /opt/appdata/servarr/sabnzbd:/config
+      - /opt/terminal_dogma/AppData/servarr/sabnzbd:/backups
     networks:
       - default
       - homelab
