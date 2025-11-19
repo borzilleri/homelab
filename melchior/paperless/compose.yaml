@@ -42,7 +42,7 @@ services:
       - /opt/appdata/paperless/socialaccount_providers.env
     volumes:
       - /opt/appdata/paperless/data:/usr/src/paperless/data
-      - /opt/appdata/paperless/media:/usr/src/paperless/media
+      - /opt/terminal_dogma/AppData/paperless/media:/usr/src/paperless/media
       - type: volume
         source: transfer
         target: /usr/src/paperless/export
