@@ -25,6 +25,10 @@ services:
       - /opt/appdata/homepage:/backup/homepage:ro
       # Maintainerr (sqlite)
       # NPM (DB, Data)
+      - /opt/appdata/nginx-proxy-manager/data:/backup/npm/npm_data
+      - /opt/appdata/nginx-proxy-manager/letsencrypt:/backup/npm/npm_letsencrypt
+      - /opt/appdata/nginx-proxy-manager/secrets:/backup/npm/npm_secrets
+      - /opt/appdata/nginx-proxy-manager/db/backup:/backup/npm/npm_db
       # Paperless (DB, Data)
       - /opt/appdata/paperless/data:/backup/paperless/paperless_data
       - /opt/appdata/paperless/db/backup:/backup/paperless/paperless_db
