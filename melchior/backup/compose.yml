@@ -15,17 +15,19 @@ services:
       - ./configuration:/etc/dockervolumebackup/conf.d
       # Destination Directory
       - /opt/terminal_dogma/AppData:/archive
+      # Booklore (DB, app)
+      - /opt/appdata/booklore/data:/backup/booklore/booklore_data
+      - /opt/appdata/booklore/db_backup:/backup/booklore/booklore_db
+      # Homebox (DB, Data)
+      - /opt/appdata/homebox/data:/backup/homebox/homebox_data
+      - /opt/appdata/homebox/db/backup:/backup/homebox/homebox_db
       # Homepage
       - /opt/appdata/homepage:/backup/homepage:ro
+      # Maintainerr (sqlite)
+      # NPM (DB, Data)
       # Paperless (DB, Data)
       - /opt/appdata/paperless/data:/backup/paperless/paperless_data
       - /opt/appdata/paperless/db/backup:/backup/paperless/paperless_db
       # Servarr (DB, Transmission)
       - /opt/appdata/servarr/db/backup:/backup/servarr/servarr_db
       - /opt/appdata/servarr/transmission:/backup/servarr/transmission
-      # Homebox (DB, Data)
-      - /opt/appdata/homebox/data:/backup/homebox/homebox_data
-      - /opt/appdata/homebox/db/backup:/backup/homebox/homebox_db
-      # Booklore (DB, app)
-      # Maintainerr
-      # NPM
