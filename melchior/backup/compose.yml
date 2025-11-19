@@ -27,7 +27,7 @@ services:
       # Immich (Secrets only)
       - /opt/appdata/immich/secrets:/backup/immich/immich_secrets
       # Maintainerr (sqlite)
-      # NPM (DB, Data)
+      # NPM (DB, Data, Secrets)
       - /opt/appdata/nginx-proxy-manager/data:/backup/npm/npm_data
       - /opt/appdata/nginx-proxy-manager/letsencrypt:/backup/npm/npm_letsencrypt
       - /opt/appdata/nginx-proxy-manager/secrets:/backup/npm/npm_secrets
@@ -35,6 +35,10 @@ services:
       # Paperless (DB, Data)
       - /opt/appdata/paperless/data:/backup/paperless/paperless_data
       - /opt/appdata/paperless/db/backup:/backup/paperless/paperless_db
-      # Servarr (DB, Transmission)
+      - /opt/appdata/paperless/secrets:/backup/paperless/paperless_secrets
+      # Servarr (DB, Transmission, Secrets)
       - /opt/appdata/servarr/db/backup:/backup/servarr/servarr_db
       - /opt/appdata/servarr/transmission:/backup/servarr/transmission
+      - /opt/appdata/servarr/secrets:/backup/servarr/servarr_secrets
+      # unifi-route53-dns
+      - /opt/appdata/unifi-route53-dns:/backup/unifi-route53-dns

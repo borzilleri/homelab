@@ -39,7 +39,7 @@ services:
     user: "1000:1000"
     env_file:
       - ./paperless.env
-      - /opt/appdata/paperless/socialaccount_providers.env
+      - /opt/appdata/paperless/secrets/secrets.env
     volumes:
       - /opt/appdata/paperless/data:/usr/src/paperless/data
       - /opt/terminal_dogma/AppData/paperless/media:/usr/src/paperless/media
