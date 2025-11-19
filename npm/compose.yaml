@@ -25,9 +25,9 @@ services:
       DB_MYSQL_USER: "npm"
       DB_MYSQL_PASSWORD__FILE: /run/secrets/db_pass
     volumes:
-      - /etc/homelab/npm/letsencrypt:/etc/letsencrypt
-      - /etc/homelab/npm/data:/data
       - ./snippets:/snippets
+      - /opt/appdata/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+      - /opt/appdata/nginx-proxy-manager/data:/data
     networks:
       - homelab
       - default
@@ -43,7 +43,8 @@ services:
       MYSQL_PASSWORD_FILE: /run/secrets/db_pass
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_pass
     volumes:
-      - /etc/homelab/npm/mysql9:/var/lib/mysql
+      - /opt/appdata/nginx-proxy-manager/db/mysql9:/var/lib/mysql
+      - /opt/appdata/nginx-proxy-manager/db/backup:/backup
     networks:
       - default
     secrets:
@@ -55,14 +56,6 @@ secrets:
     file: /etc/homelab/npm/secrets/db_root_pass
   db_pass:
     file: /etc/homelab/npm/secrets/db_pass
-
-volumes:
-  config:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=terminal-dogma.local,nolock,soft,nfsvers=4
-      device: :/mnt/AppDataPool/Configs
 
 networks:
   default:
