@@ -51,7 +51,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     labels:
-      docker-volume-backup.archive-pre: /bin/sh -c 'mariadb-dump -p${MYSQL_ROOT_PASSWORD} --all-databases > /backup/booklore_db.sql'
+      docker-volume-backup.archive-pre: /bin/sh -c 'mariadb-dump --all-databases > /backup/booklore_db.sql'
     volumes:
       - /opt/appdata/booklore/db:/config
       - /opt/appdata/booklore/db_backup:/backup
