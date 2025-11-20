@@ -3,7 +3,7 @@ services:
     image: offen/docker-volume-backup:v2.46.1
     restart: unless-stopped
     environment:
-      BACKUP_CRON_EXPRESSION: "@daily"
+      BACKUP_CRON_EXPRESSION: "30 3 * * *"
       BACKUP_JITTER: "10m"
       BACKUP_COMPRESSION: "gz"
       BACKUP_RETENTION_DAYS: "30"
