@@ -17,6 +17,9 @@ services:
       DOZZLE_ENABLE_SHELL: true
       # Enable authentication. See https://dozzle.dev/guide/authentication
       # DOZZLE_AUTH_PROVIDER: simple
-      DOZZLE_REMOTE_AGENT: medina.sdf1.internal:7007
+      # Don't know what happened here, but the dev is some kind of
+      # fucking moron and broke hostname resolution somehow.
+      # How do you even *do* that?
+      DOZZLE_REMOTE_AGENT: 192.168.1.241:7007
     networks:
       - homelab
