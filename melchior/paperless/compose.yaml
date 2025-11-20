@@ -20,6 +20,7 @@ services:
       POSTGRES_USER: paperless
       POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
     labels:
+      docker-volume-backup.exec-label: "paperless"
       docker-volume-backup.archive-pre: /bin/sh -c 'pg_dumpall -U paperless --clean --file=/backup/paperless_db.sql'
     volumes:
       - /opt/appdata/paperless/db/pg16:/var/lib/postgresql/data

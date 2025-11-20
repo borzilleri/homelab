@@ -40,6 +40,7 @@ services:
       POSTGRES_USER: homebox
       POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
     labels:
+      docker-volume-backup.exec-label: "homebox"
       docker-volume-backup.archive-pre: /bin/sh -c 'pg_dumpall -U homebox --clean --file=/backup/homebox_db.sql'
     volumes:
       - /opt/appdata/homebox/db/pg16:/var/lib/postgresql/data

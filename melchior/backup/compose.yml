@@ -4,10 +4,11 @@ services:
     restart: unless-stopped
     environment:
       BACKUP_CRON_EXPRESSION: "@daily"
-      BACKUP_JITTER: "0s"
+      BACKUP_JITTER: "10m"
       BACKUP_COMPRESSION: "gz"
       BACKUP_RETENTION_DAYS: "30"
       BACKUP_PRUNING_LEEWAY: "1m"
+      EXEC_FORWARD_OUTPUT: "true"
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
