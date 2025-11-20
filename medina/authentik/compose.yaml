@@ -15,6 +15,7 @@ services:
       POSTGRES_USER: authentik
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_pass
     labels:
+      docker-volume-backup.exec-label: "authentik"
       docker-volume-backup.archive-pre: /bin/sh -c 'pg_dumpall -U authentik --clean --file=/backup/authentik_db.sql'
     secrets:
       - postgres_pass
