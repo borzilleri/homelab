@@ -44,7 +44,7 @@ services:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_pass
     labels:
       docker-volume-backup.exec-label: "nginx-proxy-manager"
-      docker-volume-backup.archive-pre: /bin/sh -c 'mysqldump -uroot -p$$(cat /run/secrets/db_pass) --all-databases > /backup/npm_db.sql'
+      docker-volume-backup.archive-pre: /bin/sh -c 'mysqldump -uroot -p$(cat /run/secrets/db_root_pass) --all-databases > /backup/npm_db.sql'
     volumes:
       - /opt/appdata/nginx-proxy-manager/db/mysql9:/var/lib/mysql
       - /opt/appdata/nginx-proxy-manager/db/backup:/backup
