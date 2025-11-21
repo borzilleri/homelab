@@ -1,0 +1,13 @@
+services:
+  whats-up-docker: # Port 300
+    image: getwud/wud
+    container_name: wud
+    restart: unless-stopped
+    env_file:
+      - /opt/appdata/whats-up-docker/secrets/whatsupdocker.env
+    environment:
+      TZ: America/Los_Angeles
+      WUD_REGISTRY_LSCR_PRIVATE_USERNAME: borzilleri
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/appdata/whats-up-docker/data:/store
