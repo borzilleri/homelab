@@ -1,3 +1,5 @@
+include:
+  - ../common/networks.yaml
 services:
   whats-up-docker: # Port 300
     image: getwud/wud
@@ -11,3 +13,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/appdata/whats-up-docker/data:/store
+    networks:
+      - homelab
