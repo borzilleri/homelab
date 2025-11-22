@@ -1,7 +1,9 @@
 services:
   backup:
-    image: offen/docker-volume-backup:v2.46.1
+    image: offen/docker-volume-backup:${VERSION:-latest}
     restart: unless-stopped
+    env_file:
+      - /opt/appdata/backup/env/backup.env
     environment:
       BACKUP_CRON_EXPRESSION: "30 3 * * *"
       BACKUP_JITTER: "10m"
