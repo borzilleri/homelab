@@ -3,18 +3,19 @@ include:
 
 services:
   booklore:
-    image: booklore/booklore:latest
+    image: booklore/booklore:${BOOKLORE_VERSION:-latest}
     # Alternative: Use GitHub Container Registry
     # image: ghcr.io/booklore-app/booklore:latest
     container_name: booklore
     restart: unless-stopped
+    env_file:
+      - /opt/appdata/booklore/env/booklore.env
     environment:
       USER_ID: 1000
       GROUP_ID: 1000
       TZ: America/Los_Angeles
       DATABASE_URL: jdbc:mariadb://mariadb:3306/booklore
       DATABASE_USERNAME: booklore
-      DATABASE_PASSWORD: ${MYSQL_PASSWORD}
       BOOKLORE_PORT: 6060
     expose:
       - "6060"
@@ -40,16 +41,16 @@ services:
       - homelab
 
   mariadb:
-    image: lscr.io/linuxserver/mariadb:11.4.5
+    image: lscr.io/linuxserver/mariadb:${MARIADB_VERSION:-11.4.5}
     restart: unless-stopped
+    env_file:
+      - /opt/appdata/booklore/env/booklore.env
     environment:
       PUID: 1000
       PGID: 1000
       TZ: America/Los_Angeles
       MYSQL_DATABASE: booklore
       MYSQL_USER: booklore
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     labels:
       docker-volume-backup.exec-label: "booklore"
       docker-volume-backup.archive-pre: /bin/sh -c 'mariadb-dump --all-databases > /backup/booklore_db.sql'

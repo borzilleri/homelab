@@ -2,7 +2,7 @@ include:
   - ../common/networks.yaml
 services:
   whats-up-docker: # Port 300
-    image: getwud/wud
+    image: getwud/wud:${VERSION:-latest}
     container_name: wud
     restart: unless-stopped
     env_file:

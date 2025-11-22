@@ -2,7 +2,7 @@ include:
   - ../common/networks.yaml
 services:
   beszel:
-    image: henrygd/beszel:latest
+    image: henrygd/beszel:${VERSION:-latest}
     container_name: beszel
     restart: unless-stopped
     extra_hosts:
@@ -15,7 +15,7 @@ services:
     networks:
       - homelab
   beszel-agent:
-    image: henrygd/beszel-agent
+    image: henrygd/beszel-agent:${VERSION:-latest}
     container_name: beszel-agent
     restart: unless-stopped
     network_mode: host

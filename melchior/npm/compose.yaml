@@ -2,7 +2,7 @@ include:
   - ../common/networks.yaml
 services:
   npm:
-    image: 'jc21/nginx-proxy-manager:latest'
+    image: jc21/nginx-proxy-manager:${NPM_VERSION:-latest}
     container_name: nginx-proxy-manager
     restart: unless-stopped
     depends_on:
@@ -34,7 +34,7 @@ services:
     secrets:
       - db_pass
   db:
-    image: 'mysql:9'
+    image: mysql:9
     restart: unless-stopped
     user: "1000:1000"
     environment:

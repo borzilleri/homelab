@@ -21,7 +21,7 @@ services:
     secrets:
       - db_pass
   radarr:
-    image: lscr.io/linuxserver/radarr:latest
+    image: lscr.io/linuxserver/radarr:${RADARR_VERSION:-latest}
     container_name: radarr
     restart: unless-stopped
     depends_on:
@@ -42,7 +42,7 @@ services:
       - default
       - homelab
   sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
+    image: lscr.io/linuxserver/sonarr:${SONARR_VERSION:-latest}
     container_name: sonarr
     restart: always
     depends_on:
@@ -64,7 +64,7 @@ services:
       - homelab
 
   bazarr:
-    image: lscr.io/linuxserver/bazarr:latest
+    image: lscr.io/linuxserver/bazarr:${BAZARR_VERSION:-latest}
     container_name: bazarr
     restart: always
     depends_on:
@@ -86,7 +86,7 @@ services:
       - default
       - homelab
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
+    image: lscr.io/linuxserver/prowlarr:${PROWLARR_VERSION:-latest}
     container_name: prowlarr
     restart: always
     depends_on:
@@ -107,7 +107,7 @@ services:
       - homelab
 
   maintainerr: # Port 6246 
-    image: ghcr.io/maintainerr/maintainerr:2.20.0
+    image: ghcr.io/maintainerr/maintainerr:${MAINTAINERR_VERSION:-latest}
     container_name: maintainerr
     restart: unless-stopped
     user: 1000:1000

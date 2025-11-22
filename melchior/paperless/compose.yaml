@@ -31,7 +31,7 @@ services:
       - db_pass
 
   webserver:
-    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    image: ghcr.io/paperless-ngx/paperless-ngx:${PAPERLESS_VERSION:-latest}
     container_name: paperless
     restart: unless-stopped
     depends_on:

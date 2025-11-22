@@ -4,7 +4,7 @@ include:
 # Port 8080
 services:
   dozzle:
-    image: amir20/dozzle:latest
+    image: amir20/dozzle:${VERSION:-latest}
     container_name: dozzle
     restart: unless-stopped
     volumes:
