@@ -6,7 +6,6 @@ services:
     image: getmeili/meilisearch:v1.15
     container_name: ba-search
     restart: unless-stopped
-    user: "1000:1000"
     env_file:
       - /opt/appdata/bar-assistant/secrets/bar.env
     environment:
@@ -16,7 +15,7 @@ services:
       - homelab
       - default
     volumes:
-      - /opt/appdata/bar-assistant/meili_data:/meili_data
+      - meili_data:/meili_data
 
   # Optional, but recommended
   redis:
@@ -31,7 +30,6 @@ services:
     image: barassistant/server:v5
     container_name: bar-assistant
     restart: unless-stopped
-    user: "1000:1000"
     depends_on:
       - meilisearch
       - redis
@@ -47,7 +45,7 @@ services:
       - homelab
       - default
     volumes:
-      - /opt/appdata/bar-assistant/bar_data:/var/www/cocktails/storage/bar-assistant
+      - bar_data:/var/www/cocktails/storage/bar-assistant
 
   salt-rim: # Port 8080
     image: barassistant/salt-rim:v4
@@ -60,6 +58,10 @@ services:
     networks:
       - homelab
       - default
+
+volumes:
+  meili_data:
+  bar_data:
 
 networks:
   default:
