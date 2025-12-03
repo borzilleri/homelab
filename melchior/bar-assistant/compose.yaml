@@ -54,7 +54,7 @@ services:
     depends_on:
       - bar-assistant
     env_file:
-      - ./bar-assistant.env
+      - /opt/appdata/bar-assistant/secrets/bar.env
     networks:
       - homelab
       - default
