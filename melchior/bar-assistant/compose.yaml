@@ -1,0 +1,63 @@
+include:
+  - ../common/networks.yaml
+
+services:
+  meilisearch: # Port 7700
+    image: getmeili/meilisearch:v1.15
+    container_name: ba-search
+    restart: unless-stopped
+    env_file:
+      - /opt/appdata/bar-assistant/secrets/bar.env
+    environment:
+      MEILI_NO_ANALYTICS: true
+      MEILI_ENV: production
+    networks:
+      - homelab
+      - default
+    volumes:
+      - /opt/appdata/bar-assistant/meili_data:/meili_data
+
+  # Optional, but recommended
+  redis:
+    image: redis
+    restart: unless-stopped
+    environment:
+      ALLOW_EMPTY_PASSWORD: yes
+    networks:
+      - default
+
+  bar-assistant: # Port 8080
+    image: barassistant/server:v5
+    container_name: bar-assistant
+    restart: unless-stopped
+    depends_on:
+      - meilisearch
+      - redis
+    env_file:
+      - /opt/appdata/bar-assistant/secrets/bar.env
+    environment:
+      MEILISEARCH_HOST: http://meilisearch:7700
+      REDIS_HOST: redis
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      ALLOW_REGISTRATION: true
+    networks:
+      - homelab
+      - default
+    volumes:
+      - /opt/appdata/bar-assistant/bar_data:/var/www/cocktails/storage/bar-assistant
+
+  salt-rim: # Port 8080
+    image: barassistant/salt-rim:v4
+    container_name: salt-rim
+    restart: unless-stopped
+    depends_on:
+      - bar-assistant
+    env_file:
+      - ./bar-assistant.env
+    networks:
+      - homelab
+      - default
+
+networks:
+  default:
