@@ -6,6 +6,7 @@ services:
     image: getmeili/meilisearch:v1.15
     container_name: ba-search
     restart: unless-stopped
+    user: "1000:1000"
     env_file:
       - /opt/appdata/bar-assistant/secrets/bar.env
     environment:
@@ -30,6 +31,7 @@ services:
     image: barassistant/server:v5
     container_name: bar-assistant
     restart: unless-stopped
+    user: "1000:1000"
     depends_on:
       - meilisearch
       - redis
