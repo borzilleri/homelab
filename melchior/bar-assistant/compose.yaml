@@ -40,7 +40,6 @@ services:
       REDIS_HOST: redis
       CACHE_DRIVER: redis
       SESSION_DRIVER: redis
-      ALLOW_REGISTRATION: true
     networks:
       - homelab
       - default
