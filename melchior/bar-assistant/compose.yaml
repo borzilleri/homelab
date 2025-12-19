@@ -6,6 +6,8 @@ services:
     image: getmeili/meilisearch:v1.15
     container_name: ba-search
     restart: unless-stopped
+    labels:
+      wud.watch: false
     env_file:
       - /opt/appdata/bar-assistant/secrets/bar.env
     environment:
@@ -21,6 +23,8 @@ services:
   redis:
     image: redis
     restart: unless-stopped
+    labels:
+      wud.watch: false
     environment:
       ALLOW_EMPTY_PASSWORD: yes
     networks:

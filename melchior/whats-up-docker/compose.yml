@@ -5,6 +5,8 @@ services:
     image: getwud/wud:${VERSION:-latest}
     container_name: wud
     restart: unless-stopped
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+$'
     env_file:
       - /opt/appdata/whats-up-docker/secrets/whatsupdocker.env
     environment:

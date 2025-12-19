@@ -21,6 +21,8 @@ services:
     container_name: beszel-agent
     restart: unless-stopped
     network_mode: host
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+$'
     env_file: /opt/appdata/beszel-agent/beszel-agent.env
     environment:
       PORT: 45876

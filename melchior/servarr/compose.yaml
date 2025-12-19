@@ -11,6 +11,7 @@ services:
       POSTGRES_USER: servarr
       POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
     labels:
+      wud.watch: false
       docker-volume-backup.exec-label: "servarr"
       docker-volume-backup.archive-pre: /bin/sh -c 'pg_dumpall -U servarr --clean --file=/backup/servarr_db.sql'
     volumes:
@@ -26,6 +27,8 @@ services:
     restart: unless-stopped
     depends_on:
       - db
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       PUID: 1000
       PGID: 1000
@@ -47,6 +50,8 @@ services:
     restart: always
     depends_on:
       - db
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       PUID: 1000
       PGID: 1000
@@ -69,6 +74,8 @@ services:
     restart: always
     depends_on:
       - db
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       PUID: 1000
       PGID: 1000
@@ -91,6 +98,8 @@ services:
     restart: always
     depends_on:
       - db
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       PUID: 1000
       PGID: 1000
@@ -111,6 +120,8 @@ services:
     container_name: maintainerr
     restart: unless-stopped
     user: 1000:1000
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       TZ: America/Los_Angeles
     volumes:

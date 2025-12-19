@@ -54,6 +54,7 @@ services:
       MYSQL_DATABASE: booklore
       MYSQL_USER: booklore
     labels:
+      wud.watch: false
       docker-volume-backup.exec-label: "booklore"
       docker-volume-backup.archive-pre: /bin/sh -c 'mariadb-dump --all-databases > /backup/booklore_db.sql'
     volumes:
