@@ -31,7 +31,7 @@ services:
       - default
 
   bar-assistant: # Port 8080
-    image: barassistant/server:v5
+    image: barassistant/server:${BAR_VERSION:-latest}
     container_name: bar-assistant
     restart: unless-stopped
     depends_on:
@@ -53,7 +53,7 @@ services:
       - bar_data:/var/www/cocktails/storage/bar-assistant
 
   salt-rim: # Port 8080
-    image: barassistant/salt-rim:v4
+    image: barassistant/salt-rim:${SALTRIM_VERSION:-latest}
     container_name: salt-rim
     restart: unless-stopped
     depends_on:
