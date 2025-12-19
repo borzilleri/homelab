@@ -14,6 +14,8 @@ services:
     container_name: immich_server
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
     restart: unless-stopped
+    labels:
+      wud.tag.include: 'v^\d+\.\d+\.\d+$'
     env_file:
       - .env
     volumes:
@@ -47,6 +49,8 @@ services:
     image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
     volumes:
       - model-cache:/cache
+    labels:
+      wud.watch: false
     env_file:
       - .env
     healthcheck:

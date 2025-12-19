@@ -134,6 +134,8 @@ services:
     image: lscr.io/linuxserver/sabnzbd:latest
     container_name: sabnzbd
     restart: always
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+-ls\d+$'
     environment:
       PUID: 1000
       PGID: 1000
@@ -149,6 +151,8 @@ services:
     image: lscr.io/linuxserver/transmission:latest
     container_name: transmission
     restart: always
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+-r\d+-ls\d+$'
     env_file: /opt/appdata/servarr/secrets/transmission.env
     environment:
       PUID: 1000

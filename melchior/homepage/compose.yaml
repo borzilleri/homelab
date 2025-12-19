@@ -67,7 +67,7 @@ services:
     container_name: homepage-public
     restart: unless-stopped
     labels:
-      wud.tag.include: '^v\d+\.\d+\.\d+$'
+      wud.watch: false
     environment:
       LOG_TARGETS: stdout
       PUID: 1000
