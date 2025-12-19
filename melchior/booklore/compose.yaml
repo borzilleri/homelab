@@ -8,6 +8,8 @@ services:
     # image: ghcr.io/booklore-app/booklore:latest
     container_name: booklore
     restart: unless-stopped
+    labels:
+      wud.tag.include: '^v\d+\.\d+\.\d+$'
     env_file:
       - /opt/appdata/booklore/env/booklore.env
     environment:

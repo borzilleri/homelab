@@ -9,6 +9,8 @@ services:
       - host.docker.internal:host-gateway
     ports:
       - 8090:8090
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+$'
     volumes:
       - /opt/appdata/beszel:/beszel_data
       - /opt/terminal_dogma/AppData/beszel:/beszel_data/backups

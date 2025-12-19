@@ -9,6 +9,8 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      wud.tag.include: '^v\d+\.\d+\.\d+$'
     environment:
       # Enable container actions (stop, start, restart).
       # See https://dozzle.dev/guide/actions
