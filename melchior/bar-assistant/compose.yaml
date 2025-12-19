@@ -37,6 +37,8 @@ services:
     depends_on:
       - meilisearch
       - redis
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+$'
     env_file:
       - /opt/appdata/bar-assistant/secrets/bar.env
     environment:
@@ -56,6 +58,8 @@ services:
     restart: unless-stopped
     depends_on:
       - bar-assistant
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+$'
     env_file:
       - /opt/appdata/bar-assistant/secrets/bar.env
     networks:
