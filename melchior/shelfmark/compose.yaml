@@ -1,0 +1,29 @@
+include:
+  - ../common/networks.yaml
+
+services: # Port 8084
+  shelfmark:
+    image: ghcr.io/calibrain/shelfmark:${VERSION:-latest}
+    restart: unless-stopped
+    container_name: shelfmark
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+    volumes:
+      - /opt/appdata/shelfmark/data:/config
+      - type: volume
+        source: central-dogma
+        target: /books
+        volume:
+          nocopy: true
+          subpath: downloads/bookdrop
+      - type: volume
+        source: central-dogma
+        target: /data/downloads/complete
+        volume:
+          nocopy: true
+          subpath: downloads/complete
+    networks:
+      - homelab
+
