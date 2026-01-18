@@ -27,3 +27,10 @@ services: # Port 8084
     networks:
       - homelab
 
+volumes:
+  central-dogma:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=central-dogma.local,nolock,soft,nfsvers=4
+      device: :/volume1/Media
