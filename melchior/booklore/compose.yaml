@@ -37,7 +37,7 @@ services:
         target: /bookdrop
         volume:
           nocopy: true
-          subpath: downloads/complete/book-import
+          subpath: downloads/bookdrop
     networks:
       - default
       - homelab
