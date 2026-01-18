@@ -131,7 +131,7 @@ services:
       - homelab
 
   sabnzbd:
-    image: lscr.io/linuxserver/sabnzbd:latest
+    image: lscr.io/linuxserver/sabnzbd:${SABNZBD_VERSION:-latest}
     container_name: sabnzbd
     restart: always
     labels:
@@ -148,7 +148,7 @@ services:
       - default
       - homelab
   transmission:
-    image: lscr.io/linuxserver/transmission:latest
+    image: lscr.io/linuxserver/transmission:${TRANSMISSION_VERSION:-latest}
     container_name: transmission
     restart: always
     labels:
