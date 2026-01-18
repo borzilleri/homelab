@@ -10,6 +10,8 @@ services: # Port 8084
       PUID: 1000
       PGID: 1000
       TZ: America/Los_Angeles
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+$'
     volumes:
       - /opt/appdata/shelfmark/data:/config
       - type: volume
