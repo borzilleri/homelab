@@ -41,5 +41,7 @@ services:
       - /opt/appdata/servarr/db/backup:/backup/servarr/servarr_db
       - /opt/appdata/servarr/transmission:/backup/servarr/transmission
       - /opt/appdata/servarr/secrets:/backup/servarr/servarr_secrets
+      # Shelfmark (Data)
+      - /opt/appdata/shelfmark/data:/backup/shelfmark/shelfmark_data
       # unifi-route53-dns (secrets)
       - /opt/appdata/unifi-route53-dns:/backup/unifi-route53-dns
