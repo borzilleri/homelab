@@ -39,6 +39,8 @@ services:
       - redis
     labels:
       wud.tag.include: '^\d+\.\d+\.\d+$'
+      docker-volume-backup.exec-label: "bar-assistant"
+      docker-volume-backup.archive-pre: /bin/sh -c 'php artisan bar:full-backup'
     env_file:
       - /opt/appdata/bar-assistant/secrets/bar.env
     environment:
@@ -51,6 +53,7 @@ services:
       - default
     volumes:
       - bar_data:/var/www/cocktails/storage/bar-assistant
+      - /opt/appdata/bar-assistant/backups:/var/www/cocktails/storage/bar-assistant/backups
 
   salt-rim: # Port 8080
     image: barassistant/salt-rim:${SALTRIM_VERSION:-latest}
