@@ -14,7 +14,7 @@ services:
       - db
     labels:
       wud.tag.include: '^\d+\.\d+\.\d+$'
-      wud.tag.template: 'https://github.com/sysadminsmedia/homebox/releases/tag/v$${original}'
+      wud.link.template: 'https://github.com/sysadminsmedia/homebox/releases/tag/v$${original}'
     env_file: /opt/appdata/homebox/secrets/secrets.env
     environment:
       HBOX_LOG_LEVEL: info

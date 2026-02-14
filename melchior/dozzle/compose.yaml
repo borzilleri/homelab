@@ -11,7 +11,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       wud.tag.include: '^v\d+\.\d+\.\d+$'
-      wud.tag.template: 'https://github.com/amir20/dozzle/releases/tag/$${original}'
+      wud.link.template: 'https://github.com/amir20/dozzle/releases/tag/$${original}'
     environment:
       # Enable container actions (stop, start, restart).
       # See https://dozzle.dev/guide/actions
