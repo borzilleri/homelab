@@ -2,6 +2,9 @@ services:
   backup:
     image: offen/docker-volume-backup:${VERSION:-latest}
     restart: unless-stopped
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+$'
+      wud.tag.template: 'https://github.com/offen/docker-volume-backup/releases/tag/$${original}'
     environment:
       BACKUP_CRON_EXPRESSION: "30 3 * * *"
       BACKUP_JITTER: "10m"

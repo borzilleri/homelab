@@ -39,6 +39,7 @@ services:
       - redis
     labels:
       wud.tag.include: '^\d+\.\d+\.\d+$'
+      wud.tag.template: 'https://github.com/karlomikus/bar-assistant/releases/tag/v$${original}'
       docker-volume-backup.exec-label: "bar-assistant"
       docker-volume-backup.archive-pre: /bin/sh -c 'php artisan bar:full-backup'
     env_file:
@@ -63,6 +64,7 @@ services:
       - bar-assistant
     labels:
       wud.tag.include: '^\d+\.\d+\.\d+$'
+      wud.tag.template: 'https://github.com/karlomikus/vue-salt-rim/releases/tag/v$${original}'
     env_file:
       - /opt/appdata/bar-assistant/secrets/bar.env
     networks:

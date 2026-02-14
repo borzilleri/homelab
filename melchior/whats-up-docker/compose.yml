@@ -7,6 +7,7 @@ services:
     restart: unless-stopped
     labels:
       wud.tag.include: '^\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/getwud/wud/releases/tag/$${original}'
     env_file:
       - /opt/appdata/whats-up-docker/secrets/whatsupdocker.env
     environment:

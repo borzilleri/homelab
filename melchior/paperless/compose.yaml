@@ -43,6 +43,7 @@ services:
     user: "1000:1000"
     labels:
       wud.tag.include: '^\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/paperless-ngx/paperless-ngx/releases/tag/v$${original}'
     env_file:
       - ./paperless.env
       - /opt/appdata/paperless/secrets/secrets.env

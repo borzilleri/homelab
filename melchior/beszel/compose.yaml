@@ -23,6 +23,7 @@ services:
     network_mode: host
     labels:
       wud.tag.include: '^\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/henrygd/beszel/releases/tag/v$${original}'
     env_file: /opt/appdata/beszel-agent/beszel-agent.env
     environment:
       PORT: 45876

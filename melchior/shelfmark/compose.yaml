@@ -12,6 +12,7 @@ services: # Port 8084
       TZ: America/Los_Angeles
     labels:
       wud.tag.include: '^\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/calibrain/shelfmark/releases/tag/v$${original}'
     volumes:
       - /opt/appdata/shelfmark/data:/config
       - type: volume

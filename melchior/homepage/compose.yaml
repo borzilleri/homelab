@@ -8,6 +8,7 @@ services:
     restart: unless-stopped
     labels:
       wud.tag.include: '^v\d+\.\d+\.\d+$'
+      wud.tag.template: 'https://github.com/gethomepage/homepage/releases/tag/v$${original}'
     environment:
       PUID: 1000
       PGID: 1000
