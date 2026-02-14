@@ -1,9 +1,13 @@
 services:
   dozzle-agent:
-    image: amir20/dozzle:latest
+    image: amir20/dozzle:${VERSION:-latest}
     container_name: "dozzle-agent"
     restart: unless-stopped
     command: agent
+    labels:
+      wud.tag.include: '^v\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/amir20/dozzle/releases/tag/$${original}'
+
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:

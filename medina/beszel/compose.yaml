@@ -1,9 +1,12 @@
 services:
   beszel-agent:
-    image: "henrygd/beszel-agent"
+    image: henrygd/beszel-agent:${VERSION:-latest}
     container_name: "beszel-agent"
     restart: unless-stopped
     network_mode: host
+    labels:
+      wud.tag.include: '^\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/henrygd/beszel/releases/tag/v$${original}'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:

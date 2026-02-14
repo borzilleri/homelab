@@ -11,6 +11,7 @@ services:
       - 8090:8090
     labels:
       wud.tag.include: '^\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/henrygd/beszel/releases/tag/v$${original}'
     volumes:
       - /opt/appdata/beszel:/beszel_data
       - /opt/terminal_dogma/AppData/beszel:/beszel_data/backups
