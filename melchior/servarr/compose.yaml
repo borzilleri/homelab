@@ -136,6 +136,7 @@ services:
     restart: always
     labels:
       wud.tag.include: '^\d+\.\d+\.\d+-ls\d+$'
+      wud.link.template: 'https://github.com/linuxserver/docker-sabnzbd/releases/tag/$${original}'
     environment:
       PUID: 1000
       PGID: 1000
@@ -153,6 +154,7 @@ services:
     restart: always
     labels:
       wud.tag.include: '^\d+\.\d+\.\d+-r\d+-ls\d+$'
+      wud.link.template: 'https://github.com/linuxserver/docker-transmission/releases/tag/$${original}'
     env_file: /opt/appdata/servarr/secrets/transmission.env
     environment:
       PUID: 1000
