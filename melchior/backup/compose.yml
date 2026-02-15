@@ -19,6 +19,9 @@ services:
       - ./configuration:/etc/dockervolumebackup/conf.d
       # Destination Directory
       - /opt/terminal_dogma/AppData:/archive
+      # Bar Assistant
+      - /opt/appdata/bar-assistant/backups:/backup/bar-assistant/bar_assistant_data
+      - /opt/appdata/bar-assistant/secrets:/backup/bar-assistant/bar_assistant_secrets
       # Booklore (DB, app)
       - /opt/appdata/booklore/data:/backup/booklore/booklore_data
       - /opt/appdata/booklore/db_backup:/backup/booklore/booklore_db
