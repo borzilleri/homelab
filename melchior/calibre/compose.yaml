@@ -1,0 +1,42 @@
+include:
+  - ../common/networks.yaml
+
+services:
+  calibre-web-automated: # Port 8083
+    image: crocodilestick/calibre-web-automated:${VERSION:-latest}
+    container_name: calibre
+    restart: unless-stopped
+    labels:
+      wud.tag.include: 'v^\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/crocodilestick/Calibre-Web-Automated/releases/tag/$${original}'
+    env_file:
+      - /opt/appdata/calibre/secrets/calibre.env
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+      NETWORK_SHARE_MODE: true
+    volumes:
+      - /opt/appdata/calibre/config:/config
+      - type: volume
+        source: central-dogma
+        target: /cwa-book-ingest
+        volume:
+          nocopy: true
+          subpath: downloads/bookdrop
+      - type: volume
+        source: central-dogma
+        target: /calibre-library
+        volume:
+          nocopy: true
+          subpath: Calibre
+    networks:
+      - homelab
+
+volumes:
+  central-dogma:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=central-dogma.local,nolock,soft,nfsvers=4
+      device: :/volume1/Media
