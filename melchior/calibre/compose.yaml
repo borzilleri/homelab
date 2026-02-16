@@ -10,14 +10,14 @@ services:
       wud.tag.include: 'v^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/crocodilestick/Calibre-Web-Automated/releases/tag/$${original}'
     env_file:
-      - /opt/appdata/calibre/secrets/calibre.env
+      - /opt/appdata/calibre/config/secrets.env
     environment:
       PUID: 1000
       PGID: 1000
       TZ: America/Los_Angeles
       NETWORK_SHARE_MODE: true
     volumes:
-      - /opt/appdata/calibre/config:/config
+      - /opt/appdata/calibre/data:/config
       - type: volume
         source: central-dogma
         target: /cwa-book-ingest
