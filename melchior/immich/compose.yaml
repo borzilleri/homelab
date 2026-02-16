@@ -44,6 +44,30 @@ services:
       - default
       - homelab
 
+  immich-kiosk: # Port 3000
+    container_name: immich-kiosk
+    image: ghcr.io/damongolding/immich-kiosk:${KIOSK_VERSION:-latest}
+    restart: unless-stopped
+    labels:
+      wud.tag.include: 'v^\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/damongolding/immich-kiosk/releases/tag/v$${original}'
+    environment:
+      LANG: "en_US"
+      TZ: "America/Los_Angeles"
+    volumes:
+      - /opt/appdata/immich/kiosk_config:/config
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    depends_on:
+      - immich-server
+    networks:
+      - default
+      - homelab
+
   immich-machine-learning:
     container_name: immich_machine_learning
     restart: unless-stopped

@@ -31,8 +31,9 @@ services:
       - /opt/appdata/homebox/secrets:/backup/homebox/homebox_secrets
       # Homepage
       - /opt/appdata/homepage:/backup/homepage:ro
-      # Immich (Secrets only)
+      # Immich (Kiosk Config, Secrets)
       - /opt/appdata/immich/secrets:/backup/immich/immich_secrets
+      - /opt/appdata/immich/kiosk_config:/backup/immich/immich_kiosk_config
       # Maintainerr (sqlite)
       # NPM (DB, Data, Secrets)
       - /opt/appdata/nginx-proxy-manager/data:/backup/npm/npm_data
