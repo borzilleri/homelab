@@ -29,7 +29,7 @@ services:
         target: /calibre-library
         volume:
           nocopy: true
-          subpath: Calibre
+          subpath: Books
     networks:
       - homelab
 
