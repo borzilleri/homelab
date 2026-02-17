@@ -1,6 +1,6 @@
 services:
   backup:
-    image: offen/docker-volume-backup:v2.46.1
+    image: offen/docker-volume-backup:${VERSION:-latest}
     restart: unless-stopped
     labels:
       wud.watch: true
