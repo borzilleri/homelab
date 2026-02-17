@@ -22,6 +22,10 @@ services:
       # Bar Assistant
       - /opt/appdata/bar-assistant/backups:/backup/bar-assistant/bar_assistant_data
       - /opt/appdata/bar-assistant/secrets:/backup/bar-assistant/bar_assistant_secrets
+      # Calibre (Manifest, Data, Config)
+      - /opt/appdata/calibre/config:/backup/calibre/calibre_config
+      - /opt/appdata/calibre/data:/backup/calibre/calibre_data
+      - /opt/appdata/calibre/library:/backup/calibre/calibre_library
       # Homebox (DB, Data, Secrets)
       - /opt/appdata/homebox/data:/backup/homebox/homebox_data
       - /opt/appdata/homebox/db/backup:/backup/homebox/homebox_db
