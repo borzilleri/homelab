@@ -13,7 +13,7 @@ services:
     environment:
       TZ: America/Los_Angeles
       WUD_REGISTRY_LSCR_PRIVATE_USERNAME: borzilleri
-      WUD_WATCHER_MELCHIOR_SOCKET: /var/run/docker.sock
+      WUD_WATCHER_LOCAL_SOCKET: /var/run/docker.sock
       WUD_WATCHER_MEDINA_HOST: http://medina.sdf1.internal
       WUD_WATCHER_MEDINA_PORT: 2376
       WUD_WATCHER_MEDINA_CAFILE: /certs/medina/ca.pem
