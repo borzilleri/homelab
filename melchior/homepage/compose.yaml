@@ -17,6 +17,7 @@ services:
       HOMEPAGE_FILE_AUTHENTIK_PASS: /run/secrets/authentik_pass
       HOMEPAGE_FILE_AUTHENTIK_API_TOKEN: /run/secrets/authentik_api_token
       HOMEPAGE_FILE_BAZARR_KEY: /run/secrets/bazarr_key
+      HOMEPAGE_FILE_CALIBRE_PASS: /run/secrets/calibre_pass
       HOMEPAGE_FILE_NPM_PASS: /run/secrets/npm_pass
       HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
       HOMEPAGE_FILE_PLEX_KEY: /run/secrets/plex_key
@@ -45,6 +46,7 @@ services:
       - authentik_pass
       - authentik_api_token
       - bazarr_key
+      - calibre_pass
       - npm_pass
       - paperless_key
       - plex_key
