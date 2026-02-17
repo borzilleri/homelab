@@ -18,6 +18,7 @@ services:
       NETWORK_SHARE_MODE: true
     volumes:
       - /opt/appdata/calibre/data:/config
+      - /opt/appdata/calibre/library:/calibre-library
       - type: volume
         source: central-dogma
         target: /cwa-book-ingest
@@ -26,7 +27,7 @@ services:
           subpath: downloads/bookdrop
       - type: volume
         source: central-dogma
-        target: /calibre-library
+        target: /books
         volume:
           nocopy: true
           subpath: Books
