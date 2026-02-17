@@ -73,7 +73,7 @@ services:
       - /opt/docker_data/authentik/data/certs:/certs
       - /opt/docker_data/authentik/data/custom-templates:/templates
   dockerproxy:
-    image: ghcr.io/tecnativa/docker-socket-proxy:latest
+    image: ghcr.io/tecnativa/docker-socket-proxy:${PROXY_VERSION:-latest}
     container_name: authentik-docker-proxy
     restart: unless-stopped
     labels:
