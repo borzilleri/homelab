@@ -78,6 +78,7 @@ services:
       HOMEPAGE_ALLOWED_HOSTS: home.sdf1.rampant.io,homepage-public:3000
       HOMEPAGE_FILE_AUTHENTIK_PASS: /run/secrets/authentik_pass
       HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
+      HOMEPAGE_FILE_PLEX_KEY: /run/secrets/plex_key
       HOMEPAGE_FILE_HA_TOKEN: /run/secrets/homeassistant_token
       HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
       HOMEPAGE_FILE_PROXMOX_PASS: /run/secrets/proxmox_token
@@ -91,6 +92,7 @@ services:
       - authentik_pass
       - calibre_pass
       - paperless_key
+      - plex_key
       - homeassistant_token
       - immich_key
       - proxmox_token
