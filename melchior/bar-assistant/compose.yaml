@@ -6,8 +6,6 @@ services:
     image: getmeili/meilisearch:v1.15
     container_name: ba-search
     restart: unless-stopped
-    labels:
-      wud.watch: false
     env_file:
       - /opt/appdata/bar-assistant/secrets/bar.env
     environment:
@@ -23,8 +21,6 @@ services:
   redis:
     image: redis
     restart: unless-stopped
-    labels:
-      wud.watch: false
     environment:
       ALLOW_EMPTY_PASSWORD: yes
     networks:
@@ -38,6 +34,7 @@ services:
       - meilisearch
       - redis
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/karlomikus/bar-assistant/releases/tag/v$${original}'
       docker-volume-backup.exec-label: "bar-assistant"
@@ -63,6 +60,7 @@ services:
     depends_on:
       - bar-assistant
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/karlomikus/vue-salt-rim/releases/tag/v$${original}'
     env_file:

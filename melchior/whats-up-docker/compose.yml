@@ -6,6 +6,7 @@ services:
     container_name: wud
     restart: unless-stopped
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/getwud/wud/releases/tag/$${original}'
     env_file:
@@ -14,11 +15,13 @@ services:
       TZ: America/Los_Angeles
       WUD_REGISTRY_LSCR_PRIVATE_USERNAME: borzilleri
       WUD_WATCHER_LOCAL_SOCKET: /var/run/docker.sock
+      WUD_WATCHER_LOCAL_WATCHBYDEFAULT: false
       WUD_WATCHER_MEDINA_HOST: http://medina.sdf1.internal
       WUD_WATCHER_MEDINA_PORT: 2376
       WUD_WATCHER_MEDINA_CAFILE: /certs/medina/ca.pem
       WUD_WATCHER_MEDINA_CERTFILE: /certs/medina/cert.pem
       WUD_WATCHER_MEDINA_KEYFILE: /certs/medina/key.pem
+      WUD_WATCHER_MEDINA_WATCHBYDEFAULT: false
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/appdata/whats-up-docker/data:/store

@@ -10,6 +10,7 @@ services:
     ports:
       - 8090:8090
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/henrygd/beszel/releases/tag/v$${original}'
     volumes:
@@ -22,9 +23,6 @@ services:
     container_name: beszel-agent
     restart: unless-stopped
     network_mode: host
-    labels:
-      wud.tag.include: '^\d+\.\d+\.\d+$'
-      wud.link.template: 'https://github.com/henrygd/beszel/releases/tag/v$${original}'
     env_file: /opt/appdata/beszel-agent/beszel-agent.env
     environment:
       PORT: 45876

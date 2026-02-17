@@ -7,6 +7,7 @@ services:
     container_name: homepage
     restart: unless-stopped
     labels:
+      wud.watch: true
       wud.tag.include: '^v\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/gethomepage/homepage/releases/tag/$${original}'
     environment:
@@ -69,8 +70,6 @@ services:
     image: ghcr.io/gethomepage/homepage:${HOMEPAGE_VERSION:-latest}
     container_name: homepage-public
     restart: unless-stopped
-    labels:
-      wud.watch: false
     environment:
       LOG_TARGETS: stdout
       PUID: 1000
@@ -101,6 +100,7 @@ services:
     container_name: homepage-dockerproxy
     restart: unless-stopped
     labels:
+      wud.watch: true
       wud.tag.include: '^v\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/Tecnativa/docker-socket-proxy/releases/tag/$${original}'
     environment:

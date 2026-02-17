@@ -17,6 +17,7 @@ services:
         max-size: "50m"
         max-file: "2"
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/NginxProxyManager/nginx-proxy-manager/releases/tag/v$${original}'
     environment:
@@ -46,7 +47,6 @@ services:
       MYSQL_PASSWORD_FILE: /run/secrets/db_pass
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_pass
     labels:
-      wud.watch: false
       docker-volume-backup.exec-label: "nginx-proxy-manager"
       docker-volume-backup.archive-pre: /bin/sh -c 'mysqldump -uroot -p$(cat /run/secrets/db_root_pass) --all-databases > /backup/npm_db.sql'
     volumes:

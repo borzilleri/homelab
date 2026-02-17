@@ -11,6 +11,7 @@ services: # Port 8084
       PGID: 1000
       TZ: America/Los_Angeles
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/calibrain/shelfmark/releases/tag/v$${original}'
     volumes:

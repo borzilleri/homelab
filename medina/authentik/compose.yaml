@@ -15,7 +15,6 @@ services:
       POSTGRES_USER: authentik
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_pass
     labels:
-      wud.watch: false
       docker-volume-backup.exec-label: "authentik"
       docker-volume-backup.archive-pre: /bin/sh -c 'pg_dumpall -U authentik --clean --file=/backup/authentik_db.sql'
     secrets:
@@ -36,6 +35,7 @@ services:
       postgresql:
         condition: service_healthy
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/goauthentik/authentik/releases/tag/version%2F$${original}'
     env_file:
@@ -58,8 +58,6 @@ services:
     depends_on:
       postgresql:
         condition: service_healthy
-    labels:
-      wud.watch: false
     env_file:
       - ./authentik.env
     secrets:
@@ -77,6 +75,7 @@ services:
     container_name: authentik-docker-proxy
     restart: unless-stopped
     labels:
+      wud.watch: true
       wud.tag.include: '^v\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/Tecnativa/docker-socket-proxy/releases/tag/$${original}'
     environment:

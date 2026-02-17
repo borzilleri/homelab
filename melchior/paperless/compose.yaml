@@ -5,8 +5,6 @@ services:
     image: docker.io/library/redis:7
     container_name: paperless-broker
     restart: unless-stopped
-    labels:
-      wud.watch: false
     volumes:
       - redis-data:/data
     networks:
@@ -22,7 +20,6 @@ services:
       POSTGRES_USER: paperless
       POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
     labels:
-      wud.watch: false
       docker-volume-backup.exec-label: "paperless"
       docker-volume-backup.archive-pre: /bin/sh -c 'pg_dumpall -U paperless --clean --file=/backup/paperless_db.sql'
     volumes:
@@ -42,6 +39,7 @@ services:
       - broker
     user: "1000:1000"
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/paperless-ngx/paperless-ngx/releases/tag/v$${original}'
     env_file:

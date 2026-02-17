@@ -11,7 +11,6 @@ services:
       POSTGRES_USER: servarr
       POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
     labels:
-      wud.watch: false
       docker-volume-backup.exec-label: "servarr"
       docker-volume-backup.archive-pre: /bin/sh -c 'pg_dumpall -U servarr --clean --file=/backup/servarr_db.sql'
     volumes:
@@ -28,6 +27,7 @@ services:
     depends_on:
       - db
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       PUID: 1000
@@ -51,6 +51,7 @@ services:
     depends_on:
       - db
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       PUID: 1000
@@ -75,6 +76,7 @@ services:
     depends_on:
       - db
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       PUID: 1000
@@ -99,6 +101,7 @@ services:
     depends_on:
       - db
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       PUID: 1000
@@ -121,6 +124,7 @@ services:
     restart: unless-stopped
     user: 1000:1000
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       TZ: America/Los_Angeles
@@ -135,6 +139,7 @@ services:
     container_name: sabnzbd
     restart: always
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+-ls\d+$'
       wud.link.template: 'https://github.com/linuxserver/docker-sabnzbd/releases/tag/$${original}'
     environment:
@@ -153,6 +158,7 @@ services:
     container_name: transmission
     restart: always
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+-r\d+-ls\d+$'
       wud.link.template: 'https://github.com/linuxserver/docker-transmission/releases/tag/$${original}'
     env_file: /opt/appdata/servarr/secrets/transmission.env

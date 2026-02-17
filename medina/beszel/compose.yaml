@@ -5,6 +5,7 @@ services:
     restart: unless-stopped
     network_mode: host
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/henrygd/beszel/releases/tag/v$${original}'
     volumes:

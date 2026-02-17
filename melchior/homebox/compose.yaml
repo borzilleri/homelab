@@ -13,6 +13,7 @@ services:
     depends_on:
       - db
     labels:
+      wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/sysadminsmedia/homebox/releases/tag/v$${original}'
     env_file: /opt/appdata/homebox/secrets/secrets.env
@@ -43,7 +44,6 @@ services:
       POSTGRES_USER: homebox
       POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
     labels:
-      wud.watch: false
       docker-volume-backup.exec-label: "homebox"
       docker-volume-backup.archive-pre: /bin/sh -c 'pg_dumpall -U homebox --clean --file=/backup/homebox_db.sql'
     volumes:
