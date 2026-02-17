@@ -81,6 +81,7 @@ services:
       HOMEPAGE_FILE_HA_TOKEN: /run/secrets/homeassistant_token
       HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
       HOMEPAGE_FILE_PROXMOX_PASS: /run/secrets/proxmox_token
+      HOMEPAGE_FILE_CALIBRE_PASS: /run/secrets/calibre_pass
     volumes:
       - /opt/appdata/homepage/public:/app/config
     networks:
@@ -88,6 +89,7 @@ services:
       - homelab
     secrets:
       - authentik_pass
+      - calibre_pass
       - paperless_key
       - homeassistant_token
       - immich_key
