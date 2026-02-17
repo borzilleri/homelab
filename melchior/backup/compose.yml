@@ -22,9 +22,6 @@ services:
       # Bar Assistant
       - /opt/appdata/bar-assistant/backups:/backup/bar-assistant/bar_assistant_data
       - /opt/appdata/bar-assistant/secrets:/backup/bar-assistant/bar_assistant_secrets
-      # Booklore (DB, app)
-      - /opt/appdata/booklore/data:/backup/booklore/booklore_data
-      - /opt/appdata/booklore/db_backup:/backup/booklore/booklore_db
       # Homebox (DB, Data, Secrets)
       - /opt/appdata/homebox/data:/backup/homebox/homebox_data
       - /opt/appdata/homebox/db/backup:/backup/homebox/homebox_db
