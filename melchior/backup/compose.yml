@@ -3,7 +3,7 @@ services:
     image: offen/docker-volume-backup:${VERSION:-latest}
     restart: unless-stopped
     labels:
-      wud.tag.include: '^\d+\.\d+\.\d+$'
+      wud.tag.include: '^v\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/offen/docker-volume-backup/releases/tag/$${original}'
     environment:
       BACKUP_CRON_EXPRESSION: "30 3 * * *"
