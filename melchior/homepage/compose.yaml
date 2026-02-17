@@ -102,6 +102,7 @@ services:
     restart: unless-stopped
     labels:
       wud.tag.include: '^v\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/Tecnativa/docker-socket-proxy/releases/tag/$${original}'
     environment:
       - CONTAINERS=1
       - SERVICES=1
