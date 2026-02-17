@@ -13,8 +13,15 @@ services:
     environment:
       TZ: America/Los_Angeles
       WUD_REGISTRY_LSCR_PRIVATE_USERNAME: borzilleri
+      WUD_WATCHER_MELCHIOR_SOCKET: /var/run/docker.sock
+      WUD_WATCHER_MEDINA_HOST: http://medina.sdf1.internal
+      WUD_WATCHER_MEDINA_PORT: 2376
+      WUD_WATCHER_MEDINA_CAFILE: /certs/medina/ca.pem
+      WUD_WATCHER_MEDINA_CERTFILE: /certs/medina/cert.pem
+      WUD_WATCHER_MEDINA_KEYFILE: /certs/medina/key.pem
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/appdata/whats-up-docker/data:/store
+      - /opt/appdata/docker-certs:/certs:ro
     networks:
       - homelab
