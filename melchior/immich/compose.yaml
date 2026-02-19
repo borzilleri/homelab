@@ -80,7 +80,9 @@ services:
       wud.link.template: ''
     env_file:
       - .env
+      - /opt/appdata/immich/secrets/power_tools.env
     environment:
+      IMMICH_URL: http://immich-server:2283
       DB_HOST: database
       DB_PORT: 5432
     healthcheck:
