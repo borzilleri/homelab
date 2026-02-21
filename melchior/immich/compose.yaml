@@ -85,12 +85,12 @@ services:
       IMMICH_URL: http://immich-server:2283
       DB_HOST: database
       DB_PORT: 5432
-    healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+    #healthcheck:
+    #  test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+    #  interval: 30s
+    #  timeout: 10s
+    #  retries: 3
+    #  start_period: 40s
     networks:
       - default
       - homelab
