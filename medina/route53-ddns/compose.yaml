@@ -1,9 +1,8 @@
-include:
-  - ../common/networks.yaml
-
 services:
-  route53-ddns: # Port 8080
+  route53-ddns:
     image: ghcr.io/borzilleri/route53_ddns:${VERSION:-latest}
+    ports:
+      - 8080:8080
     labels:
       wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
@@ -15,8 +14,6 @@ services:
       - aws_credentials
     volumes:
       - /opt/docker_data/route53-ddns/config/config.yaml:/config.yaml:ro
-    networks:
-      - homelab
 
 secrets:
   aws_credentials:
