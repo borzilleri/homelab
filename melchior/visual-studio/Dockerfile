@@ -10,7 +10,7 @@ RUN \
     # The two links here are just used as example, they are actually available on https://open-vsx.org/
     urls=(\
         # https://open-vsx.org/extension/redhat/vscode-yaml
-        https://open-vsx.org/api/redhat/vscode-yaml/1.19.1/file/redhat.vscode-yaml-1.19.1.vsix \
+        https://open-vsx.org/api/redhat/vscode-yaml/1.20.0/file/redhat.vscode-yaml-1.20.0.vsix \
     )\
     # Create a tmp dir for downloading
     && tdir=/tmp/exts && mkdir -p "${tdir}" && cd "${tdir}" \

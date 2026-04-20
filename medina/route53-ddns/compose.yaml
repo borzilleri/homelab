@@ -1,6 +1,7 @@
 services:
   route53-ddns:
     image: ghcr.io/borzilleri/route53_ddns:${VERSION:-latest}
+    container_name: "route53-ddns"
     ports:
       - 8080:8080
     labels:
