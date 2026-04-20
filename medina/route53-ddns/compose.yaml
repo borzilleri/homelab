@@ -14,10 +14,10 @@ services:
     secrets:
       - aws_credentials
     volumes:
-      - /opt/appdata/route53-ddns/config/config.yaml:/config.yaml:ro
+      - /opt/docker_data/route53-ddns/config/config.yaml:/config.yaml:ro
     networks:
       - homelab
 
 secrets:
   aws_credentials:
-    file: /opt/appdata/route53-ddns/secrets/aws_credentials
+    file: /opt/docker_data/route53-ddns/secrets/aws_credentials
