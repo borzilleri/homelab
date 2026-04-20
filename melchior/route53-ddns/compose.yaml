@@ -1,0 +1,23 @@
+include:
+  - ../common/networks.yaml
+
+services:
+  route53-ddns: # Port 8080
+    image: ghcr.io/borzilleri/route53_ddns:${VERSION:-latest}
+    labels:
+      wud.watch: true
+      wud.tag.include: '^\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/borzilleri/route53_ddns/releases/tag/v$${original}'
+    environment:
+      AWS_SHARED_CREDENTIALS_FILE: /run/secrets/aws_credentials
+      AWS_DEFAULT_REGION: us-west-2
+    secrets:
+      - aws_credentials
+    volumes:
+      - /opt/appdata/route53-ddns/config/config.yaml:/config.yaml:ro
+    networks:
+      - homelab
+
+secrets:
+  aws_credentials:
+    file: /opt/appdata/route53-ddns/secrets/aws_credentials
