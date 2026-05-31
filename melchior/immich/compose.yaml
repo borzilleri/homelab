@@ -134,7 +134,7 @@ services:
     secrets:
       - db_pass
     volumes:
-      - /opt/appdata/immich/db/pg14:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
     networks:
       - default
 
@@ -143,6 +143,7 @@ networks:
   default:
 
 volumes:
+  db-data:
   model-cache:
   library-data:
     driver: local
