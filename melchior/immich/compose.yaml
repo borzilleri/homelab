@@ -95,6 +95,22 @@ services:
       - default
       - homelab
 
+  immich-metadata-api: # Port 8000
+    image: ghcr.io/borzilleri/immich-metadata-api:1.0.0
+    container_name: immich_metadata_api
+    restart: unless-stopped
+    labels:
+      wud.watch: true
+      wud.tag.include: '^\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/borzilleri/immich-metadata-api/releases/tag/v$${original}'
+    environment:
+      IMMICH_INTERNAL_URL: http://immich-server:2283/api
+    depends_on:
+      - database
+      - immich-server
+    networks:
+      - default
+      - homelab
 
   immich-machine-learning:
     container_name: immich_machine_learning
