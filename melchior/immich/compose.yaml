@@ -105,6 +105,8 @@ services:
       wud.link.template: 'https://github.com/borzilleri/immich-metadata-api/releases/tag/v$${original}'
     environment:
       IMMICH_INTERNAL_URL: http://immich-server:2283/api
+    secrets:
+      - db_pass
     depends_on:
       - database
       - immich-server
