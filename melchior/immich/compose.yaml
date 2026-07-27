@@ -96,7 +96,7 @@ services:
       - homelab
 
   immich-metadata-api: # Port 8000
-    image: ghcr.io/borzilleri/immich-metadata-api:1.0.0
+    image: ghcr.io/borzilleri/immich-metadata-api:${METADATA_API_VERSION:-latest}
     container_name: immich_metadata_api
     restart: unless-stopped
     labels:
