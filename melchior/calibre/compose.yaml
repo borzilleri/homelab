@@ -3,7 +3,7 @@ include:
 
 services:
   calibre-web-automated: # Port 8083
-    image: crocodilestick/calibre-web-automated:${VERSION:-latest}
+    image: ghcr.io/new-usemame/calibre-web-nextgen:${VERSION:-latest}
     container_name: calibre
     restart: unless-stopped
     labels:
