@@ -12,20 +12,7 @@ services:
       wud.link.template: 'https://github.com/subdavis/kobo-book-downloader/releases/tag/$${original}'
     volumes:
       - /opt/appdata/kobodl/data/kobodl.json:/home/kobodl.json
-      - type: volume
-        source: central-dogma
-        target: /home/downloads
-        volume:
-          nocopy: true
-          subpath: downloads/bookdrop
+      - /opt/appdata/kobodl/downloads:/home/downloads
     command: --config /home/kobodl.json serve -h 0.0.0.0 -p 5000 --output-dir /home/downloads
     networks:
       - homelab
-
-volumes:
-  central-dogma:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=central-dogma.local,nolock,soft,nfsvers=4
-      device: :/volume1/Media
