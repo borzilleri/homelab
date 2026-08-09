@@ -1,0 +1,40 @@
+include:
+  - ../common/networks.yaml
+services:
+  grimoire: # Port 9481
+    image: hunterreadca/grimoire:${VERSION:-latest}
+    container_name: grimoire
+    restart: unless-stopped
+    labels:
+      wud.watch: true
+      wud.tag.include: '^\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/hunterreadca/grimoire/releases/tag/v$${original}'
+    environment:
+      - LIBRARY_PATH=/library
+      - DATA_PATH=/data
+      - WORKERS=2
+      - SECRET_KEY=${SECRET_KEY}
+      - VALKEY_URL=redis://valkey:6379/0
+    volumes:
+      - /opt/terminal_dogma/DogmaArchive/RPG Library:/library:ro
+      - /opt/appdata/grimoire/data:/data
+    depends_on:
+      - valkey
+    networks:
+      - grimoire
+      - homelab
+
+  valkey:
+    image: valkey/valkey:8-alpine
+    container_name: grimoire-valkey
+    restart: unless-stopped
+    volumes:
+      - valkey_data:/data
+    networks:
+      - grimoire
+
+volumes:
+  valkey_data:
+
+networks:
+  grimoire:
