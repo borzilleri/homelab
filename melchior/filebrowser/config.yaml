@@ -1,0 +1,36 @@
+server:
+  database:
+    path: "data/filebrowser.sqlite"
+  cacheDir: "data/tmp"
+  sources:
+    - path: "/home/filebrowser" # mount the docker home folder for convenience
+      name: Backend
+      config:
+        denyByDefault: true
+    - path: "/central-dogma"
+      name: Central Dogma
+      config:
+        denyByDefault: true
+    - path: "/DogmaArchive"
+      name: Dogma Archive
+      config:
+        denyByDefault: true
+  #externalUrl: 'https://<YOUR_IP>:8900' # if you plan to share externally, share links will be generated with this url
+  maxArchiveSize: 50 # maxiumum pre-archive size users are allowed to download at once.
+http:
+  trustProxyHeaders: true
+auth:
+  tokenExpirationHours: 2
+  methods:
+    password:
+      enabled: false
+    oidc:
+      enabled: true
+      clientId: "dyHmoAASHYjofXFwQmS3An7r4qsMhcYba5lGk8Ym"
+      clientSecret: "lLRSNev7vgZ1QwTAihrRSFHaW8rKgBjdQx5J6rYVFF30nWTXBbEhKcRncR2LPPQIXFnMWiQ36uX3QCzBYOecBkkecl7EIy0DKiXtWPpVbyeyWQ8CMMuhlZpmL0joqTIe"
+      issuerUrl: "https://auth.sdf1.rampant.io/application/o/file-browser"
+      scopes: "openid profile email"
+      userIdentifier: "preferred_username"
+      adminGroup: "service-admin"
+      userGroups:
+        - "homelab-public-users"

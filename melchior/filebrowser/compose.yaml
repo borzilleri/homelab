@@ -1,0 +1,28 @@
+include:
+  - ../common/networks.yaml
+
+services:
+  filebrowser: # Port 8900 (or 80?)
+    image: gtstef/filebrowser:${VERSION:-latest}
+    container_name: filebrowser
+    restart: unless-stopped
+    labels:
+      wud.watch: true
+      wud.tag.include: 'v^\d+\.\d+\.\d+$'
+      wud.link.template: ''
+    environment:
+      FILEBROWSER_CONFIG: "data/config.yaml"
+    volumes:
+      - /opt/appdata/filebrowser/data:/home/filebrowser/data
+      - /opt/terminal_dogma/DogmaArchive:/DogmaArchive
+      - central-dogma:/central-dogma
+    networks:
+      - homelab
+
+volumes:
+  central-dogma:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=central-dogma.local,nolock,soft,nfsvers=4
+      device: :/volume1/Media
