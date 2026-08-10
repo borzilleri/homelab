@@ -37,6 +37,7 @@ services:
       HOMEPAGE_FILE_HA_TOKEN: /run/secrets/homeassistant_token
       HOMEPAGE_FILE_BESZEL_PASS: /run/secrets/beszel_pass
       HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
+      HOMEPAGE_FILE_GRIMOIRE_KEY: /run/secrets/grimoire_key
     volumes:
       - /opt/appdata/homepage/main:/app/config
       - /opt/appdata/homepage/tls:/app/config/tls
@@ -66,6 +67,7 @@ services:
       - homeassistant_token
       - beszel_pass
       - immich_key
+      - grimoire_key
   homepage-public:
     image: ghcr.io/gethomepage/homepage:${HOMEPAGE_VERSION:-latest}
     container_name: homepage-public
@@ -82,6 +84,7 @@ services:
       HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
       HOMEPAGE_FILE_PROXMOX_PASS: /run/secrets/proxmox_token
       HOMEPAGE_FILE_CALIBRE_PASS: /run/secrets/calibre_pass
+      HOMEPAGE_FILE_GRIMOIRE_KEY: /run/secrets/grimoire_key
     volumes:
       - /opt/appdata/homepage/public:/app/config
     networks:
@@ -95,6 +98,7 @@ services:
       - homeassistant_token
       - immich_key
       - proxmox_token
+      - grimoire_key
   dockerproxy:
     image: ghcr.io/tecnativa/docker-socket-proxy:${PROXY_VERSION:-latest}
     container_name: homepage-dockerproxy
@@ -160,6 +164,8 @@ secrets:
     file: /opt/appdata/homepage/secrets/beszel_pass
   immich_key:
     file: /opt/appdata/homepage/secrets/immich_key
+  grimoire_key:
+    file: /opt/appdata/homepage/secrets/grimoire_key
 
 networks:
   default:
