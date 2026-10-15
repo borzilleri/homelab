@@ -4,7 +4,7 @@ include:
 services:
   app:
     container_name: bookorbit-app
-    image: ghcr.io/bookorbit/bookorbit:${VERSION:latest}
+    image: ghcr.io/bookorbit/bookorbit:${VERSION:-latest}
     restart: unless-stopped
     init: true
     env_file:
