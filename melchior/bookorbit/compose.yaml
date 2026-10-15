@@ -1,0 +1,96 @@
+include:
+  - ../common/networks.yaml
+
+services:
+  app:
+    container_name: bookorbit-app
+    image: ghcr.io/bookorbit/bookorbit:${VERSION:latest}
+    restart: unless-stopped
+    init: true
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: bookorbit
+      POSTGRES_USER: bookorbit
+      SETUP_BOOTSTRAP_TOKEN_FILE: /run/secrets/bootstrap_token
+      EMAIL_ENCRYPTION_KEY_FILE: /run/secrets/email_key
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      JWT_SECRET_FILE: /run/secrets/jwt_secret
+      BOOK_REQUEST_ENCRYPTION_KEY_FILE: /run/secrets/request_key
+      MIGRATION_ENCRYPTION_KEY_file: /run/secrets/migration_key
+      APP_URL: ${APP_URL?required}
+      CLIENT_URL: ${APP_URL?required}
+      NODE_MAX_OLD_SPACE_SIZE: ${NODE_MAX_OLD_SPACE_SIZE:-auto}
+      DISABLE_LOCAL_AUTH: ${DISABLE_LOCAL_AUTH:-false}
+      BOOK_DOCK_PATH: /book_dock
+      LIBRARY_BROWSE_ROOT: /books
+    secrets:
+      - bootstrap_token
+      - email_key
+      - db_password
+      - jwt_secret
+      - migration_key
+      - request_key
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - /opt/appdata/bookorbit/data:/data
+      - /opt/appdata/bookorbit/book_dock:/book_dock
+      - /opt/terminal_dogma/AppData/bookorbit_books:/books
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 30s
+
+  postgres:
+    container_name: bookorbit-db
+    image: pgvector/pgvector:pg18
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: bookorbit
+      POSTGRES_USER: bookorbit
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    secrets:
+      - db_password
+    volumes:
+      - /opt/appdata/bookorbit/db:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        ["CMD-SHELL", 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+secrets:
+  bootstrap_token:
+    file: /opt/appdata/bookorbit/secrets/bootstrap_token
+  email_key:
+    file: /opt/appdata/bookorbit/secrets/email_key
+  db_password:
+    file: /opt/appdata/bookorbit/secrets/db_password
+  jwt_secret:
+    file: /opt/appdata/bookorbit/secrets/jwt_secret
+  migration_key:
+    file: /opt/appdata/bookorbit/secrets/migration_key
+  request_key:
+    file: /opt/appdata/bookorbit/secrets/request_key
