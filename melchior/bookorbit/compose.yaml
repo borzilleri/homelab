@@ -59,6 +59,9 @@ services:
     security_opt:
       - no-new-privileges:true
     stop_grace_period: 30s
+    networks:
+      - default
+      - homelab
 
   postgres:
     container_name: bookorbit-db
@@ -80,6 +83,8 @@ services:
       timeout: 5s
       retries: 10
       start_period: 20s
+    networks:
+      - default
 
 secrets:
   bootstrap_token:
@@ -94,3 +99,6 @@ secrets:
     file: /opt/appdata/bookorbit/secrets/migration_key
   request_key:
     file: /opt/appdata/bookorbit/secrets/request_key
+
+networks:
+  default:
