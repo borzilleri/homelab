@@ -7,6 +7,10 @@ services:
     image: ghcr.io/bookorbit/bookorbit:${VERSION:-latest}
     restart: unless-stopped
     init: true
+    labels:
+      wud.watch: true
+      wud.tag.include: '^\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/bookorbit/bookorbit/v$${original}'
     env_file:
       - .env
     environment:
