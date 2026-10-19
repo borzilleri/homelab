@@ -16,7 +16,7 @@ services:
       SECRET_KEY: ${SECRET_KEY}
       VALKEY_URL: redis://valkey:6379/0
     volumes:
-      - /opt/terminal_dogma/DogmaArchive/RPG Library:/library:ro
+      - /opt/terminal_dogma/DogmaArchive/RPG Library:/library
       - /opt/appdata/grimoire/data:/data
     depends_on:
       - valkey
