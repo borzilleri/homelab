@@ -31,6 +31,7 @@ services:
       - 9443:9443
       - 9000:9000
     user: "1000:1000"
+    shm_size: 512mb
     depends_on:
       postgresql:
         condition: service_healthy
@@ -55,6 +56,7 @@ services:
     restart: unless-stopped
     command: worker
     user: "1000:1000"
+    shm_size: 512mb
     depends_on:
       postgresql:
         condition: service_healthy
