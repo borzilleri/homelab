@@ -47,7 +47,7 @@ services:
       - fastmail_user
       - fastmail_pass
     volumes:
-      - /opt/docker_data/authentik/data/media:/media
+      - /opt/docker_data/authentik/data/data:/data
       - /opt/docker_data/authentik/data/certs:/certs
       - /opt/docker_data/authentik/data/custom-templates:/templates
   worker:
@@ -69,7 +69,7 @@ services:
       - fastmail_pass
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/docker_data/authentik/data/media:/media
+      - /opt/docker_data/authentik/data/data:/data
       - /opt/docker_data/authentik/data/certs:/certs
       - /opt/docker_data/authentik/data/custom-templates:/templates
   dockerproxy:
