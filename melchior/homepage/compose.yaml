@@ -77,6 +77,10 @@ services:
       PUID: 1000
       PGID: 1000
       HOMEPAGE_ALLOWED_HOSTS: home.sdf1.rampant.io,homepage-public:3000
+      HOMEPAGE_AUTH_ENABLED: true
+      HOMEPAGE_EXTERNAL_URL: https://home.sdf1.rampant.io
+      HOMEPAGE_OIDC_NAME: Authentik
+      HOMEPAGE_OIDC_AUTO_LOGIN: true
       HOMEPAGE_FILE_AUTHENTIK_PASS: /run/secrets/authentik_pass
       HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
       HOMEPAGE_FILE_PLEX_KEY: /run/secrets/plex_key
@@ -85,12 +89,26 @@ services:
       HOMEPAGE_FILE_PROXMOX_PASS: /run/secrets/proxmox_token
       HOMEPAGE_FILE_CALIBRE_PASS: /run/secrets/calibre_pass
       HOMEPAGE_FILE_GRIMOIRE_KEY: /run/secrets/grimoire_key
+    command:
+      # Absolute bullshit nonsense because homepage devs are fucking idiots
+      # and didn't implement docker secrets properly. Morons.
+      - /bin/sh
+      - -ec
+      - |-
+        HOMEPAGE_AUTH_SECRET="$$(cat /run/secrets/homepage_auth_secret)"
+        HOMEPAGE_OIDC_CLIENT_ID="$$(cat /run/secrets/homepage_oidc_client_id)"
+        HOMEPAGE_OIDC_CLIENT_SECRET="$$(cat /run/secrets/homepage_oidc_client_secret)"
+        export HOMEPAGE_AUTH_SECRET HOMEPAGE_OIDC_CLIENT_ID HOMEPAGE_OIDC_CLIENT_SECRET
+        exec node server.js
     volumes:
       - /opt/appdata/homepage/public:/app/config
     networks:
       - default
       - homelab
     secrets:
+      - homepage_auth_secret
+      - homepage_oidc_client_id
+      - homepage_oidc_client_secret
       - authentik_pass
       - calibre_pass
       - paperless_key
@@ -118,6 +136,12 @@ services:
       - default
 
 secrets:
+  homepage_auth_secret:
+    file: /opt/appdata/homepage/secrets/homepage_auth_secret
+  homepage_oidc_client_id:
+    file: /opt/appdata/homepage/secrets/homepage_oidc_client_id
+  homepage_oidc_client_secret:
+    file: /opt/appdata/homepage/secrets/homepage_oidc_client_secret
   authentik_pass:
     file: /opt/appdata/homepage/secrets/authentik_pass
   authentik_api_token:
