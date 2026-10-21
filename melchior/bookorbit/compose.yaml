@@ -49,6 +49,18 @@ services:
       - /opt/appdata/bookorbit/data:/data
       - /opt/appdata/bookorbit/book_dock:/book_dock
       - /opt/terminal_dogma/AppData/bookorbit_books:/books
+      - type: volume
+        source: central-dogma
+        target: /downloads/sabnzbd
+        volume:
+          nocopy: true
+          subpath: downloads/bookdrop
+      - type: volume
+        source: central-dogma
+        target: /downloads/transmission
+        volume:
+          nocopy: true
+          subpath: downloads/transmission/complete
     read_only: true
     tmpfs:
       - /tmp
@@ -106,3 +118,11 @@ secrets:
 
 networks:
   default:
+
+volumes:
+  central-dogma:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=central-dogma.local,nolock,soft,nfsvers=4
+      device: :/volume1/Media
