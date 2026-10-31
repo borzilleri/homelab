@@ -1,6 +1,9 @@
 include:
   - ../common/networks.yaml
 
+# Additional Plugins:
+# https://github.com/Evan-2007/bookorbit-annas-archive-plugin/releases
+
 services:
   app:
     container_name: bookorbit-app
