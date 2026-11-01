@@ -1,0 +1,18 @@
+include:
+  - ../common/networks.yaml
+services:
+  dockhand: #Port 3000
+    image: fnsys/dockhand:${VERSION:-latest}
+    container_name: dockhand
+    restart: unless-stopped
+    environment:
+      PUID: 1000
+      PGID: 1000
+      DISABLE_LOCAL_LOGIN: false
+      OIDC_AUTOLOGIN: false
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - dockhand_data:/app/data
+
+volumes:
+  dockhand_data:
