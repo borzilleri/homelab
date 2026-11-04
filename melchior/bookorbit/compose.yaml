@@ -121,6 +121,7 @@ secrets:
 
 networks:
   default:
+    internal: true
 
 volumes:
   central-dogma:
