@@ -1,5 +1,3 @@
-include:
-  - ../common/networks.yaml
 services:
   dockhand: #Port 3000
     image: fnsys/dockhand:${VERSION:-latest}
@@ -18,3 +16,8 @@ services:
 
 volumes:
   dockhand_data:
+
+networks:
+  homelab:
+    name: homelab
+    external: true
