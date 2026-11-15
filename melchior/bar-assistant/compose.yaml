@@ -42,16 +42,18 @@ services:
     env_file:
       - /opt/appdata/bar-assistant/secrets/bar.env
     environment:
+      APP_URL: "https://bar.sdf1.rampant.io/api"
       MEILISEARCH_HOST: http://meilisearch:7700
       REDIS_HOST: redis
       CACHE_DRIVER: redis
       SESSION_DRIVER: redis
+      AUTHENTIK_BASE_URL: https://auth.sdf1.rampant.io
+      AUTHENTIK_REDIRECT_URI: https://bar.sdf1.rampant.io/oauth/callback
     networks:
       - homelab
       - default
     volumes:
       - bar_data:/var/www/cocktails/storage/bar-assistant
-      - /opt/appdata/bar-assistant/backups:/var/www/cocktails/storage/bar-assistant/backups
 
   salt-rim: # Port 8080
     image: barassistant/salt-rim:${SALTRIM_VERSION:-latest}
@@ -63,8 +65,9 @@ services:
       wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/karlomikus/vue-salt-rim/releases/tag/v$${original}'
-    env_file:
-      - /opt/appdata/bar-assistant/secrets/bar.env
+    environment:
+      API_URL: "https://bar.sdf1.rampant.io/api"
+      MEILISEARCH_URL: "https://bar.sdf1.rampant.io/search"
     networks:
       - homelab
       - default
@@ -76,3 +79,5 @@ volumes:
 networks:
   default:
     internal: true
+  homelab:
+    external: true
