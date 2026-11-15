@@ -1,9 +1,11 @@
 Homelab setup/configuration files.
 
+## Structure
 
-## Updating Images
+`docker/`: Contains subfolders with compose stacks for machine-agnostic standalone services.
 
-```bash
-docker compose pull
-docker compose up -d <service name>
-```
+`<machine name>`: Contains machine-specific files.
+
+`<machine name>/docker/`: Contains machine-specific docker compose stacks
+
+`common/` - Deprecated
