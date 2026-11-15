@@ -1,0 +1,8 @@
+name: homepage-proxy
+services:
+  dockerproxy:
+    extends:
+      file: proxy-common.yml
+      service: dockerproxy
+    ports:
+      - 2375:2375

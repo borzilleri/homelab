@@ -1,0 +1,16 @@
+services:
+  dockerproxy:
+    image: ghcr.io/tecnativa/docker-socket-proxy:${PROXY_VERSION}
+    container_name: homepage-dockerproxy
+    restart: unless-stopped
+    labels:
+      wud.watch: true
+      wud.tag.include: '^v\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/Tecnativa/docker-socket-proxy/releases/tag/$${original}'
+    environment:
+      - CONTAINERS=1
+      - SERVICES=1
+      - TASKS=1
+      - POST=0
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
