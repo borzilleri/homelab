@@ -1,3 +1,7 @@
+# Note:
+# Dockhand is written by idiots who dont properly support compose include
+# & extend directives. So this file isn't very useful. Kept for future use /
+# posterity
 services:
   dockerproxy:
     image: ghcr.io/tecnativa/docker-socket-proxy:${PROXY_VERSION}
