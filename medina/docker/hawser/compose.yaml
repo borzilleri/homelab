@@ -7,9 +7,9 @@ services:
     ports:
       - 2376:2376
     env_file:
-      - /opt/hawser/secrets.env
+      - /opt/docker_data/hawser/secrets.env
     environment:
       STACKS_DIR: /opt/hawser-stacks
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/hawser/stacks:/opt/hawser-stacks
+      - /opt/docker_data/hawser/stacks:/opt/hawser-stacks
