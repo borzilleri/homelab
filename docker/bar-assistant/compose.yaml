@@ -4,8 +4,6 @@ services:
     image: getmeili/meilisearch:v1.15
     container_name: ba-search
     restart: unless-stopped
-    env_file:
-      - /opt/appdata/bar-assistant/secrets/bar.env
     environment:
       MEILI_NO_ANALYTICS: true
       MEILI_ENV: production
@@ -35,10 +33,6 @@ services:
       wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/karlomikus/bar-assistant/releases/tag/v$${original}'
-      docker-volume-backup.exec-label: "bar-assistant"
-      docker-volume-backup.archive-pre: /bin/sh -c 'php artisan bar:full-backup'
-    env_file:
-      - /opt/appdata/bar-assistant/secrets/bar.env
     environment:
       APP_URL: "https://bar.sdf1.rampant.io/api"
       MEILISEARCH_HOST: http://meilisearch:7700
