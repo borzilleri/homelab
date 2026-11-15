@@ -13,7 +13,7 @@ services:
       MEILI_ENV: production
     networks:
       - homelab
-      - default
+      - internal
     volumes:
       - meili_data:/meili_data
 
@@ -24,7 +24,7 @@ services:
     environment:
       ALLOW_EMPTY_PASSWORD: yes
     networks:
-      - default
+      - internal
 
   bar-assistant: # Port 8080
     image: barassistant/server:${BAR_VERSION:-latest}
@@ -51,7 +51,7 @@ services:
       AUTHENTIK_REDIRECT_URI: https://bar.sdf1.rampant.io/oauth/callback
     networks:
       - homelab
-      - default
+      - internal
     volumes:
       - bar_data:/var/www/cocktails/storage/bar-assistant
 
@@ -70,14 +70,14 @@ services:
       MEILISEARCH_URL: "https://bar.sdf1.rampant.io/search"
     networks:
       - homelab
-      - default
+      - internal
 
 volumes:
   meili_data:
   bar_data:
 
 networks:
-  default:
+  internal:
     internal: true
   homelab:
     external: true
