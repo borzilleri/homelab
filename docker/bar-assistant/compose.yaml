@@ -1,6 +1,4 @@
-include:
-  - ../common/networks.yaml
-
+name: bar-assistant
 services:
   meilisearch: # Port 7700
     image: getmeili/meilisearch:v1.15
