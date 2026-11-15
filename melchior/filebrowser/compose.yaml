@@ -1,9 +1,7 @@
-include:
-  - ../common/networks.yaml
-
+name: filebrowser
 services:
   filebrowser: # Port 8900 (or 80?)
-    image: gtstef/filebrowser:${VERSION:-latest}
+    image: gtstef/filebrowser:${VERSION}
     container_name: filebrowser
     restart: unless-stopped
     labels:
@@ -13,9 +11,9 @@ services:
     environment:
       FILEBROWSER_CONFIG: "data/config.yaml"
     volumes:
-      - /opt/appdata/filebrowser/data:/home/filebrowser/data
-      - /opt/terminal_dogma/DogmaArchive:/DogmaArchive
       - central-dogma:/central-dogma
+      - dogma-archive:/DogmaArchive
+      - /opt/appdata/filebrowser/data:/home/filebrowser/data
     networks:
       - homelab
 
@@ -24,5 +22,15 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=central-dogma.local,nolock,soft,nfsvers=4
+      o: addr=central-dogma.sdf1.internal,nolock,soft,nfsvers=4
       device: :/volume1/Media
+  dogma-archive:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.sdf1.internal,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/DogmaArchive
+
+networks:
+  homelab:
+    external: true
