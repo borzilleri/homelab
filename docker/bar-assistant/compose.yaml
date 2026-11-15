@@ -27,7 +27,7 @@ services:
       - internal
 
   bar-assistant: # Port 8080
-    image: barassistant/server:${BAR_VERSION:-latest}
+    image: barassistant/server:${BAR_VERSION}
     container_name: bar-assistant
     restart: unless-stopped
     depends_on:
@@ -44,6 +44,7 @@ services:
     environment:
       APP_URL: "https://bar.sdf1.rampant.io/api"
       MEILISEARCH_HOST: http://meilisearch:7700
+      MEILISEARCH_KEY: ${MEILI_MASTER_KEY}
       REDIS_HOST: redis
       CACHE_DRIVER: redis
       SESSION_DRIVER: redis
@@ -56,7 +57,7 @@ services:
       - bar_data:/var/www/cocktails/storage/bar-assistant
 
   salt-rim: # Port 8080
-    image: barassistant/salt-rim:${SALTRIM_VERSION:-latest}
+    image: barassistant/salt-rim:${SALTRIM_VERSION}
     container_name: salt-rim
     restart: unless-stopped
     depends_on:
