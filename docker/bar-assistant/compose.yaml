@@ -5,6 +5,7 @@ services:
     container_name: ba-search
     restart: unless-stopped
     environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
       MEILI_NO_ANALYTICS: true
       MEILI_ENV: production
     networks:
@@ -42,6 +43,10 @@ services:
       SESSION_DRIVER: redis
       AUTHENTIK_BASE_URL: https://auth.sdf1.rampant.io
       AUTHENTIK_REDIRECT_URI: https://bar.sdf1.rampant.io/oauth/callback
+      AUTHENTIK_CLIENT_ID: ${AUTHENTIK_CLIENT_ID}
+      AUTHENTIK_CLIENT_SECRET: ${AUTHENTIK_CLIENT_SECRET}
+      ENABLE_PASSWORD_LOGIN: ${ENABLE_PASSWORD_LOGIN}
+      ALLOW_REGISTRATION: ${ALLOW_REGISTRATION}
     networks:
       - homelab
       - internal
