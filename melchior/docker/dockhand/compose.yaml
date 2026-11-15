@@ -10,6 +10,7 @@ services:
       OIDC_AUTOLOGIN: false
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/homelab:/homelab:ro
       - dockhand_data:/app/data
     networks:
       - homelab
