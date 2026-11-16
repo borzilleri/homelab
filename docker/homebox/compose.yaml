@@ -7,7 +7,7 @@ include:
 
 services:
   homebox:
-    image: ghcr.io/sysadminsmedia/homebox:${HOMEBOX_VERSION:-latest}
+    image: ghcr.io/sysadminsmedia/homebox:${VERSION}
     container_name: homebox
     restart: unless-stopped
     depends_on:
@@ -16,7 +16,6 @@ services:
       wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/sysadminsmedia/homebox/releases/tag/v$${original}'
-    env_file: /opt/appdata/homebox/secrets/secrets.env
     environment:
       HBOX_LOG_LEVEL: info
       HBOX_LOG_FORMAT: text
@@ -29,13 +28,15 @@ services:
       HBOX_DATABASE_USERNAME: homebox
       HBOX_DATABASE_DATABASE: homebox
       HBOX_DATABASE_SSL_MODE: disable
+      HBOX_DATABASE_PASSWORD: ${DB_PASSWORD}
+      HBOX_AUTH_API_KEY_PEPPER: ${HBOX_AUTH_API_KEY_PEPPER}
     networks:
-      - default
+      - internal
       - homelab
     volumes:
       - /opt/appdata/homebox/data:/data
   db:
-    image: docker.io/library/postgres:${PGSQL_VERSION:-16-bookworm}
+    image: docker.io/library/postgres:16-bookworm
     container_name: homebox-db
     restart: unless-stopped
     user: "1000:1000"
@@ -43,21 +44,21 @@ services:
       POSTGRES_DB: homebox
       POSTGRES_USER: homebox
       POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
-    labels:
-      docker-volume-backup.exec-label: "homebox"
-      docker-volume-backup.archive-pre: /bin/sh -c 'pg_dumpall -U homebox --clean --file=/backup/homebox_db.sql'
     volumes:
       - /opt/appdata/homebox/db/pg16:/var/lib/postgresql/data
       - /opt/appdata/homebox/db/backup:/backup
-    networks:
-      - default
     secrets:
       - db_pass
+    networks:
+      - internal
 
 networks:
-  default:
+  internal:
     internal: true
+  homelab:
+    external: true
 
 secrets:
   db_pass:
+    environment: "DB_PASSWORD"
     file: /opt/appdata/homebox/secrets/db_pass
