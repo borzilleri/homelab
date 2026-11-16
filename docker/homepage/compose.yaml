@@ -13,7 +13,6 @@ services:
       PGID: 1000
       LOG_TARGETS: stdout
       HOMEPAGE_ALLOWED_HOSTS: homepage.sdf1.site
-      HOMEPAGE_FILE_AUTHENTIK_PASS: /run/secrets/authentik_pass
       HOMEPAGE_FILE_AUTHENTIK_API_TOKEN: /run/secrets/authentik_api_token
       HOMEPAGE_FILE_BAZARR_KEY: /run/secrets/bazarr_key
       HOMEPAGE_FILE_NPM_PASS: /run/secrets/npm_pass
@@ -41,7 +40,6 @@ services:
       - internal
       - homelab
     secrets:
-      - authentik_pass
       - authentik_api_token
       - bazarr_key
       - npm_pass
@@ -77,7 +75,6 @@ services:
       HOMEPAGE_OIDC_ISSUER: https://auth.sdf1.rampant.io/application/o/homepage/
       HOMEPAGE_OIDC_NAME: Authentik
       HOMEPAGE_OIDC_AUTO_LOGIN: true
-      HOMEPAGE_FILE_AUTHENTIK_PASS: /run/secrets/authentik_pass
       HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
       HOMEPAGE_FILE_PLEX_KEY: /run/secrets/plex_key
       HOMEPAGE_FILE_HA_TOKEN: /run/secrets/homeassistant_token
@@ -105,7 +102,6 @@ services:
       - homepage_auth_secret
       - homepage_oidc_client_id
       - homepage_oidc_client_secret
-      - authentik_pass
       - calibre_pass
       - paperless_key
       - plex_key
