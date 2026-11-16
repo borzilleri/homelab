@@ -1,0 +1,187 @@
+name: homepage
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:${HOMEPAGE_VERSION}
+    container_name: homepage
+    restart: unless-stopped
+    labels:
+      wud.watch: true
+      wud.tag.include: '^v\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/gethomepage/homepage/releases/tag/$${original}'
+    environment:
+      PUID: 1000
+      PGID: 1000
+      LOG_TARGETS: stdout
+      HOMEPAGE_ALLOWED_HOSTS: homepage.sdf1.site
+      HOMEPAGE_FILE_AUTHENTIK_PASS: /run/secrets/authentik_pass
+      HOMEPAGE_FILE_AUTHENTIK_API_TOKEN: /run/secrets/authentik_api_token
+      HOMEPAGE_FILE_BAZARR_KEY: /run/secrets/bazarr_key
+      HOMEPAGE_FILE_NPM_PASS: /run/secrets/npm_pass
+      HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
+      HOMEPAGE_FILE_PLEX_KEY: /run/secrets/plex_key
+      HOMEPAGE_FILE_PROWLARR_KEY: /run/secrets/prowlarr_key
+      HOMEPAGE_FILE_RADARR_KEY: /run/secrets/radarr_key
+      HOMEPAGE_FILE_SABNZBD_KEY: /run/secrets/sabnzbd_key
+      HOMEPAGE_FILE_SONARR_KEY: /run/secrets/sonarr_key
+      HOMEPAGE_FILE_SYNOLOGY_PASS: /run/secrets/synology_pass
+      HOMEPAGE_FILE_TAILSCALE_KEY: /run/secrets/tailscale_key
+      HOMEPAGE_FILE_TAUTULLI_KEY: /run/secrets/tautulli_key
+      HOMEPAGE_FILE_TRANSMISSION_PASS: /run/secrets/transmission_pass
+      HOMEPAGE_FILE_TRUENAS_KEY: /run/secrets/truenas_key
+      HOMEPAGE_FILE_UNIFI_UCG_MAX_KEY: /run/secrets/unifi_ucg_max_key
+      HOMEPAGE_FILE_HOMEBOX_PASS: /run/secrets/homebox_pass
+      HOMEPAGE_FILE_PROXMOX_PASS: /run/secrets/proxmox_token
+      HOMEPAGE_FILE_HA_TOKEN: /run/secrets/homeassistant_token
+      HOMEPAGE_FILE_BESZEL_PASS: /run/secrets/beszel_pass
+      HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
+      HOMEPAGE_FILE_GRIMOIRE_KEY: /run/secrets/grimoire_key
+    volumes:
+      - /opt/appdata/homepage/main:/app/config
+    networks:
+      - internal
+      - homelab
+    secrets:
+      - authentik_pass
+      - authentik_api_token
+      - bazarr_key
+      - npm_pass
+      - paperless_key
+      - plex_key
+      - prowlarr_key
+      - radarr_key
+      - sabnzbd_key
+      - sonarr_key
+      - synology_pass
+      - tailscale_key
+      - tautulli_key
+      - transmission_pass
+      - truenas_key
+      - unifi_ucg_max_key
+      - homebox_pass
+      - proxmox_token
+      - homeassistant_token
+      - beszel_pass
+      - immich_key
+      - grimoire_key
+  homepage-public:
+    image: ghcr.io/gethomepage/homepage:${HOMEPAGE_VERSION}
+    container_name: homepage-public
+    restart: unless-stopped
+    environment:
+      PUID: 1000
+      PGID: 1000
+      LOG_TARGETS: stdout
+      HOMEPAGE_ALLOWED_HOSTS: home.sdf1.rampant.io,homepage-public:3000
+      HOMEPAGE_AUTH_ENABLED: true
+      HOMEPAGE_EXTERNAL_URL: https://home.sdf1.rampant.io
+      HOMEPAGE_OIDC_ISSUER: https://auth.sdf1.rampant.io/application/o/homepage/
+      HOMEPAGE_OIDC_NAME: Authentik
+      HOMEPAGE_OIDC_AUTO_LOGIN: true
+      HOMEPAGE_FILE_AUTHENTIK_PASS: /run/secrets/authentik_pass
+      HOMEPAGE_FILE_PAPERLESS_KEY: /run/secrets/paperless_key
+      HOMEPAGE_FILE_PLEX_KEY: /run/secrets/plex_key
+      HOMEPAGE_FILE_HA_TOKEN: /run/secrets/homeassistant_token
+      HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
+      HOMEPAGE_FILE_PROXMOX_PASS: /run/secrets/proxmox_token
+      HOMEPAGE_FILE_CALIBRE_PASS: /run/secrets/calibre_pass
+      HOMEPAGE_FILE_GRIMOIRE_KEY: /run/secrets/grimoire_key
+    command:
+      # Absolute bullshit nonsense because homepage devs are fucking idiots
+      # and didn't implement docker secrets properly. Morons.
+      - /bin/sh
+      - -ec
+      - |-
+        HOMEPAGE_AUTH_SECRET="$$(cat /run/secrets/homepage_auth_secret)"
+        HOMEPAGE_OIDC_CLIENT_ID="$$(cat /run/secrets/homepage_oidc_client_id)"
+        HOMEPAGE_OIDC_CLIENT_SECRET="$$(cat /run/secrets/homepage_oidc_client_secret)"
+        export HOMEPAGE_AUTH_SECRET HOMEPAGE_OIDC_CLIENT_ID HOMEPAGE_OIDC_CLIENT_SECRET
+        exec node server.js
+    volumes:
+      - /opt/appdata/homepage/public:/app/config
+    networks:
+      - internal
+      - homelab
+    secrets:
+      - homepage_auth_secret
+      - homepage_oidc_client_id
+      - homepage_oidc_client_secret
+      - authentik_pass
+      - calibre_pass
+      - paperless_key
+      - plex_key
+      - homeassistant_token
+      - immich_key
+      - proxmox_token
+      - grimoire_key
+  dockerproxy:
+    image: ghcr.io/tecnativa/docker-socket-proxy:${PROXY_VERSION}
+    restart: unless-stopped
+    labels:
+      wud.watch: true
+      wud.tag.include: '^v\d+\.\d+\.\d+$'
+      wud.link.template: 'https://github.com/Tecnativa/docker-socket-proxy/releases/tag/$${original}'
+    environment:
+      - CONTAINERS=1
+      - SERVICES=1
+      - TASKS=1
+      - POST=0
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - internal
+
+networks:
+  internal:
+    internal: true
+  homelab:
+    external: true
+
+secrets:
+  homepage_auth_secret:
+    environment: "HOMEPAGE_AUTH_SECRET"
+  homepage_oidc_client_id:
+    environment: "OIDC_CLIENT_ID"
+  homepage_oidc_client_secret:
+    environment: "OIDC_CLIENT_SECRET"
+  authentik_api_token:
+    environment: "AUTHENTIK_API_TOKEN"
+  bazarr_key:
+    environment: "BAZARR_API_KEY"
+  npm_pass:
+    environment: "NPM_PASSWORD"
+  paperless_key:
+    environment: "PAPERLESS_API_KEY"
+  plex_key:
+    environment: "PLEX_API_KEY"
+  prowlarr_key:
+    environment: "PROWLARR_API_KEY"
+  radarr_key:
+    environment: "RADARR_API_KEY"
+  sabnzbd_key:
+    environment: "SABNZBD_API_KEY"
+  sonarr_key:
+    environment: "SONARR_API_KEY"
+  synology_pass:
+    environment: "SYNOLOGY_PASSWORD"
+  tailscale_key:
+    environment: "TAILSCALE_API_KEY"
+  tautulli_key:
+    environment: "TAUTULLI_API_KEY"
+  transmission_pass:
+    environment: "TRANSMISSION_PASSWORD"
+  truenas_key:
+    environment: "TRUENAS_API_KEY"
+  unifi_ucg_max_key:
+    environment: "UNIFI_API_KEY"
+  homebox_pass:
+    environment: "HOMEBOX_PASSWORD"
+  proxmox_token:
+    environment: "PROXMOX_TOKEN"
+  homeassistant_token:
+    environment: "HOME_ASSISTANT_TOKEN"
+  beszel_pass:
+    environment: "BESZEL_PASSWORD"
+  immich_key:
+    environment: "IMMICH_API_KEY"
+  grimoire_key:
+    environment: "GRIMOIRE_API_KEY"
