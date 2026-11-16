@@ -58,4 +58,3 @@ networks:
 secrets:
   db_pass:
     environment: "DB_PASSWORD"
-    file: /opt/appdata/homebox/secrets/db_pass
