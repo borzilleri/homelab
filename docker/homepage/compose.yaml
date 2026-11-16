@@ -80,7 +80,6 @@ services:
       HOMEPAGE_FILE_HA_TOKEN: /run/secrets/homeassistant_token
       HOMEPAGE_FILE_IMMICH_KEY: /run/secrets/immich_key
       HOMEPAGE_FILE_PROXMOX_PASS: /run/secrets/proxmox_token
-      HOMEPAGE_FILE_CALIBRE_PASS: /run/secrets/calibre_pass
       HOMEPAGE_FILE_GRIMOIRE_KEY: /run/secrets/grimoire_key
     command:
       # Absolute bullshit nonsense because homepage devs are fucking idiots
@@ -102,7 +101,6 @@ services:
       - homepage_auth_secret
       - homepage_oidc_client_id
       - homepage_oidc_client_secret
-      - calibre_pass
       - paperless_key
       - plex_key
       - homeassistant_token
