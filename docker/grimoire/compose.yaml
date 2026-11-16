@@ -8,8 +8,6 @@ services:
       wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/hunterreadca/grimoire/releases/tag/v$${original}'
-    env_file:
-      - grimoire.env
     environment:
       TZ: America/Los_Angeles
       SECRET_KEY: ${SECRET_KEY}
