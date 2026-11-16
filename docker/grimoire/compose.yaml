@@ -1,8 +1,7 @@
-include:
-  - ../common/networks.yaml
+name: grimoire
 services:
   grimoire: # Port 9481
-    image: hunterreadca/grimoire:${VERSION:-latest}
+    image: hunterreadca/grimoire:${VERSION}
     container_name: grimoire
     restart: unless-stopped
     labels:
@@ -15,13 +14,22 @@ services:
       TZ: America/Los_Angeles
       SECRET_KEY: ${SECRET_KEY}
       VALKEY_URL: redis://valkey:6379/0
+      WORKERS: 2
+      LIBRARY_PATH: /library
+      DATA_PATH: /data
+      BASE_URL: https://grimoire.sdf1.rampant.io
     volumes:
-      - /opt/terminal_dogma/DogmaArchive/RPG Library:/library
       - /opt/appdata/grimoire/data:/data
+      - type: volume
+        source: dogma-archive
+        target: /library
+        volume:
+          nocopy: true
+          subpath: "RPG Library"
     depends_on:
       - valkey
     networks:
-      - grimoire
+      - internal
       - homelab
 
   valkey:
@@ -31,10 +39,19 @@ services:
     volumes:
       - valkey_data:/data
     networks:
-      - grimoire
+      - internal
 
 volumes:
   valkey_data:
+  dogma-archive:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.sdf1.internal,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/DogmaArchive
 
 networks:
-  grimoire:
+  internal:
+    internal: true
+  homelab:
+    external: true
