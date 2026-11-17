@@ -1,25 +1,15 @@
-# Make sure to use the docker-compose.yml of the current release:
-#
-# https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
-#
-# The compose file on main may not be compatible with the latest release.
-
 name: immich
-
-include:
-  - ../common/networks.yaml
 
 services:
   immich-server: # Port 2283
     container_name: immich_server
-    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION}
     restart: unless-stopped
-    labels:
-      wud.watch: true
-      wud.tag.include: 'v^\d+\.\d+\.\d+$'
-      wud.link.template: 'https://github.com/immich-app/immich/releases/tag/$${original}'
-    env_file:
-      - .env
+    environment:
+      TZ: America/Los_Angeles
+      DB_USERNAME: postgres
+      DB_DATABASE_NAME: immich
+      DB_PASSWORD_FILE: /run/secrets/db_pass
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - type: volume
@@ -42,20 +32,16 @@ services:
     secrets:
       - db_pass
     networks:
-      - default
+      - internal
       - homelab
 
   kiosk: # Port 3000
-    image: ghcr.io/damongolding/immich-kiosk:${KIOSK_VERSION:-latest}
+    image: ghcr.io/damongolding/immich-kiosk:${KIOSK_VERSION}
     container_name: immich_kiosk
     restart: unless-stopped
-    labels:
-      wud.watch: true
-      wud.tag.include: '^\d+\.\d+\.\d+$'
-      wud.link.template: 'https://github.com/damongolding/immich-kiosk/releases/tag/v$${original}'
     environment:
-      LANG: "en_US"
-      TZ: "America/Los_Angeles"
+      LANG: en_US
+      TZ: America/Los_Angeles
     volumes:
       - /opt/appdata/immich/kiosk_config:/config
     healthcheck:
@@ -67,63 +53,55 @@ services:
     depends_on:
       - immich-server
     networks:
-      - default
+      - internal
       - homelab
 
   power-tools: # port 3000
-    image: ghcr.io/immich-power-tools/immich-power-tools:${TOOLS_VERSION:-release}
+    image: ghcr.io/immich-power-tools/immich-power-tools:${TOOLS_VERSION}
     container_name: immich_power_tools
     restart: unless-stopped
-    labels:
-      wud.watch: true
-      wud.tag.include: '^\d+\.\d+\.\d+$'
-      wud.link.template: 'https://github.com/varun-raj/immich-power-tools/releases/tag/v$${original}'
-    env_file:
-      - .env
-      - /opt/appdata/immich/secrets/power_tools.env
     environment:
+      TZ: America/Los_Angeles
       IMMICH_URL: http://immich-server:2283
+      EXTERNAL_IMMICH_URL: https://immich.sdf1.rampant.io
+      IMMICH_API_KEY: ${POWER_TOOLS_API_KEY}
       DB_HOST: database
       DB_PORT: 5432
-    #healthcheck:
-    #  test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
-    #  interval: 30s
-    #  timeout: 10s
-    #  retries: 3
-    #  start_period: 40s
+      DB_USERNAME: postgres
+      DB_DATABASE_NAME: immich
+      DB_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
     networks:
-      - default
+      - internal
       - homelab
 
   immich-metadata-api: # Port 8000
-    image: ghcr.io/borzilleri/immich-metadata-api:${METADATA_API_VERSION:-latest}
+    image: ghcr.io/borzilleri/immich-metadata-api:${METADATA_API_VERSION}
     container_name: immich_metadata_api
     restart: unless-stopped
-    labels:
-      wud.watch: true
-      wud.tag.include: '^\d+\.\d+\.\d+$'
-      wud.link.template: 'https://github.com/borzilleri/immich-metadata-api/releases/tag/v$${original}'
-    env_file:
-      - .env
     environment:
       IMMICH_INTERNAL_URL: http://immich-server:2283/api
+      TZ: America/Los_Angeles
+      DB_USERNAME: postgres
+      DB_DATABASE_NAME: immich
+      DB_PASSWORD_FILE: /run/secrets/db_pass
     secrets:
       - db_pass
     depends_on:
       - database
       - immich-server
     networks:
-      - default
+      - internal
       - homelab
 
   immich-public-proxy: # Port 3000
     container_name: immich-public-proxy
     restart: unless-stopped
-    image: alangrainger/immich-public-proxy:${PUBLIC_PROXY_VERSION:-latest}
-    labels:
-      wud.watch: true
-      wud.tag.include: '^\d+\.\d+\.\d+$'
-      wud.link.template: 'https://github.com/borzilleri/immich-metadata-api/releases/tag/$${original}'
+    image: alangrainger/immich-public-proxy:${PUBLIC_PROXY_VERSION}
     read_only: true
     cap_drop:
       - ALL
@@ -137,21 +115,25 @@ services:
       start_period: 10s
       timeout: 5s
     networks:
-      - default
+      - internal
       - homelab
 
   immich-machine-learning:
     container_name: immich_machine_learning
     restart: unless-stopped
-    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION}
     volumes:
       - model-cache:/cache
-    env_file:
-      - .env
+    environment:
+      TZ: America/Los_Angeles
+      DB_USERNAME: postgres
+      DB_DATABASE_NAME: immich
+      DB_PASSWORD_FILE: /run/secrets/db_pass
+      ORT_DISABLE_TELEMETRY: 1
     healthcheck:
       disable: false
     networks:
-      - default
+      - internal
 
   redis:
     container_name: immich_redis
@@ -160,7 +142,7 @@ services:
     healthcheck:
       test: redis-cli ping || exit 1
     networks:
-      - default
+      - internal
 
   database:
     container_name: immich_postgres
@@ -170,9 +152,9 @@ services:
     user: "1000:1000"
     environment:
       POSTGRES_INITDB_ARGS: '--data-checksums'
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_DB: ${DB_DATABASE_NAME}
-      POSTGRES_PASSWORD_FILE: ${DB_PASSWORD_FILE}
+      POSTGRES_USER: postgres
+      POSTGRES_DB: immich
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
       # Uncomment the DB_STORAGE_TYPE: 'HDD' var if your database isn't stored on SSDs
       # DB_STORAGE_TYPE: 'HDD'
     secrets:
@@ -180,12 +162,14 @@ services:
     volumes:
       - /opt/appdata/immich/db/pg14:/var/lib/postgresql/data
     networks:
-      - default
+      - internal
 
 
 networks:
-  default:
+  internal:
     internal: true
+  homelab:
+    external: true
 
 volumes:
   model-cache:
@@ -198,4 +182,4 @@ volumes:
 
 secrets:
   db_pass:
-    file: /opt/appdata/immich/secrets/db_pass
+    environment: DB_PASSWORD
