@@ -1,8 +1,7 @@
-include:
-  - ../common/networks.yaml
+name: beszel
 services:
   beszel:
-    image: henrygd/beszel:${VERSION:-latest}
+    image: henrygd/beszel:${VERSION}
     container_name: beszel
     restart: unless-stopped
     extra_hosts:
@@ -15,12 +14,17 @@ services:
       wud.link.template: 'https://github.com/henrygd/beszel/releases/tag/v$${original}'
     volumes:
       - /opt/appdata/beszel:/beszel_data
-      - /opt/terminal_dogma/AppData/beszel:/beszel_data/backups
+      - type: volume
+        source: app-data
+        target: /beszel_data/backups
+        volume:
+          nocopy: true
+          subpath: beszel
     networks:
       - homelab
-  beszel-agent:
-    image: henrygd/beszel-agent:${VERSION:-latest}
-    container_name: beszel-agent
+
+  agent:
+    image: henrygd/beszel-agent:${VERSION}
     restart: unless-stopped
     network_mode: host
     env_file: /opt/appdata/beszel-agent/beszel-agent.env
@@ -30,3 +34,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       # monitor other disks / partitions by mounting a folder in /extra-filesystems
       # - /mnt/disk/.beszel:/extra-filesystems/sda1:ro
+
+networks:
+  homelab:
+    external: true
+
+volumes:
+  app-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.sdf1.internal,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/AppData
