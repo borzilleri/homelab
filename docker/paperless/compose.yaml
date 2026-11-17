@@ -1,0 +1,103 @@
+name: paperless
+services:
+  broker:
+    image: docker.io/library/redis:7
+    container_name: paperless-broker
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    networks:
+      - internal
+
+  db:
+    image: docker.io/library/postgres:16-bookworm
+    container_name: paperless-db
+    restart: unless-stopped
+    user: "1000:1000"
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
+    volumes:
+      - /opt/appdata/paperless/db/pg16:/var/lib/postgresql/data
+    networks:
+      - internal
+    secrets:
+      - db_pass
+
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:${VERSION}
+    container_name: paperless
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+    user: "1000:1000"
+    environment:
+      USERMAP_UID: 1000
+      USERMAP_GID: 1000
+      PAPERLESS_TIME_ZONE: America/Los_Angeles
+      PAPERLESS_OCR_LANGUAGE: eng
+      PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'
+      PAPERLESS_FILENAME_FORMAT: "{{ doc_pc }}_{{ original_name }}"
+      PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBHOST: db
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS_FILE: /run/secrets/db_pass
+      PAPERLESS_URL: https://paperless.sdf1.rampant.io
+      PAPERLESS_CSRF_TRUSTED_ORIGINS: https://paperless.sdf1.site
+      PAPERLESS_ALLOWED_HOSTS: paperless.sdf1.site,paperless
+      PAPERLESS_CORS_ALLOWED_HOSTS: https://paperless.sdf1.site
+      PAPERLESS_SOCIALACCOUNT_PROVIDERS: ${SOCIAL_ACCOUNT_PROVIDERS}
+      PAPERLESS_SECRET_KEY: ${SECRET_KEY}
+    volumes:
+      - /opt/appdata/paperless/data:/usr/src/paperless/data
+      - type: volume
+        source: app-data
+        target: /usr/src/paperless/media
+        volume:
+          nocopy: true
+          subpath: paperless/media
+      - type: volume
+        source: transfer
+        target: /usr/src/paperless/export
+        volume:
+          nocopy: true
+          subpath: export
+      - type: volume
+        source: transfer
+        target: /usr/src/paperless/consume
+        volume:
+          nocopy: true
+          subpath: import        
+    networks:
+      - internal
+      - homelab
+    secrets:
+      - db_pass
+
+volumes:
+  redis-data:
+  app-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.sdf1.internal,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/AppData
+  transfer:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.sdf1.internal,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/PaperlessTransfer
+
+networks:
+  internal:
+    internal: true
+  homelab:
+    external: true
+
+secrets:
+  db_pass:
+    environment: DB_PASSWORD
