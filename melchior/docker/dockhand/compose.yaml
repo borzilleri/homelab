@@ -3,6 +3,8 @@ services:
     image: fnsys/dockhand:${VERSION:-latest}
     container_name: dockhand
     restart: unless-stopped
+    ports: 
+      - 3000:3000
     environment:
       PUID: 1000
       PGID: 1000
