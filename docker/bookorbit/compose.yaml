@@ -65,7 +65,6 @@ services:
         volume:
           nocopy: true
           subpath: downloads/transmission/complete
-    read_only: true
     tmpfs:
       - /tmp
     cap_drop:
