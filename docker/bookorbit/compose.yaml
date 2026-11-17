@@ -1,28 +1,24 @@
-include:
-  - ../common/networks.yaml
-
 # Additional Plugins:
 # https://github.com/Evan-2007/bookorbit-annas-archive-plugin/releases
 
+name: bookorbit
 services:
   app:
     container_name: bookorbit-app
-    image: ghcr.io/bookorbit/bookorbit:${VERSION:-latest}
+    image: ghcr.io/bookorbit/bookorbit:${VERSION}
     restart: unless-stopped
     init: true
     labels:
       wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
       wud.link.template: 'https://github.com/bookorbit/bookorbit/v$${original}'
-    env_file:
-      - .env
     environment:
       NODE_ENV: production
       PORT: 3000
       PUID: 1000
       PGID: 1000
       TZ: America/Los_Angeles
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: db
       POSTGRES_PORT: 5432
       POSTGRES_DB: bookorbit
       POSTGRES_USER: bookorbit
@@ -32,9 +28,9 @@ services:
       JWT_SECRET_FILE: /run/secrets/jwt_secret
       BOOK_REQUEST_ENCRYPTION_KEY_FILE: /run/secrets/request_key
       MIGRATION_ENCRYPTION_KEY_file: /run/secrets/migration_key
-      APP_URL: ${APP_URL?required}
-      CLIENT_URL: ${APP_URL?required}
-      NODE_MAX_OLD_SPACE_SIZE: ${NODE_MAX_OLD_SPACE_SIZE:-auto}
+      APP_URL: https://bookorbit.sdf1.rampant.io
+      CLIENT_URL: https://bookorbit.sdf1.rampant.io
+      NODE_MAX_OLD_SPACE_SIZE: 2048
       DISABLE_LOCAL_AUTH: ${DISABLE_LOCAL_AUTH:-false}
       BOOK_DOCK_PATH: /book_dock
       LIBRARY_BROWSE_ROOT: /books
@@ -46,12 +42,17 @@ services:
       - migration_key
       - request_key
     depends_on:
-      postgres:
+      db:
         condition: service_healthy
     volumes:
       - /opt/appdata/bookorbit/data:/data
       - /opt/appdata/bookorbit/book_dock:/book_dock
-      - /opt/terminal_dogma/AppData/bookorbit_books:/books
+      - type: volume
+        source: app-data
+        target: /books
+        volume:
+          nocopy: true
+          subpath: bookorbit_books
       - type: volume
         source: central-dogma
         target: /downloads/sabnzbd
@@ -79,11 +80,10 @@ services:
       - no-new-privileges:true
     stop_grace_period: 30s
     networks:
-      - default
+      - internal
       - homelab
 
-  postgres:
-    container_name: bookorbit-db
+  db:
     image: pgvector/pgvector:pg18
     restart: unless-stopped
     environment:
@@ -103,27 +103,35 @@ services:
       retries: 10
       start_period: 20s
     networks:
-      - default
+      - internal
 
 secrets:
   bootstrap_token:
-    file: /opt/appdata/bookorbit/secrets/bootstrap_token
+    environment: BOOTSTRAP_TOKEN
   email_key:
-    file: /opt/appdata/bookorbit/secrets/email_key
+    environment: EMAIL_KEY
   db_password:
-    file: /opt/appdata/bookorbit/secrets/db_password
+    environment: DB_PASSWORD
   jwt_secret:
-    file: /opt/appdata/bookorbit/secrets/jwt_secret
+    environment: JWT_SECRET
   migration_key:
-    file: /opt/appdata/bookorbit/secrets/migration_key
+    environment: MIGRATION_KEY
   request_key:
-    file: /opt/appdata/bookorbit/secrets/request_key
+    environment: REQUEST_KEY
 
 networks:
-  default:
+  internal:
     internal: true
+  homelab:
+    external: true
 
 volumes:
+  app-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.sdf1.internal,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/AppData
   central-dogma:
     driver: local
     driver_opts:
