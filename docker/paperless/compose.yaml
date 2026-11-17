@@ -51,6 +51,8 @@ services:
       PAPERLESS_CORS_ALLOWED_HOSTS: https://paperless.sdf1.site
       PAPERLESS_SOCIALACCOUNT_PROVIDERS: ${SOCIAL_ACCOUNT_PROVIDERS}
       PAPERLESS_SECRET_KEY: ${SECRET_KEY}
+      PAPERLESS_DISABLE_REGULAR_LOGIN: ${PAPERLESS_DISABLE_REGULAR_LOGIN}
+      PAPERLESS_REDIRECT_LOGIN_TO_SSO: ${PAPERLESS_REDIRECT_LOGIN_TO_SSO}
     volumes:
       - /opt/appdata/paperless/data:/usr/src/paperless/data
       - type: volume
