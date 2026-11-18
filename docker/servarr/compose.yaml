@@ -163,7 +163,6 @@ services:
     labels:
       wud.watch: true
       wud.tag.include: '^\d+\.\d+\.\d+$'
-    env_file: /opt/appdata/servarr/secrets/transmission.env
     environment:
       PUID: 1000
       PGID: 1000
