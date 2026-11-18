@@ -1,6 +1,4 @@
-include:
-  - ../common/networks.yaml
-
+name: servarr
 services:
   db:
     image: postgres:14
@@ -10,25 +8,19 @@ services:
     environment:
       POSTGRES_USER: servarr
       POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
-    labels:
-      docker-volume-backup.exec-label: "servarr"
-      docker-volume-backup.archive-pre: /bin/sh -c 'pg_dumpall -U servarr --clean --file=/backup/servarr_db.sql'
-    volumes:
-      - /opt/appdata/servarr/db/pg14:/var/lib/postgresql/data
-      - /opt/appdata/servarr/db/backup:/backup
-    networks:
-      - default
     secrets:
       - db_pass
+    volumes:
+      - /opt/appdata/servarr/db/pg14:/var/lib/postgresql/data
+    networks:
+      - internal
+
   radarr:
-    image: lscr.io/linuxserver/radarr:${RADARR_VERSION:-latest}
+    image: lscr.io/linuxserver/radarr:${RADARR_VERSION}
     container_name: radarr
     restart: unless-stopped
     depends_on:
       - db
-    labels:
-      wud.watch: true
-      wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       PUID: 1000
       PGID: 1000
@@ -36,23 +28,26 @@ services:
       RADARR__POSTGRES__HOST: db
       RADARR__POSTGRES__PORT: 5432
       RADARR__POSTGRES__USER: servarr
-      RADARR__POSTGRES__PASSWORD: ${DB_PASS}
+      RADARR__POSTGRES__PASSWORD: ${DB_PASSWORD}
     volumes:
-      - central-dogma:/data
       - /opt/appdata/servarr/radarr:/config
-      - /opt/terminal_dogma/AppData/servarr/radarr:/backups
+      - central-dogma:/data
+      - type: volume
+        source: app-data
+        target: /backups
+        volume:
+          nocopy: true
+          subpath: servarr/radarr
     networks:
-      - default
+      - internal
       - homelab
+
   sonarr:
-    image: lscr.io/linuxserver/sonarr:${SONARR_VERSION:-latest}
+    image: lscr.io/linuxserver/sonarr:${SONARR_VERSION}
     container_name: sonarr
     restart: always
     depends_on:
       - db
-    labels:
-      wud.watch: true
-      wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       PUID: 1000
       PGID: 1000
@@ -60,24 +55,26 @@ services:
       SONARR__POSTGRES__HOST: db
       SONARR__POSTGRES__PORT: 5432
       SONARR__POSTGRES__USER: servarr
-      SONARR__POSTGRES__PASSWORD: ${DB_PASS}
+      SONARR__POSTGRES__PASSWORD: ${DB_PASSWORD}
     volumes:
-      - central-dogma:/data
       - /opt/appdata/servarr/sonarr:/config
-      - /opt/terminal_dogma/AppData/servarr/sonarr:/backups
+      - central-dogma:/data
+      - type: volume
+        source: app-data
+        target: /backups
+        volume:
+          nocopy: true
+          subpath: servarr/sonarr
     networks:
-      - default
+      - internal
       - homelab
 
   bazarr:
-    image: lscr.io/linuxserver/bazarr:${BAZARR_VERSION:-latest}
+    image: lscr.io/linuxserver/bazarr:${BAZARR_VERSION}
     container_name: bazarr
     restart: always
     depends_on:
       - db
-    labels:
-      wud.watch: true
-      wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       PUID: 1000
       PGID: 1000
@@ -86,23 +83,25 @@ services:
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
       POSTGRES_USERNAME: servarr
-      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - central-dogma:/data
       - /opt/appdata/servarr/bazarr:/config
-      - /opt/terminal_dogma/AppData/servarr/bazarr:/backups
+      - central-dogma:/data
+      - type: volume
+        source: app-data
+        target: /backups
+        volume:
+          nocopy: true
+          subpath: servarr/bazarar
     networks:
-      - default
+      - internal
       - homelab
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:${PROWLARR_VERSION:-latest}
+    image: lscr.io/linuxserver/prowlarr:${PROWLARR_VERSION}
     container_name: prowlarr
     restart: always
     depends_on:
       - db
-    labels:
-      wud.watch: true
-      wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       PUID: 1000
       PGID: 1000
@@ -110,51 +109,55 @@ services:
       PROWLARR__POSTGRES__HOST: db
       PROWLARR__POSTGRES__PORT: 5432
       PROWLARR__POSTGRES__USER: servarr
-      PROWLARR__POSTGRES__PASSWORD: ${DB_PASS}
+      PROWLARR__POSTGRES__PASSWORD: ${DB_PASSWORD}
     volumes:
       - /opt/appdata/servarr/prowlarr:/config
-      - /opt/terminal_dogma/AppData/servarr/prowlarr:/backups
+      - type: volume
+        source: app-data
+        target: /backups
+        volume:
+          nocopy: true
+          subpath: servarr/prowlarr
     networks:
-      - default
+      - internal
       - homelab
 
   maintainerr: # Port 6246 
-    image: ghcr.io/maintainerr/maintainerr:${MAINTAINERR_VERSION:-latest}
+    image: ghcr.io/maintainerr/maintainerr:${MAINTAINERR_VERSION}
     container_name: maintainerr
     restart: unless-stopped
     user: 1000:1000
-    labels:
-      wud.watch: true
-      wud.tag.include: '^\d+\.\d+\.\d+$'
-      wud.link.template: 'https://github.com/Maintainerr/Maintainerr/releases/tag/v$${original}'
     environment:
       TZ: America/Los_Angeles
     volumes:
       - /opt/appdata/servarr/maintainerr:/opt/data
     networks:
-      - default
+      - internal
       - homelab
 
   sabnzbd:
-    image: lscr.io/linuxserver/sabnzbd:${SABNZBD_VERSION:-latest}
+    image: lscr.io/linuxserver/sabnzbd:${SABNZBD_VERSION}
     container_name: sabnzbd
     restart: always
-    labels:
-      wud.watch: true
-      wud.tag.include: '^\d+\.\d+\.\d+$'
     environment:
       PUID: 1000
       PGID: 1000
       TZ: America/Los_Angeles
     volumes:
-      - central-dogma:/data
       - /opt/appdata/servarr/sabnzbd:/config
-      - /opt/terminal_dogma/AppData/servarr/sabnzbd:/backups
+      - central-dogma:/data
+      - type: volume
+        source: app-data
+        target: /backups
+        volume:
+          nocopy: true
+          subpath: servarr/sabnzbd
     networks:
-      - default
+      - internal
       - homelab
+
   transmission:
-    image: lscr.io/linuxserver/transmission:${TRANSMISSION_VERSION:-latest}
+    image: lscr.io/linuxserver/transmission:${TRANSMISSION_VERSION}
     container_name: transmission
     restart: always
     labels:
@@ -166,6 +169,7 @@ services:
       PGID: 1000
       TZ: America/Los_Angeles
       USER: admin
+      PASS: ${TRANSMISSION_PASSWORD}
     ports:
       - 51413:51413
       - 51413:51413/udp
@@ -173,21 +177,29 @@ services:
       - central-dogma:/data
       - /opt/appdata/servarr/transmission:/config
     networks:
-      - default
+      - internal
       - homelab
 
 volumes:
+  app-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.sdf1.internal,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/AppData
   central-dogma:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=central-dogma.local,nolock,soft,nfsvers=4
+      o: addr=central-dogma.sdf1.internal,nolock,soft,nfsvers=4
       device: :/volume1/Media
 
 secrets:
   db_pass:
-    file: /opt/appdata/servarr/secrets/db_pass
+    environment: DB_PASSWORD
 
 networks:
-  default:
+  internal:
     internal: true
+  homelab:
+    external: true
