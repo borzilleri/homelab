@@ -1,3 +1,4 @@
+name: authentik
 services:
   postgresql:
     image: docker.io/library/postgres:16-alpine
@@ -14,14 +15,10 @@ services:
       POSTGRES_DB: authentik
       POSTGRES_USER: authentik
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_pass
-    labels:
-      docker-volume-backup.exec-label: "authentik"
-      docker-volume-backup.archive-pre: /bin/sh -c 'pg_dumpall -U authentik --clean --file=/backup/authentik_db.sql'
     secrets:
       - postgres_pass
     volumes:
       - /opt/docker_data/authentik/pg16:/var/lib/postgresql/data
-      - /opt/docker_data/authentik/db_backup:/backup
   server:
     image: ghcr.io/goauthentik/server:${AUTHENTIK_VERSION}
     container_name: authentik
@@ -35,12 +32,19 @@ services:
     depends_on:
       postgresql:
         condition: service_healthy
-    labels:
-      wud.watch: true
-      wud.tag.include: '^\d+\.\d+\.\d+$'
-      wud.link.template: 'https://github.com/goauthentik/authentik/releases/tag/version%2F$${original}'
-    env_file:
-      - ./authentik.env
+    environment:
+      AUTHENTIK_SECRET_KEY: file:///run/secrets/authentik_secret_key
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: authentik
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: file:///run/secrets/postgres_pass
+      AUTHENTIK_EMAIL__HOST: smtp.fastmail.com
+      AUTHENTIK_EMAIL__PORT: 465
+      AUTHENTIK_EMAIL__USERNAME: file:///run/secrets/fastmail_user
+      AUTHENTIK_EMAIL__PASSWORD: file:///run/secrets/fastmail_pass
+      AUTHENTIK_EMAIL__USE_SSL: true
+      AUTHENTIK_EMAIL__TIMEOUT: 10
+      AUTHENTIK_EMAIL__FROM: authentik@rampant.io
     secrets:
       - authentik_secret_key
       - postgres_pass
@@ -60,8 +64,19 @@ services:
     depends_on:
       postgresql:
         condition: service_healthy
-    env_file:
-      - ./authentik.env
+    environment:
+      AUTHENTIK_SECRET_KEY: file:///run/secrets/authentik_secret_key
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: authentik
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: file:///run/secrets/postgres_pass
+      AUTHENTIK_EMAIL__HOST: smtp.fastmail.com
+      AUTHENTIK_EMAIL__PORT: 465
+      AUTHENTIK_EMAIL__USERNAME: file:///run/secrets/fastmail_user
+      AUTHENTIK_EMAIL__PASSWORD: file:///run/secrets/fastmail_pass
+      AUTHENTIK_EMAIL__USE_SSL: true
+      AUTHENTIK_EMAIL__TIMEOUT: 10
+      AUTHENTIK_EMAIL__FROM: authentik@rampant.io
     secrets:
       - authentik_secret_key
       - postgres_pass
@@ -72,14 +87,11 @@ services:
       - /opt/docker_data/authentik/data/data:/data
       - /opt/docker_data/authentik/data/certs:/certs
       - /opt/docker_data/authentik/data/custom-templates:/templates
+
   dockerproxy:
-    image: ghcr.io/tecnativa/docker-socket-proxy:${PROXY_VERSION:-latest}
+    image: ghcr.io/tecnativa/docker-socket-proxy:${PROXY_VERSION}
     container_name: authentik-docker-proxy
     restart: unless-stopped
-    labels:
-      wud.watch: true
-      wud.tag.include: '^v\d+\.\d+\.\d+$'
-      wud.link.template: 'https://github.com/Tecnativa/docker-socket-proxy/releases/tag/$${original}'
     environment:
       CONTAINERS: 1
       POST: 1
@@ -91,10 +103,10 @@ services:
 
 secrets:
   authentik_secret_key:
-    file: /opt/docker_data/authentik/secrets/authentik_secret_key
+    environment: SECRET_KEY
   postgres_pass:
-    file: /opt/docker_data/authentik/secrets/postgres_pass
+    environment: DB_PASSWORD
   fastmail_user:
-    file: /opt/docker_data/authentik/secrets/fastmail_user
+    environment: FASTMAIL_USER
   fastmail_pass:
-    file: /opt/docker_data/authentik/secrets/fastmail_pass
+    environment: FASTMAIL_PASSWORD
