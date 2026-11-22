@@ -226,7 +226,7 @@ services:
     volumes:
       - /opt/appdata/servarr/gluetun:/gluetun
     networks:
-      default: # internet egress for the VPN tunnel; `internal` has none
+      homelab:
       internal:
         aliases:
           - qbittorrent # qbittorrent shares this netns
