@@ -45,7 +45,7 @@ services:
   sonarr:
     image: lscr.io/linuxserver/sonarr:${SONARR_VERSION}
     container_name: sonarr
-    restart: always
+    restart: unless-stopped
     depends_on:
       - db
     environment:
@@ -72,7 +72,7 @@ services:
   bazarr:
     image: lscr.io/linuxserver/bazarr:${BAZARR_VERSION}
     container_name: bazarr
-    restart: always
+    restart: unless-stopped
     depends_on:
       - db
     environment:
@@ -99,7 +99,7 @@ services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:${PROWLARR_VERSION}
     container_name: prowlarr
-    restart: always
+    restart: unless-stopped
     depends_on:
       - db
     environment:
@@ -135,10 +135,10 @@ services:
       - internal
       - homelab
 
-  sabnzbd:
+  sabnzbd: # Port 8080
     image: lscr.io/linuxserver/sabnzbd:${SABNZBD_VERSION}
     container_name: sabnzbd
-    restart: always
+    restart: unless-stopped
     environment:
       PUID: 1000
       PGID: 1000
@@ -156,13 +156,10 @@ services:
       - internal
       - homelab
 
-  transmission:
+  transmission: # Port 9091
     image: lscr.io/linuxserver/transmission:${TRANSMISSION_VERSION}
     container_name: transmission
-    restart: always
-    labels:
-      wud.watch: true
-      wud.tag.include: '^\d+\.\d+\.\d+$'
+    restart: unless-stopped
     environment:
       PUID: 1000
       PGID: 1000
@@ -178,6 +175,64 @@ services:
     networks:
       - internal
       - homelab
+
+  qbittorrent: # Port 8080
+    image: qbittorrentofficial/qbittorrent-nox:${QBITTORRENT_VERSION}
+    container_name: qbittorrent
+    restart: unless-stopped
+    network_mode: "service:gluetun"
+    depends_on:
+      gluetun:
+        condition: service_healthy
+        restart: true # re-attach to gluetun's netns when it is recreated
+    stop_grace_period: 30m
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Los_Angeles
+      QBT_LEGAL_NOTICE: confirm
+    volumes:
+      - /opt/appdata/servarr/qbittorrent:/config
+      - central-dogma:/data
+
+  qui: # Port 7476
+    image: ghcr.io/autobrr/qui:${QUI_VERSION}
+    container_name: qui
+    restart: unless-stopped
+    environment:
+      TZ: America/Los_Angeles
+      QUI__SESSION_SECRET_FILE: /run/secrets/qui_session_secret
+    secrets:
+      - qui_session_secret
+    volumes:
+      - /opt/appdata/servarr/qui:/config
+    networks:
+      - internal
+      - homelab
+
+  gluetun:
+    image: qmcgaw/gluetun:${GLUETUN_VERSION}
+    container_name: gluetun
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      TZ: America/Los_Angeles
+      VPN_SERVICE_PROVIDER: nordvpn
+      VPN_TYPE: wireguard # NordLynx
+      SERVER_COUNTRIES: United States
+      UPDATER_PERIOD: 480h
+    secrets:
+      - wireguard_private_key
+    volumes:
+      - /opt/appdata/servarr/gluetun:/gluetun
+    networks:
+      default: # internet egress for the VPN tunnel; `internal` has none
+      internal:
+        aliases:
+          - qbittorrent # qbittorrent shares this netns
 
 volumes:
   app-data:
@@ -196,6 +251,10 @@ volumes:
 secrets:
   db_pass:
     environment: DB_PASSWORD
+  wireguard_private_key:
+    environment: WIREGUARD_PRIVATE_KEY
+  qui_session_secret:
+    environment: QUI_SESSION_SECRET
 
 networks:
   internal:
