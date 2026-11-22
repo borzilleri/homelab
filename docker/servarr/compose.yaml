@@ -201,9 +201,6 @@ services:
     restart: unless-stopped
     environment:
       TZ: America/Los_Angeles
-      QUI__SESSION_SECRET_FILE: /run/secrets/qui_session_secret
-    secrets:
-      - qui_session_secret
     volumes:
       - /opt/appdata/servarr/qui:/config
     networks:
@@ -253,8 +250,6 @@ secrets:
     environment: DB_PASSWORD
   wireguard_private_key:
     environment: WIREGUARD_PRIVATE_KEY
-  qui_session_secret:
-    environment: QUI_SESSION_SECRET
 
 networks:
   internal:
