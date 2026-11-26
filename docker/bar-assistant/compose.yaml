@@ -1,7 +1,7 @@
 name: bar-assistant
 services:
   meilisearch: # Port 7700
-    image: getmeili/meilisearch:v1.15
+    image: getmeili/meilisearch:${MEILI_VERSION}
     container_name: ba-search
     restart: unless-stopped
     environment:
