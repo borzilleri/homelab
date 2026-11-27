@@ -1,0 +1,103 @@
+# https://docs.romm.app/
+# Any RomM env var can be read from a file by appending _FILE
+# (handled by the image's /docker-entrypoint.sh).
+
+name: romm
+services:
+  app: # Port 8080
+    image: rommapp/romm:${VERSION}
+    container_name: romm
+    restart: unless-stopped
+    environment:
+      TZ: America/Los_Angeles
+      ROMM_BASE_URL: https://romm.sdf1.rampant.io
+      ROMM_SESSION_SECURE_COOKIE: true
+      ROMM_AUTH_SECRET_KEY_FILE: /run/secrets/auth_secret_key
+      DB_HOST: db
+      DB_NAME: romm
+      DB_USER: romm
+      DB_PASSWD_FILE: /run/secrets/db_password
+      # OIDC (Authentik)
+      OIDC_ENABLED: ${OIDC_ENABLED}
+      DISABLE_USERPASS_LOGIN: ${DISABLE_USERPASS_LOGIN}
+      OIDC_ALLOW_REGISTRATION: ${OIDC_ALLOW_REGISTRATION}
+      OIDC_PROVIDER: authentik
+      OIDC_CLIENT_ID: /run/secrets/oidc_client_id
+      OIDC_CLIENT_SECRET_FILE: /run/secrets/oidc_client_secret
+      OIDC_REDIRECT_URI: https://romm.sdf1.rampant.io/api/oauth/openid
+      OIDC_SERVER_APPLICATION_URL: https://auth.sdf1.rampant.io/application/o/romm
+      OIDC_CLAIM_ROLES: groups
+      OIDC_ROLE_ADMIN: service-admin
+      OIDC_ROLE_VIEWER: homelab-public-users
+      # Metadata providers
+      HASHEOUS_API_ENABLED: true
+    secrets:
+      - auth_secret_key
+      - db_password
+      - oidc_client_secret
+      - oidc_client_id
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    volumes:
+      - /opt/appdata/romm/assets:/romm/assets
+      - /opt/appdata/romm/config:/romm/config
+      - /opt/appdata/romm/resources:/romm/resources
+      - /opt/appdata/romm/redis:/redis-data
+      - type: volume
+        source: dogma-archive
+        target: /romm/library
+        volume:
+          nocopy: true
+          subpath: Emulation/library
+    networks:
+      - internal
+      - homelab
+
+  db:
+    container_name: romm-db
+    image: docker.io/library/mariadb:11.8
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: romm
+      MARIADB_USER: romm
+      MARIADB_PASSWORD_FILE: /run/secrets/db_password
+      MARIADB_RANDOM_ROOT_PASSWORD: 1
+    secrets:
+      - db_password
+    volumes:
+      - /opt/appdata/romm/db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 30s
+      start_interval: 2s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal
+
+secrets:
+  auth_secret_key:
+    environment: AUTH_SECRET_KEY
+  db_password:
+    environment: DB_PASSWORD
+  oidc_client_id:
+    environment: OIDC_CLIENT_ID
+  oidc_client_secret:
+    environment: OIDC_CLIENT_SECRET
+
+networks:
+  internal:
+    internal: true
+  homelab:
+    external: true
+
+volumes:
+  dogma-archive:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=terminal-dogma.sdf1.internal,nolock,soft,nfsvers=4
+      device: :/mnt/DataPool/DogmaArchive
