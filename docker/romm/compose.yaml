@@ -22,7 +22,7 @@ services:
       DISABLE_USERPASS_LOGIN: ${DISABLE_USERPASS_LOGIN}
       OIDC_ALLOW_REGISTRATION: ${OIDC_ALLOW_REGISTRATION}
       OIDC_PROVIDER: authentik
-      OIDC_CLIENT_ID: /run/secrets/oidc_client_id
+      OIDC_CLIENT_ID_FILE: /run/secrets/oidc_client_id
       OIDC_CLIENT_SECRET_FILE: /run/secrets/oidc_client_secret
       OIDC_REDIRECT_URI: https://romm.sdf1.rampant.io/api/oauth/openid
       OIDC_SERVER_APPLICATION_URL: https://auth.sdf1.rampant.io/application/o/romm
