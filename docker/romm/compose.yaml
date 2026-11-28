@@ -37,6 +37,8 @@ services:
       HLTB_API_ENABLED: true
       SCREENSCRAPER_USER_FILE: /run/secrets/screenscraper_user
       SCREENSCRAPER_PASSWORD_FILE: /run/secrets/screenscraper_password
+      IGDB_CLIENT_ID_FILE: /run/secrets/igdb_client_id
+      IGDB_CLIENT_SECRET_FILE: /run/secrets/igdb_client_secret
     secrets:
       - auth_secret_key
       - db_password
@@ -44,6 +46,8 @@ services:
       - oidc_client_id
       - screenscraper_user
       - screenscraper_password
+      - igdb_client_id
+      - igdb_client_secret
     depends_on:
       db:
         condition: service_healthy
@@ -99,6 +103,10 @@ secrets:
     environment: SCREENSCRAPER_USER
   screenscraper_password:
     environment: SCREENSCRAPER_PASSWORD
+  igdb_client_id:
+    environment: IGDB_CLIENT_ID
+  igdb_client_secret:
+    environment: IGDB_CLIENT_SECRET
 
 networks:
   internal:
