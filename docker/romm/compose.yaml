@@ -31,11 +31,19 @@ services:
       OIDC_ROLE_VIEWER: homelab-public-users
       # Metadata providers
       HASHEOUS_API_ENABLED: true
+      LAUNCHBOX_API_ENABLED: true
+      ENABLE_SCHEDULED_UPDATE_LAUNCHBOX_METADATA: true
+      PLAYMATCH_API_ENABLED: true
+      HLTB_API_ENABLED: true
+      SCREENSCRAPER_USER_FILE: /run/secrets/screenscraper_user
+      SCREENSCRAPER_PASSWORD_FILE: /run/secrets/screenscraper_password
     secrets:
       - auth_secret_key
       - db_password
       - oidc_client_secret
       - oidc_client_id
+      - screenscraper_user
+      - screenscraper_password
     depends_on:
       db:
         condition: service_healthy
@@ -87,6 +95,10 @@ secrets:
     environment: OIDC_CLIENT_ID
   oidc_client_secret:
     environment: OIDC_CLIENT_SECRET
+  screenscraper_user:
+    environment: SCREENSCRAPER_USER
+  screenscraper_password:
+    environment: SCREENSCRAPER_PASSWORD
 
 networks:
   internal:
